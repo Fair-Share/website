@@ -1,3 +1,7 @@
-<h1 id="title">App Template</h1>
+<h1 id="title">FairShare</h1>
+
+{{#if user}}
+  <button {{action 'logout'}}>Logged in as: {{user.name}}</button>
+{{/if}}
 
 {{outlet}}

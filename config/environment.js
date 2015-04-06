@@ -5,17 +5,28 @@ module.exports = function(environment) {
     modulePrefix: 'fairshare-site',
     environment: environment,
     baseURL: '/',
-    locationType: 'auto',
+    locationType: 'hash',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
       }
     },
+    consumerKey: 'p93jnimz0njKow',
+    redirectUrl: 'http://localhost:4200/#/?',
 
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+    },
+    contentSecurityPolicy: {
+      'default-src': "'none'",
+      'script-src': "'self'",
+      'font-src': "'self'",
+      'connect-src': "'self' https://*.reddit.com http://*.reddit.com",
+      'img-src': "'self' http://*.redditmedia.com https://*.redditstatic.com",
+      'style-src': "'self' 'unsafe-inline' https://*.redditstatic.com",
+      'media-src': "'self'"
     }
   };
 
@@ -40,7 +51,8 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.consumerKey = 'wLEiatVvp09G7g';
+    ENV.redirectUrl = 'http://fair-share.github.io/#/?';
   }
 
   return ENV;

@@ -11,6 +11,9 @@
     "ember-load-initializers": "ember-cli/ember-load-initializers#0.0.2",
     "ember-qunit": "0.3.0",
     "ember-qunit-notifications": "0.0.7",
-    "qunit": "~1.17.1"
+    "qunit": "~1.17.1",
+    "snoocore": "~2.7.4",
+    "moment": "~2.9.0",
+    "ember-cli-moment-shim": "~0.0.3"
   }
 }
