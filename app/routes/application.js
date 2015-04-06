@@ -40,10 +40,7 @@ export default Ember.Route.extend({
   },
 
   redirect: function(model) {
-    if (model) {
-      return this.transitionTo('ubi');
-    }
-    this.transitionTo('login');
+    return this.transitionTo('ubi');
   },
 
   actions: {

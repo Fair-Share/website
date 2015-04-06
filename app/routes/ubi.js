@@ -12,7 +12,7 @@ export default Ember.Route.extend({
       });
       if (post) {return post.data};
     }).then(function(post) {
-      return client('/r/GetFairShare/comments/' + post.id).get().then(function(result) {
+      return client('/r/GetFairShare/comments/' + post.id + '.json').get().then(function(result) {
         post.comments = result[1].data.children.getEach('data');
         post.beneficiaries = post.comments.getEach('author').uniq().without('PoliticBot');
         return post;

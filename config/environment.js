@@ -51,7 +51,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.consumerKey = 'wLEiatVvp09G7g';
+    ENV.consumerKey = 'Eb_FuUtIEDgkFw';
     ENV.redirectUrl = 'http://fair-share.github.io/#/?';
   }
 

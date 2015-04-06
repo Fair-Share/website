@@ -2,6 +2,8 @@
 
 {{#if user}}
   <button {{action 'logout'}}>Logged in as: {{user.name}}</button>
+{{else}}
+<a title='Login' {{bind-attr href=loginUrl}}><button>(Optional) Login at reddit.com</button></a>
 {{/if}}
 
 {{outlet}}
