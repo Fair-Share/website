@@ -1,18 +1,47 @@
-{{#if link_flair_text}}
-  <h3>Closed {{link_flair_text}} : {{title}}</h3>
-{{else}}
-  <h3>{{title}}</h3>
+<div class='row'>
+  <div class='col-md-4'>
+    <h3>FairShare = {{fairShare}} satoshi</h3>
+    <form>
+      <div class="form-group">
+        <label>Pool Size</label>
+        {{input value=ubiPool class='form-control'}}
+      </div>
+      <div class="form-group">
+        <label>Percentage</label>
+        {{input value=percentage class='form-control'}}
+      </div>
+      <div class="form-group">
+        <label>Beneficiaries</label>
+        {{input value=beneficiaryCount class='form-control'}}
+      </div>
+    </form>
+    <hr>
+    <ul class='media-list'>
+      {{#each comments}}
+        <li class="media">
+          <div class="media-body">
+            <h4 class="media-heading">{{author}}</h4>
+            {{{body_html}}}
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+    <div class='col-md-8'>
+  {{#if link_flair_text}}
+    <h3>Closed {{link_flair_text}} : {{title}}</h3>
+  {{else}}
+    <h3>{{title}} (Pending)</h3>
+  {{/if}}
 
-{{/if}}
+  <pre># UBI Pool: {{ubiPool}} satoshi
+  ## Today's Total Distribution: {{total}} satoshi
+  # {{beneficiaryCount}} Beneficiares
+  {{#each name in beneficiaries}}
+    * /u/{{name}}
+  {{/each}}
+  # FairShare = {{fairShare}} satoshi
+  </pre>
+    </div>
 
-<label>Pool Size (satoshis) {{input value=ubiPool size=12}}</label>
-<label>% {{input value=percentage size=3}}</label>
-FairShare = {{fairShare}} satoshi
-<pre># UBI Pool: {{ubiPool}} satoshi
-## Today's Total Distribution: {{total}} satoshi
-# {{beneficiaries.length}} Beneficiares
-{{#each name in beneficiaries}}
-  * /u/{{name}}
-{{/each}}
-# FairShare = {{fairShare}} satoshi
-</pre>
+</div>

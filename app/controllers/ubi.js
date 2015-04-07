@@ -6,9 +6,15 @@ export default Ember.ObjectController.extend({
   total: function() {
     return parseInt(parseInt(this.get('ubiPool')) * (this.get('percentage') / 100));
   }.property('ubiPool', 'ratio'),
+  beneficiaryCount: function(key, value) {
+    if (value) {
+      return parseInt(value);
+    }
+    return this.get('beneficiaries.length');
+  }.property('beneficiaries.length'),
   fairShare: function() {
-    var count = this.get('beneficiaries.length');
+    var count = this.get('beneficiaryCount');
     if (!count) {return this.get('total')};
     return Math.floor(this.get('total') / count);
-  }.property('beneficiaries.length', 'total')
+  }.property('beneficiaryCount', 'total')
 });
