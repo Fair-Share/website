@@ -1,21 +1,18 @@
-<h2>Universal Basic Income</h2>
+{{#if link_flair_text}}
+  <h3>Closed {{link_flair_text}} : {{title}}</h3>
+{{else}}
+  <h3>{{title}}</h3>
 
-<label>Pool Size (satoshis) {{input value=ubiPool}}</label>
-<label>Disbursement % {{input value=percentage}}</label>
+{{/if}}
 
-<h3>{{title}}</h3>
-
-
-<pre>
-# UBI Pool: {{ubiPool}} satoshi
-
+<label>Pool Size (satoshis) {{input value=ubiPool size=12}}</label>
+<label>% {{input value=percentage size=3}}</label>
+FairShare = {{fairShare}} satoshi
+<pre># UBI Pool: {{ubiPool}} satoshi
 ## Today's Total Distribution: {{total}} satoshi
-
 # {{beneficiaries.length}} Beneficiares
-
 {{#each name in beneficiaries}}
   * /u/{{name}}
 {{/each}}
-
 # FairShare = {{fairShare}} satoshi
 </pre>
