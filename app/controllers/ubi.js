@@ -4,7 +4,7 @@ export default Ember.ObjectController.extend({
   ubiPool: 30000000,
   percentage: 10,
   total: function() {
-    return parseInt(parseInt(this.get('ubiPool')) * (this.get('percentage') / 100));
+    return parseInt(parseInt(this.get('ubiPool')) * (parseInt(this.get('percentage')) / 100));
   }.property('ubiPool', 'percentage'),
   beneficiaryCount: function(key, value) {
     if (value) {
