@@ -49,13 +49,7 @@
 </pre>
   </div>
     <div class='col-md-4'>
-  {{#if link_flair_text}}
-    <h2>{{link_flair_text}} : {{title}}</h2>
-  {{else}}
-    <h2>{{title}}</h2>
-  {{/if}}
-
-<pre># Crypto Currency Income Escrows {{#each share in shares}}
+<pre># {{title}} {{#each share in shares}}
 ## {{share.coin.name}}: {{share.coin.count}} {{share.coin.unit}}
 ### Today's Total: {{share.total.amount}} {{share.coin.unit}}
 ### FairShare: {{share.amount}} {{share.coin.unit}}
