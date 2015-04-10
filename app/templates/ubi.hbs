@@ -1,6 +1,10 @@
 <div class='row'>
   <div class='col-md-4'>
-    <h3>Crypto Basic Income Escrows</h3>
+<h2>Income Disbursement</h2>
+<pre>{{#each share in shares}}{{share.tip}}
+{{/each}}
+</pre>
+    <h3>Crypto Currency Escrows</h3>
     <form>
       {{#each coin in coins}}
       <div class="form-group">
@@ -35,7 +39,6 @@
     {{else}}
       <a title='Login' {{bind-attr href=loginUrl}}><button class='btn btn-default form-control'>Login to Request Your FairShare</button></a>
     {{/if}}--}}
-    <hr>
     <ul class='media-list'>
       {{#each comments}}
         <li class="media">
@@ -51,9 +54,9 @@
   </div>
     <div class='col-md-8'>
   {{#if link_flair_text}}
-    <h3>Closed {{link_flair_text}} : {{title}}</h3>
+    <h2>{{link_flair_text}} : {{title}}</h2>
   {{else}}
-    <h3>{{title}} (Pending)</h3>
+    <h2>{{title}}</h2>
   {{/if}}
 
 <pre># Crypto Income Escrows {{#each share in shares}}
@@ -68,13 +71,6 @@
 
 {{#each name in beneficiaries}}
  * /u/{{name}}
-{{/each}}
-</pre>
-
-<h4>Disbursement Comment</h4>
-<pre>{{#each share in shares}}
-{{share.tip}}
-
 {{/each}}
 </pre>
     </div>
