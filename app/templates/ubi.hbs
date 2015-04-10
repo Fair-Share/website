@@ -44,9 +44,9 @@
     {{/if}}--}}
     <hr>
 <h3>Distribution Comment</h3>
-<pre>{{#each share in shares}}{{share.tip}}
-{{/each}}
-</pre>
+<textarea class='form-control' rows=5>{{#each share in shares}}{{share.tip}}
+
+{{/each}}</textarea>
   </div>
     <div class='col-md-4'>
 <pre># {{title}} {{#each share in shares}}
