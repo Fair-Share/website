@@ -1,10 +1,22 @@
 <div class='row'>
   <div class='col-md-4'>
-<h2>Income Disbursement</h2>
-<pre>{{#each share in shares}}{{share.tip}}
-{{/each}}
-</pre>
-    <h3>Crypto Currency Escrows</h3>
+<h2>Coin Disbursement</h2>
+    <hr>
+    <div class='row'>
+      <div class='col-md-6'>
+        <div class="form-group">
+          <label>Percentage</label>
+          {{input value=percentage class='form-control'}}
+        </div>
+      </div><div class='col-md-6'>
+        <div class="form-group">
+          <label>Beneficiaries</label>
+          {{input value=beneficiaryCount class='form-control'}}
+        </div>
+      </div>
+    </div>
+    <hr>
+    <h3>Income Escrow</h3>
     <form>
       {{#each coin in coins}}
       <div class="form-group">
@@ -12,15 +24,6 @@
         {{input value=coin.count class='form-control'}}
       </div>
       {{/each}}
-      <h4>Disbursement Parameters</h4>
-      <div class="form-group">
-        <label>Percentage</label>
-        {{input value=percentage class='form-control'}}
-      </div>
-      <div class="form-group">
-        <label>Beneficiaries</label>
-        {{input value=beneficiaryCount class='form-control'}}
-      </div>
     </form>
     {{!--{{#if user}}
       {{#if requestComment}}
@@ -39,30 +42,23 @@
     {{else}}
       <a title='Login' {{bind-attr href=loginUrl}}><button class='btn btn-default form-control'>Login to Request Your FairShare</button></a>
     {{/if}}--}}
-    <ul class='media-list'>
-      {{#each comments}}
-        <li class="media">
-          <div class="media-body">
-            <h4 class="media-heading">{{author}}{{#if author_flair_text}}
-              <span class="label label-default">{{author_flair_text}}</span>
-            {{/if}}</h4>
-            {{{body_html}}}
-          </div>
-        </li>
-      {{/each}}
-    </ul>
+    <hr>
+<h3>Distribution Comment</h3>
+<pre>{{#each share in shares}}{{share.tip}}
+{{/each}}
+</pre>
   </div>
-    <div class='col-md-8'>
+    <div class='col-md-4'>
   {{#if link_flair_text}}
     <h2>{{link_flair_text}} : {{title}}</h2>
   {{else}}
     <h2>{{title}}</h2>
   {{/if}}
 
-<pre># Crypto Income Escrows {{#each share in shares}}
+<pre># Crypto Currency Income Escrows {{#each share in shares}}
 ## {{share.coin.name}}: {{share.coin.count}} {{share.coin.unit}}
-### Today's Distribution: {{share.total.amount}} {{share.coin.unit}}
-### Today's FairShare: {{share.amount}} {{share.coin.unit}}
+### Today's Total: {{share.total.amount}} {{share.coin.unit}}
+### FairShare: {{share.amount}} {{share.coin.unit}}
 
 ---
 {{/each}}
@@ -74,5 +70,20 @@
 {{/each}}
 </pre>
     </div>
-
+    <div class='col-md-4'>
+      <h2>{{beneficiaries.length}} Beneficiaries</h2>
+      <hr>
+      <ul class='media-list'>
+        {{#each comments}}
+          <li class="media">
+            <div class="media-body">
+              <h4 class="media-heading">{{author}}{{#if author_flair_text}}
+                <span class="label label-default">{{author_flair_text}}</span>
+              {{/if}}</h4>
+              {{{body_html}}}
+            </div>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
 </div>
