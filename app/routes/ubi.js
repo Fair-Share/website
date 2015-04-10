@@ -7,7 +7,7 @@ export default Ember.Route.extend({
       return (((result||{}).data||{}).children||[]).getEach('data');
     }).then(function(posts) {
       return posts.find(function(post) {
-        return post.title.match(/Prototype Distribution/);
+        return post.title.match(/\#/);
       });
     }).then(function(post) {
       return client('/r/GetFairShare/comments/' + post.id + '.json').get().then(function(result) {
