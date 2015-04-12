@@ -10,7 +10,7 @@ export default Ember.Route.extend({
         return post.title.match(/\#/);
       });
     }).then(function(post) {
-      return client('/r/GetFairShare/comments/' + post.id + '.json').get().then(function(result) {
+      return client('/r/GetFairShare/comments/' + post.id + '.json').get({depth: 1}).then(function(result) {
         post.comments = result[1].data.children.getEach('data');
         post.beneficiaries = post.comments.getEach('author').uniq().without('PoliticBot').without('[deleted]');
         return post;
