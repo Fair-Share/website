@@ -23,10 +23,7 @@ export default Ember.Route.extend({
         return client('/api/v1/me').get();
       }).then(function(res) {
         this.growl.info([
-          '<h1>Logged in as',res.name,'</h1>',
-          '<div class="message">',
-          'V for reddit will now poll for new (mod) mail',
-          '</div>'
+          '<h1>Logged in as',res.name,'</h1>'
         ].join('\n'));
         return res;
       }.bind(this));
@@ -37,10 +34,6 @@ export default Ember.Route.extend({
     ].join('\n'), {
       closeIn: 6000
     });
-  },
-
-  redirect: function(model) {
-    return this.transitionTo('ubi');
   },
 
   actions: {

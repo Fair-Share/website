@@ -1,10 +1,11 @@
 <div class='navbar navbar-default navbar-fixed-top'>
   <div class='container'>
     <div class='navbar-header'>
-      {{link-to 'Fair-Share' 'ubi' class='navbar-brand'}}
+      {{link-to 'Fair-Share' 'index' class='navbar-brand'}}
     </div>
     <div id='navbar' class='navbar-collapse collapse'>
       <ul class='nav navbar-nav'>
+        <li>{{link-to 'about' 'about'}}</li>
         <li><a target='reddit' href='https://reddit.com/r/FairShare'>reddit</a></li>
         <li><a target='changetip' href='https://www.changetip.com/tipsters/PoliticBot'>changetip</a></li>
         <li><a target='github' href='https://github.com/Fair-Share'>github</a></li>
@@ -21,3 +22,7 @@
   </div>
 </div>
 <div id='maincontainer' class='container'>{{outlet}}</div>
+<hr>
+<footer id='footer'>
+All code and concepts are licensed under <a href='http://www.wtfpl.net' target='license'>WTFPLv2</a>.  Build something!
+</footer>

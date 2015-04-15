@@ -8,4 +8,5 @@ var Router = Ember.Router.extend({
 export default Router.map(function() {
   this.route('ubi');
   this.route('privacy');
+  this.route('about');
 });
