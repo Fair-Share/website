@@ -4,31 +4,26 @@ export default Ember.ObjectController.extend({
   needs: ['application'],
   loginUrl: Ember.computed.alias('controllers.application.loginUrl'),
   user: Ember.computed.alias('controllers.application.user'),
+  distributingUser: 'PoliticBot',
   ubiPool: 30000000,
   percentage: 10,
   coins: function() {
     return [
       {
-        name: 'Doge',
-        unit: 'Doge',
-        count: 5000000,
-        tip: function(amount) {
-          return '+/u/dogetipbot ' + amount + ' doge verify';
-        }
+        name: 'dogetipbot',
+        unit: 'doge',
+        plus: true,
+        count: 5000000
       }, {
-        name: 'Reddcoin',
-        unit: 'RDD',
-        count: 1000000,
-        tip: function(amount) {
-          return '+/u/reddtipbot ' + amount + ' RDD';
-        }
+        name: 'tipnyan',
+        unit: 'nyan',
+        plus: true,
+        count: 1000000
       }, {
-        name: 'BTC',
-        unit: 'Satoshi',
-        count: 50000000,
-        tip: function(amount) {
-          return '/u/changetip ' + amount + ' satoshi public';
-        }
+        name: 'changetip',
+        unit: 'satoshi',
+        plus: false,
+        count: 50000000
       }
     ];
   }.property(),
@@ -50,8 +45,7 @@ export default Ember.ObjectController.extend({
       return {
         coin: total.coin,
         total: total,
-        amount: amount,
-        tip: total.coin.tip(amount)
+        amount: amount
       };
     });
   }.property('totals.@each.total', 'beneficiaryCount'),
@@ -63,20 +57,17 @@ export default Ember.ObjectController.extend({
     return this.get('beneficiaries.length');
   }.property('beneficiaries.length'),
 
-
   fairShare: function() {
     var count = this.get('beneficiaryCount');
     if (!count) {return this.get('total')};
     return Math.floor(this.get('total') / count);
   }.property('beneficiaryCount', 'total'),
+
   requestComment: function() {
-    console.log('user', this.get('user'));
     return this.get('comments').findProperty('author', this.get('user.name'));
   }.property('user', 'comments.@each.author'),
 
-  actions: {
-    makeRequest: function() {
-      alert('yo');
-    }
-  }
+  isDistributing: function() {
+    return this.get('distributingUser') === this.get('user.name');
+  }.property('distributingUser', 'user.name')
 });

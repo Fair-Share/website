@@ -13,7 +13,7 @@ module.exports = function(environment) {
       }
     },
     consumerKey: 'p93jnimz0njKow',
-    redirectUrl: 'http://localhost:4200/#/?',
+    redirectUrl: 'http://localhost:4342/#/?',
 
     APP: {
       // Here you can pass flags/options to your application instance
