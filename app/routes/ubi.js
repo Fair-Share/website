@@ -39,7 +39,7 @@ export default Ember.Route.extend({
   actions: {
     doDistribution: function() {
       var post = this.modelFor('ubi');
-      var commentText = Ember.$('#distcomment').text();
+      var commentText = Ember.$('#distcomment').val();
       var unflairedComments = post.comments.filter(function(comment) {
         return ((comment.author_flair_css_class === 'userflair') || !comment.author_flair_css_class);
       });
