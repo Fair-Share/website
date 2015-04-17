@@ -3,7 +3,7 @@ import client from 'fairshare-site/client';
 
 export default Ember.Route.extend({
   model: function(args) {
-    return client.raw('https://oauth.reddit.com/api/info.json').get({
+    return client.raw('https://reddit.com/api/info.json').get({
       id: 't3_' + args.thread_id
     }).then(function(result) {
       console.log('result', result);
