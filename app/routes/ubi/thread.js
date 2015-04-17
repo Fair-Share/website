@@ -5,7 +5,7 @@ export default Ember.Route.extend({
   model: function(args) {
     return client.raw('https://reddit.com/api/info.json').get({
       id: 't3_' + args.thread_id
-    }).then(function(result) {
+    }, {bypassAuth: true}).then(function(result) {
       console.log('result', result);
       return (((result||{}).data||{}).children||[]).map(function(j) {return j.data;});
     }).then(function(posts) {
