@@ -36,6 +36,31 @@ export default Ember.Route.extend({
     });
   },
 
+  afterModel: function(post) {
+    var coins = ['doge', 'nyan', 'rdd'];
+    post.prices = {
+      satoshi: '0.00000001'
+    };
+    return Ember.RSVP.all(coins.map(function(name) {
+      return Ember.RSVP.resolve($.ajax({
+        url: 'https://chain.so/api/v2/get_price/' + name
+      })).then(function (result) {
+        return result.data.prices.findProperty('price_base', 'BTC');
+      }).then(function(data) {
+        post.prices[name] = data.price;
+      });
+    })).then(function() {
+      return Ember.RSVP.resolve($.ajax({
+        url: 'https://chain.so/api/v2/get_price/btc'
+      })).then(function (result) {
+        return result.data.prices.findProperty('price_base', 'USD');
+      }).then(function(data) {
+        post.prices['btc'] = data.price;
+        console.log('prices', post.prices);
+      });
+    });
+  },
+
   actions: {
     doDistribution: function() {
       var post = this.modelFor('ubi');

@@ -18,20 +18,32 @@
     <hr>
     <h3>Income Escrow</h3>
     <form>
-      {{#each coin in coins}}
+      {{#each total in totals}}
       <div class="form-group">
         <div class='row'>
           <div class='col-md-8'>
             <div class="form-group">
-              {{input value=coin.name class='form-control'}}
+              {{input value=total.coin.name class='form-control'}}
             </div>
           </div><div class='col-md-4'>
             <div class="form-group">
-              {{input value=coin.unit class='form-control'}}
+              {{input value=total.coin.unit class='form-control'}}
             </div>
           </div>
         </div>
-        {{input value=coin.count class='form-control'}}
+        <div class='row'>
+          <div class='col-md-8'>
+            <div class="form-group">
+              {{input value=total.coin.count class='form-control'}}
+            </div>
+          </div><div class='col-md-4'>
+            <div class="form-group">
+              {{total.value}} BTC<br>
+              ${{total.usdValue}}
+            </div>
+          </div>
+        </div>
+
         <hr>
       </div>
       {{/each}}

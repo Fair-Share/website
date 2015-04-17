@@ -10,29 +10,34 @@ export default Ember.ObjectController.extend({
   coins: function() {
     return [
       {
-        name: 'dogetipbot',
-        unit: 'doge',
+        name: 'reddtipbot',
+        unit: 'rdd',
         plus: true,
-        count: 5000000
+        count: 3115002
       }, {
         name: 'tipnyan',
         unit: 'nyan',
         plus: true,
-        count: 1000000
+        count: 1099452
       }, {
         name: 'changetip',
         unit: 'satoshi',
         plus: false,
-        count: 50000000
+        count: 48823936
       }
     ];
   }.property(),
 
   totals: function() {
     var ratio = (parseInt(this.get('percentage')) / 100);
+    var post = this.get('model');
+
     return this.get('coins').map(function(coin) {
+      var val = (parseFloat(post.prices[coin.unit]) * coin.count);
       return {
         coin: coin,
+        value: val.toFixed(4),
+        usdValue: (parseFloat(post.prices.btc) * val).toFixed(2),
         amount: Math.floor(coin.count * ratio)
       };
     });
