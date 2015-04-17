@@ -67,7 +67,7 @@ export default Ember.Route.extend({
       if (!confirm('Are you sure you want to distribute?')) {
         return;
       }
-      var post = this.modelFor('ubi');
+      var post = this.modelFor('ubi.thread');
       var commentText = Ember.$('#distcomment').val();
       var unflairedComments = post.comments.filter(function(comment) {
         return ((comment.author_flair_css_class === 'userflair') || !comment.author_flair_css_class);
