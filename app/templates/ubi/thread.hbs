@@ -21,22 +21,28 @@
       {{#each total in totals}}
       <div class="form-group">
         <div class='row'>
-          <div class='col-md-8'>
+          <div class='col-md-7'>
             <div class="form-group">
               {{input value=total.coin.name class='form-control'}}
             </div>
-          </div><div class='col-md-4'>
+          </div>
+          <div class='col-md-4'>
             <div class="form-group">
               {{input value=total.coin.unit class='form-control'}}
             </div>
           </div>
+          <div class='col-md-1'>
+            <div class="form-grou">
+              {{input checked=total.coin.plus type='checkbox' class='form-control'}}
+            </div>
+          </div>
         </div>
         <div class='row'>
-          <div class='col-md-8'>
+          <div class='col-md-7'>
             <div class="form-group">
               {{input value=total.coin.count class='form-control'}}
             </div>
-          </div><div class='col-md-4'>
+          </div><div class='col-md-5'>
             <div class="form-group">
               {{total.value}} BTC<br>
               ${{total.usdValue}}

@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
   needs: ['application'],
+  queryParams: ['isDistributing'],
   loginUrl: Ember.computed.alias('controllers.application.loginUrl'),
   user: Ember.computed.alias('controllers.application.user'),
   distributingUser: 'PoliticBot',
@@ -72,7 +73,8 @@ export default Ember.ObjectController.extend({
     return this.get('comments').findProperty('author', this.get('user.name'));
   }.property('user', 'comments.@each.author'),
 
-  isDistributing: function() {
+  isDistributing: function(key, value) {
+    if (arguments.length > 1) {return value;}
     return this.get('distributingUser') === this.get('user.name');
   }.property('distributingUser', 'user.name')
 });

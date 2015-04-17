@@ -6,7 +6,9 @@ var Router = Ember.Router.extend({
 });
 
 export default Router.map(function() {
-  this.route('ubi');
+  this.resource('ubi', function() {
+    this.route('thread', {path: '/:thread_id'});
+  });
   this.route('privacy');
   this.route('about');
 });
