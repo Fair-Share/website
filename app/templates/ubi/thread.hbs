@@ -19,6 +19,7 @@
     <h3>Income Escrow</h3>
     <form>
       {{#each total in totals}}
+      <hr>
       <div class="form-group">
         <div class='row'>
           <div class='col-md-7'>
@@ -50,10 +51,12 @@
           </div>
         </div>
 
-        <hr>
       </div>
       {{/each}}
     </form>
+    <hr>
+    <h4>Estimated Total: {{collectiveTotal.btc}} BTC / ${{collectiveTotal.usd}}</h4>
+    <hr>
     {{!--{{#if user}}
       {{#if requestComment}}
         <span class='label label-success form-control'>You have already requested a FairShare</span>
@@ -82,13 +85,20 @@
 {{/if}}
   </div>
     <div class='col-md-4'>
-<pre id='distlog'># {{title}} {{#each share in shares}}
-## {{share.coin.name}}: {{share.coin.count}} {{share.coin.unit}}
-### Today's Total: {{share.total.amount}} {{share.coin.unit}}
-### FairShare: {{share.amount}} {{share.coin.unit}}
+<pre id='distlog'># {{title}}
 
 ---
+
+{{#each share in shares}}
+# {{share.coin.name}}: {{share.coin.count}} {{share.coin.unit}}
+### Today's Total: {{share.total.amount}} {{share.coin.unit}}
+## FairShare: {{share.amount}} {{share.coin.unit}}
 {{/each}}
+
+# Total FairShare Value Estimate
+## {{shareTotal.bits}} bits (BTC)
+
+---
 
 # {{beneficiaryCount}} Beneficiaries
 

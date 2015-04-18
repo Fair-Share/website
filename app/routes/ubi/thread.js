@@ -56,7 +56,7 @@ export default Ember.Route.extend({
         }
         return getMoreComments().then(function() {return post;});
       }).then(function(post) {
-        post.beneficiaries = post.comments.getEach('author').uniq().without('PoliticBot').without('[deleted]');
+        post.beneficiaries = post.comments.getEach('author').uniq().without('PoliticBot').without('[deleted]').sort();
         return post;
       });
     });

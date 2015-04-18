@@ -57,6 +57,35 @@ export default Ember.ObjectController.extend({
   totalsSort: ['value:desc'],
   totals: Ember.computed.sort('_totals', 'totalsSort'),
 
+  collectiveTotal: function() {
+    var btcValue = 0;
+    var usdValue = 0;
+    this.get('totals').forEach(function(total) {
+      btcValue += parseFloat(total.value);
+      usdValue += parseFloat(total.usdValue);
+    });
+    return {
+      btc: btcValue.toFixed(4),
+      usd: usdValue.toFixed(2)
+    };
+  }.property('totals.@each.value', 'totals.@each.usdValue'),
+
+  shareTotal: function() {
+    var post = this.get('model');
+    var btcValue = 0;
+    var usdValue = 0;
+    this.get('shares').forEach(function(share) {
+      var btc = (parseFloat(post.prices[share.coin.unit]) * share.amount);
+      var usd = (parseFloat(post.prices.btc) * btc);
+      btcValue += btc;
+      usdValue += usd;
+    });
+    return {
+      bits: (btcValue * 1000000).toFixed(2),
+      usd: usdValue.toFixed(2)
+    };
+  }.property('shares.@each.total', 'model.prices'),
+
   _shares: function() {
     var count = this.get('beneficiaryCount');
     return this.get('totals').map(function(total) {
