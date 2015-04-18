@@ -2,11 +2,8 @@ import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
   needs: ['application'],
-  queryParams: ['isDistributing'],
   loginUrl: Ember.computed.alias('controllers.application.loginUrl'),
   user: Ember.computed.alias('controllers.application.user'),
-  distributingUser: 'PoliticBot',
-  ubiPool: 30000000,
   coins: function() {
     return [
       {
@@ -127,6 +124,6 @@ export default Ember.ObjectController.extend({
 
   isDistributing: function(key, value) {
     if (arguments.length > 1) {return value;}
-    return this.get('distributingUser') === this.get('user.name');
-  }.property('distributingUser', 'user.name')
+    return this.get('model.author') === this.get('user.name');
+  }.property('model.author', 'user.name')
 });

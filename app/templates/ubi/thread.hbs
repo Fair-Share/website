@@ -73,6 +73,12 @@
 {{/if}}
   </div>
     <div class='col-md-4'>
+<div class="input-group">
+  {{input value=newThreadId action='switchThread' placeholder='reddit thread id' class='form-control'}}
+  <span class="input-group-btn">
+    <button class="btn btn-default" type="button" {{action 'switchThread'}}>Change Thread</button>
+  </span>
+</div>
 <pre id='distlog'># {{title}}
 
 ---
