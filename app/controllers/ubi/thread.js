@@ -7,44 +7,49 @@ export default Ember.ObjectController.extend({
   user: Ember.computed.alias('controllers.application.user'),
   distributingUser: 'PoliticBot',
   ubiPool: 30000000,
-  percentage: 10,
   coins: function() {
     return [
       {
         name: 'reddtipbot',
         unit: 'rdd',
         plus: true,
-        count: 2841730
+        count: 2841730,
+        percentage: 10
       }, {
         name: 'tipnyan',
         unit: 'nyan',
         plus: true,
-        count: 1028395
+        count: 1028395,
+        percentage: 10
       }, {
         name: 'dogetipbot',
         unit: 'doge',
         plus: true,
-        count: 44757
+        count: 44757,
+        percentage: 10
       }, {
         name: 'tippot',
         unit: 'pot',
         plus: true,
-        count: 9286
+        count: 9286,
+        percentage: 10
       }, {
         name: 'changetip',
         unit: 'satoshi',
         plus: false,
-        count: 44421190
+        count: 44421190,
+        percentage: 10
       }
     ];
   }.property(),
 
   _totals: function() {
-    var ratio = (parseInt(this.get('percentage')) / 100);
     var post = this.get('model');
 
     return this.get('coins').map(function(coin) {
       var val = (parseFloat(post.prices[coin.unit]) * coin.count);
+      var ratio = (parseInt(coin.percentage) / 100);
+
       return {
         coin: coin,
         value: val.toFixed(4),
@@ -52,7 +57,7 @@ export default Ember.ObjectController.extend({
         amount: Math.floor(coin.count * ratio)
       };
     });
-  }.property('coins.@each.count', 'percentage'),
+  }.property('coins.@each.{count,percentage}'),
 
   totalsSort: ['value:desc'],
   totals: Ember.computed.sort('_totals', 'totalsSort'),

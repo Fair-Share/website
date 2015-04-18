@@ -1,28 +1,13 @@
 <div class='row'>
   <div class='col-md-4'>
-<h2>Coin Disbursement</h2>
+    <h2>Income Escrow</h2>
+    <h4>Estimated Total: {{collectiveTotal.btc}} BTC / ${{collectiveTotal.usd}}</h4>
     <hr>
-    <div class='row'>
-      <div class='col-md-6'>
-        <div class="form-group">
-          <label>Percentage</label>
-          {{input value=percentage class='form-control'}}
-        </div>
-      </div><div class='col-md-6'>
-        <div class="form-group">
-          <label>Beneficiaries</label>
-          {{input value=beneficiaryCount class='form-control'}}
-        </div>
-      </div>
-    </div>
-    <hr>
-    <h3>Income Escrow</h3>
     <form>
       {{#each total in totals}}
-      <hr>
       <div class="form-group">
         <div class='row'>
-          <div class='col-md-7'>
+          <div class='col-md-8'>
             <div class="form-group">
               {{input value=total.coin.name class='form-control'}}
             </div>
@@ -32,18 +17,23 @@
               {{input value=total.coin.unit class='form-control'}}
             </div>
           </div>
-          <div class='col-md-1'>
-            <div class="form-grou">
-              {{input checked=total.coin.plus type='checkbox' class='form-control'}}
-            </div>
-          </div>
         </div>
         <div class='row'>
-          <div class='col-md-7'>
+          <div class='col-md-3'>
+            <div class='form-group'>
+              {{input value=total.coin.percentage class='form-control'}}
+            </div>
+          </div>
+          <div class='col-md-1'>
+            <div class='form-group'>
+              <label>% of</label>
+            </div>
+          </div>
+          <div class='col-md-4'>
             <div class="form-group">
               {{input value=total.coin.count class='form-control'}}
             </div>
-          </div><div class='col-md-5'>
+          </div><div class='col-md-4'>
             <div class="form-group">
               {{total.value}} BTC<br>
               ${{total.usdValue}}
@@ -52,11 +42,9 @@
         </div>
 
       </div>
+      <hr>
       {{/each}}
     </form>
-    <hr>
-    <h4>Estimated Total: {{collectiveTotal.btc}} BTC / ${{collectiveTotal.usd}}</h4>
-    <hr>
     {{!--{{#if user}}
       {{#if requestComment}}
         <span class='label label-success form-control'>You have already requested a FairShare</span>
@@ -89,10 +77,12 @@
 
 ---
 
+# Income Escrow
+
 {{#each share in shares}}
-# {{share.coin.name}}: {{share.coin.count}} {{share.coin.unit}}
-### Today's Total: {{share.total.amount}} {{share.coin.unit}}
-## FairShare: {{share.amount}} {{share.coin.unit}}
+## {{share.coin.name}}: {{share.coin.count}} {{share.coin.unit}}
+### Total Disbursement: {{share.total.amount}} {{share.coin.unit}}
+# FairShare: {{share.amount}} {{share.coin.unit}}
 {{/each}}
 
 # Total FairShare Value Estimate
@@ -103,12 +93,14 @@
 # {{beneficiaryCount}} Beneficiaries
 
 {{#each name in beneficiaries}}
- * /u/{{name}}
+/u/{{name}}
+
 {{/each}}
 </pre>
     </div>
     <div class='col-md-4'>
       <h2>{{beneficiaries.length}} Beneficiaries</h2>
+      <h4>FairShare Estimate {{shareTotal.bits}} bits / ${{shareTotal.usd}}</h4>
       <hr>
       <ul class='media-list'>
         {{#each comments}}
