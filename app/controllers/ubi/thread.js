@@ -14,22 +14,32 @@ export default Ember.ObjectController.extend({
         name: 'reddtipbot',
         unit: 'rdd',
         plus: true,
-        count: 3115002
+        count: 2841730
       }, {
         name: 'tipnyan',
         unit: 'nyan',
         plus: true,
-        count: 1099452
+        count: 1028395
+      }, {
+        name: 'dogetipbot',
+        unit: 'doge',
+        plus: true,
+        count: 44757
+      }, {
+        name: 'tippot',
+        unit: 'pot',
+        plus: true,
+        count: 9286
       }, {
         name: 'changetip',
         unit: 'satoshi',
         plus: false,
-        count: 48823936
+        count: 44421190
       }
     ];
   }.property(),
 
-  totals: function() {
+  _totals: function() {
     var ratio = (parseInt(this.get('percentage')) / 100);
     var post = this.get('model');
 
@@ -44,7 +54,10 @@ export default Ember.ObjectController.extend({
     });
   }.property('coins.@each.count', 'percentage'),
 
-  shares: function() {
+  totalsSort: ['value:desc'],
+  totals: Ember.computed.sort('_totals', 'totalsSort'),
+
+  _shares: function() {
     var count = this.get('beneficiaryCount');
     return this.get('totals').map(function(total) {
       var amount = Math.floor(total.amount/count);
@@ -55,6 +68,11 @@ export default Ember.ObjectController.extend({
       };
     });
   }.property('totals.@each.total', 'beneficiaryCount'),
+
+  maxCoins: 3,
+  shares: function() {
+    return this.get('_shares').slice(0, this.get('maxCoins'));
+  }.property('_shares.@each', 'maxCoins'),
 
   beneficiaryCount: function(key, value) {
     if (value) {

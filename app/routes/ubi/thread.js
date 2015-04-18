@@ -14,7 +14,7 @@ export default Ember.Route.extend({
   },
 
   afterModel: function(post) {
-    var coins = ['doge', 'nyan', 'rdd'];
+    var coins = ['doge', 'nyan', 'rdd', 'pot'];
     post.prices = {
       satoshi: '0.00000001'
     };
