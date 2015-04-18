@@ -87,11 +87,11 @@
 
 {{#each share in shares}}
 ## {{share.coin.name}}: {{share.coin.count}} {{share.coin.unit}}
-### Total Disbursement: {{share.total.amount}} {{share.coin.unit}}
+### {{share.coin.percentage}}% Disbursement: {{share.total.amount}} {{share.coin.unit}}
 # FairShare: {{share.amount}} {{share.coin.unit}}
 {{/each}}
 
-# Total FairShare Value Estimate
+# FairShare Value Estimate
 ## {{shareTotal.bits}} bits (BTC)
 
 ---
