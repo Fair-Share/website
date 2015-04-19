@@ -7,6 +7,11 @@ export default Ember.Route.extend({
       return (((result||{}).data||{}).children||[]).getEach('data');
     });
   },
+  afterModel: function(model) {
+    return client('/r/GetFairShare/about.json').get().then(function(result) {
+      model.about = result.data;
+    });
+  },
   actions: {
     switchThread: function() {
       var threadId = this.controllerFor('ubi.thread').get('newThreadId');

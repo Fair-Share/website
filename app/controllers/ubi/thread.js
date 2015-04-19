@@ -1,44 +1,23 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
-  needs: ['application'],
+  needs: ['application', 'ubi'],
   loginUrl: Ember.computed.alias('controllers.application.loginUrl'),
   user: Ember.computed.alias('controllers.application.user'),
+  about: Ember.computed.alias('controllers.ubi.model.about'),
   coins: function() {
-    return [
-      {
-        name: 'reddtipbot',
-        unit: 'rdd',
+    var el = Ember.$(this.get('about.description_html'));
+    return el.find('blockquote:first h2').toArray().slice(1).map(function(item) {
+      item = Ember.$(item);
+      return {
+        name: item.find('a').text(),
+        unit: item.find('em').text(),
         plus: true,
-        count: 2841730,
-        percentage: 10
-      }, {
-        name: 'tipnyan',
-        unit: 'nyan',
-        plus: true,
-        count: 1028395,
-        percentage: 10
-      }, {
-        name: 'dogetipbot',
-        unit: 'doge',
-        plus: true,
-        count: 44757,
-        percentage: 10
-      }, {
-        name: 'tippot',
-        unit: 'pot',
-        plus: true,
-        count: 9286,
-        percentage: 10
-      }, {
-        name: 'changetip',
-        unit: 'satoshi',
-        plus: false,
-        count: 44421190,
+        count: parseFloat(item.find('strong').text()),
         percentage: 10
       }
-    ];
-  }.property(),
+    });
+  }.property('about.description_html'),
 
   _totals: function() {
     var post = this.get('model');
