@@ -7,7 +7,7 @@ export default Ember.ObjectController.extend({
   about: Ember.computed.alias('controllers.ubi.model.about'),
   coins: function() {
     var el = Ember.$(this.get('about.description_html'));
-    return el.find('blockquote:first h2').toArray().slice(1).map(function(item) {
+    return el.find('blockquote:last h2').toArray().slice(1).map(function(item) {
       item = Ember.$(item);
       return {
         name: item.find('a:first').text(),
