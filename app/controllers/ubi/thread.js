@@ -10,7 +10,7 @@ export default Ember.ObjectController.extend({
     return el.find('blockquote:first h2').toArray().slice(1).map(function(item) {
       item = Ember.$(item);
       return {
-        name: item.find('a').text(),
+        name: item.find('a:first').text(),
         unit: item.find('em').text(),
         plus: true,
         count: parseFloat(item.find('strong').text()),
