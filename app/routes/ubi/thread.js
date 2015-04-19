@@ -1,3 +1,4 @@
+/* globals moment */
 import Ember from 'ember';
 import client from 'fairshare-site/client';
 
@@ -19,7 +20,7 @@ export default Ember.Route.extend({
       satoshi: '0.00000001'
     };
     return Ember.RSVP.all(coins.map(function(name) {
-      return Ember.RSVP.resolve($.ajax({
+      return Ember.RSVP.resolve(Ember.$.ajax({
         url: 'https://chain.so/api/v2/get_price/' + name
       })).then(function (result) {
         return result.data.prices.findProperty('price_base', 'BTC');
@@ -27,7 +28,7 @@ export default Ember.Route.extend({
         post.prices[name] = data.price;
       });
     })).then(function() {
-      return Ember.RSVP.resolve($.ajax({
+      return Ember.RSVP.resolve(Ember.$.ajax({
         url: 'https://chain.so/api/v2/get_price/btc'
       })).then(function (result) {
         return result.data.prices.findProperty('price_base', 'USD');
@@ -64,11 +65,9 @@ export default Ember.Route.extend({
 
   actions: {
     doDistribution: function() {
-      if (!confirm('Are you sure you want to distribute?')) {
-        return;
-      }
       var post = this.modelFor('ubi.thread');
       var commentText = Ember.$('#distcomment').val();
+      var bits = this.controllerFor('ubi.thread').get('shareTotal.bits');
       var comments = post.beneficiaries.map(function(author) {
         return post.comments.findProperty('author', author);
       }).without(undefined);
@@ -85,7 +84,7 @@ export default Ember.Route.extend({
               return line.toLowerCase().indexOf(j.toLowerCase()) !== -1;
             })) {
               return false;
-            };
+            }
             return true;
           }
           if (flair.match(/only/)) {
@@ -93,7 +92,7 @@ export default Ember.Route.extend({
               return line.toLowerCase().indexOf(j.toLowerCase()) !== -1;
             })) {
               return true;
-            };
+            }
             return false;
           }
           return true;
@@ -107,19 +106,66 @@ export default Ember.Route.extend({
         }).catch(function(error) {
           errors.pushObject(parent);
           console.error('error', parent, error);
-        }).then(makeNextComment)
+        }).then(makeNextComment);
       }
-      return client('/api/comment').post({
-        api_type: 'json',
-        thing_id: post.name,
-        text: Ember.$('#distlog').text()
-      }).then(makeNextComment).catch(function(error) {
-        console.error('comment error', error);
-      }).finally(function() {
-        console.log(commentText);
-        if (!errors.length) {return;}
-        console.error('errors', errors);
-      });
+
+      function closePost() {
+        console.log('closePost',  bits + ' * ' + comments.length);
+        return client('/api/comment').post({
+          api_type: 'json',
+          thing_id: post.name,
+          text: Ember.$('#distlog').text()
+        }).then(function() {
+          return client('/api/flair').post({
+            api_type: 'json',
+            css_class: 'closed',
+            link: post.name,
+            text: bits + ' * ' + comments.length
+          });
+        }).then(function() {
+          return client('/api/editusertext').post({
+            api_type: 'json',
+            thing_id: post.name,
+            text: '# [This distribution is CLOSED for requests](/r/' + post.subreddit + '/about/sticky)'
+          });
+        }).then(makeNextComment).catch(function(error) {
+          console.error('comment error', error);
+        }).finally(function() {
+          console.log(commentText);
+          if (!errors.length) {return;}
+          console.error('errors', errors);
+        });
+      }
+
+      function makeNextPost() {
+        var parts = post.title.split(' - ');
+        var num = parseInt(parts[0].slice(1)) + 1;
+        var date = moment(parts[1]).add('days', 1).format('YYYY-MM-DD');
+        var newTitle = '#' + num + ' - ' + date;
+        console.log('makeNextPost', newTitle);
+        return client('/api/submit').post({
+          api_type: 'json',
+          sr: post.subreddit,
+          kind: 'self',
+          title: newTitle,
+          text: post.selftext,
+          sendreplies: false
+        }).then(function(result) {
+          return client('/api/set_subreddit_sticky').post({
+            api_type: 'json',
+            id: result.name,
+            state: true
+          });
+        });
+      }
+      if (!confirm('Are you sure you want to distribute?')) {
+        return;
+      }
+      if (confirm('Make new post?')) {
+        return makeNextPost().then(closePost);
+      } else {
+        return closePost();
+      }
     }
   }
 });
