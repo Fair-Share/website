@@ -9,3 +9,11 @@
 .homepage .jumbotron {
   text-align: center;
 }
+
+.media-body .media-heading {
+  float: left;
+  margin-right: 0.5em;
+}
+.media-body .md {
+  clear: both;
+}

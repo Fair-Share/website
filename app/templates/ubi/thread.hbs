@@ -106,15 +106,19 @@
     <div class='col-md-4'>
       <h2>{{beneficiaries.length}} Beneficiaries</h2>
       <h4>FairShare Estimate {{shareTotal.bits}} bits / ${{shareTotal.usd}}</h4>
+      <h5>Opened for requests {{ago created_utc 'X'}}</h5>
       <hr>
       <ul class='media-list'>
         {{#each comments}}
           <li class="media">
             <div class="media-body">
-              <h4 class="media-heading">{{author}}{{#if author_flair_text}}
+              <h4 class="media-heading">{{author}}</h4>
+              <span class="label label-default">{{ago created_utc 'X'}}</span>
+              {{#if author_flair_text}}
                 <span class="label label-default">{{author_flair_text}}</span>
-              {{/if}}</h4>
+              {{/if}}
               {{{body_html}}}
+              <hr>
             </div>
           </li>
         {{/each}}
