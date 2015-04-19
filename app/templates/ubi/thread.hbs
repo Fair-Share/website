@@ -62,11 +62,10 @@
     {{else}}
       <a title='Login' {{bind-attr href=loginUrl}}><button class='btn btn-default form-control'>Login to Request Your FairShare</button></a>
     {{/if}}--}}
-<h3>Distribution Comment</h3>
+<h3>Tip Commands (Limit of {{maxCoins}})</h3>
 <textarea
-  class='form-control' id='distcomment' rows=5
+  class='form-control' id='distcomment' rows=3
 >{{#each share in shares}}+/u/{{share.coin.name}} {{share.amount}} {{share.coin.unit}}
-
 {{/each}}</textarea>
 {{#if isDistributing}}
   <button class='btn btn-default form-control' {{action 'doDistribution'}}>Do Distribution</button>
