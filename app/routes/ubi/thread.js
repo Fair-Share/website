@@ -116,12 +116,12 @@ export default Ember.Route.extend({
           thing_id: post.name,
           text: Ember.$('#distlog').text()
         }).then(function() {
-          return client('/api/flair').post({
+          /*return client('/api/flair').post({
             api_type: 'json',
             css_class: 'closed',
             link: post.name,
             text: bits + ' * ' + comments.length
-          });
+          });*/
         }).then(function() {
           return client('/api/editusertext').post({
             api_type: 'json',
@@ -151,11 +151,11 @@ export default Ember.Route.extend({
           text: post.selftext,
           sendreplies: false
         }).then(function(result) {
-          return client('/api/set_subreddit_sticky').post({
+          /*return client('/api/set_subreddit_sticky').post({
             api_type: 'json',
             id: result.name,
             state: true
-          });
+          });*/
         });
       }
       if (!confirm('Are you sure you want to distribute?')) {
