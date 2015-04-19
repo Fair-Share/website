@@ -69,22 +69,41 @@ export default Ember.Route.extend({
       }
       var post = this.modelFor('ubi.thread');
       var commentText = Ember.$('#distcomment').val();
-      var unflairedComments = post.comments.filter(function(comment) {
-        return ((comment.author_flair_css_class === 'userflair') || !comment.author_flair_css_class);
-      });
       var comments = post.beneficiaries.map(function(author) {
-        return unflairedComments.findProperty('author', author);
+        return post.comments.findProperty('author', author);
       }).without(undefined);
-      var flaired = post.beneficiaries.slice().removeObjects(comments.getEach('author'));
       var errors = [];
       function makeNextComment() {
         var parent = comments.popObject();
+        var commentLines = commentText.split('\n').map(function(j) {return j.trim();}).without('');
+        var flair = parent.author_flair_css_class || '';
+        var parts = flair.split('-').without('only').without('exclusion');
+        commentLines = commentLines.filter(function(line) {
+          if (!flair) {return true;}
+          if (flair.match(/exclusion/)) {
+            if (parts.find(function(j) {
+              return line.toLowerCase().indexOf(j.toLowerCase()) !== -1;
+            })) {
+              return false;
+            };
+            return true;
+          }
+          if (flair.match(/only/)) {
+            if (parts.find(function(j) {
+              return line.toLowerCase().indexOf(j.toLowerCase()) !== -1;
+            })) {
+              return true;
+            };
+            return false;
+          }
+          return true;
+        });
         if (!parent) {return Ember.RSVP.resolve();}
-        console.log('Distributing to', parent.author, parent.name);
+        console.log('Distributing to', parent.author, parent.name, flair, commentLines.length, commentLines);
         return client('/api/comment').post({
           api_type: 'json',
           thing_id: parent.name,
-          text: commentText
+          text: commentLines.join('\n\n')
         }).catch(function(error) {
           errors.pushObject(parent);
           console.error('error', parent, error);
@@ -98,7 +117,7 @@ export default Ember.Route.extend({
         console.error('comment error', error);
       }).finally(function() {
         console.log(commentText);
-        console.error('flaired', flaired);
+        if (!errors.length) {return;}
         console.error('errors', errors);
       });
     }

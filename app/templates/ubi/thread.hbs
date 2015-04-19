@@ -65,7 +65,7 @@
 <h3>Distribution Comment</h3>
 <textarea
   class='form-control' id='distcomment' rows=5
->{{#each share in shares}}{{#if share.coin.plus}}+{{/if}}/u/{{share.coin.name}} {{share.amount}} {{share.coin.unit}}
+>{{#each share in shares}}+/u/{{share.coin.name}} {{share.amount}} {{share.coin.unit}}
 
 {{/each}}</textarea>
 {{#if isDistributing}}

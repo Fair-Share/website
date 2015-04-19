@@ -12,7 +12,6 @@ export default Ember.ObjectController.extend({
       return {
         name: item.find('a:first').text(),
         unit: item.find('em').text(),
-        plus: true,
         count: parseFloat(item.find('strong').text()),
         percentage: 10
       }
