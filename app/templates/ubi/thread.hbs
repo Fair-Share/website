@@ -7,7 +7,7 @@
       {{#each total in totals}}
       <div class="form-group">
         <div class='row'>
-          <div class='col-md-8'>
+          <div class='col-md-4'>
             <div class="form-group">
               {{input value=total.coin.name class='form-control'}}
             </div>
@@ -16,6 +16,13 @@
             <div class="form-group">
               {{input value=total.coin.unit class='form-control'}}
             </div>
+          </div>
+          <div class='col-md-4'>
+            <div class="form-group">
+              {{total.value}} BTC<br>
+              ${{total.usdValue}}
+            </div>
+
           </div>
         </div>
         <div class='row'>
@@ -34,10 +41,9 @@
               {{input value=total.coin.count class='form-control'}}
             </div>
           </div><div class='col-md-4'>
-            <div class="form-group">
-              {{total.value}} BTC<br>
-              ${{total.usdValue}}
-            </div>
+            <button class='btn btn-danger form-control' {{action 'removeCoin' total.coin}}>
+              Remove
+            </button>
           </div>
         </div>
 

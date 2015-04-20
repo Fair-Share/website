@@ -64,6 +64,9 @@ export default Ember.Route.extend({
   },
 
   actions: {
+    removeCoin: function(coin) {
+      this.controllerFor('ubi.thread').get('coins').removeObject(coin);
+    },
     doDistribution: function() {
       var post = this.modelFor('ubi.thread');
       var commentText = Ember.$('#distcomment').val();
