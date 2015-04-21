@@ -8,8 +8,9 @@ export default Ember.Route.extend({
     });
   },
   afterModel: function(model) {
-    return client('/r/GetFairShare/about.json').get().then(function(result) {
-      model.about = result.data;
+    return client('/r/GetFairShare/wiki/incomeescrows.json').get().then(function(result) {
+      console.log('result', result);
+      model.escrows = result.data;
     });
   },
   actions: {

@@ -27,8 +27,8 @@ export default window.reddit = new Snoocore({
       'submit',
       //'subscribe',
       //'vote',
-      //'wikiedit',
-      //'wikiread',
+      'wikiedit',
+      'wikiread',
       'read',
       'identity'
     ]

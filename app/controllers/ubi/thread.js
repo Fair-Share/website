@@ -4,10 +4,13 @@ export default Ember.ObjectController.extend({
   needs: ['application', 'ubi'],
   loginUrl: Ember.computed.alias('controllers.application.loginUrl'),
   user: Ember.computed.alias('controllers.application.user'),
-  about: Ember.computed.alias('controllers.ubi.model.about'),
+  escrows: Ember.computed.alias('controllers.ubi.model.escrows'),
   coins: function() {
-    var el = Ember.$(this.get('about.description_html'));
-    return el.find('blockquote:last h2').toArray().slice(1).map(function(item) {
+    var data = this.get('escrows.content_html');
+    console.log('html data', data);
+    var el = Ember.$(this.get('escrows.content_html'));
+    console.log('el', el);
+    return el.find('blockquote h2').toArray().map(function(item) {
       item = Ember.$(item);
       return {
         name: item.find('a:first').text(),
@@ -16,7 +19,7 @@ export default Ember.ObjectController.extend({
         percentage: 10
       }
     });
-  }.property('about.description_html'),
+  }.property('escrows.content_html'),
 
   _totals: function() {
     var post = this.get('model');
