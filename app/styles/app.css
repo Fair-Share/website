@@ -17,3 +17,7 @@
 .media-body .md {
   clear: both;
 }
+
+.media-body .btn-remove {
+  float: right;
+}

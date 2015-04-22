@@ -14,6 +14,8 @@
     "qunit": "~1.17.1",
     "snoocore": "~2.7.4",
     "moment": "~2.9.0",
-    "ember-cli-moment-shim": "~0.0.3"
+    "ember-cli-moment-shim": "~0.0.3",
+    "bitcore": "~0.11.7",
+    "bitcore-message": "~0.10.1"
   }
 }

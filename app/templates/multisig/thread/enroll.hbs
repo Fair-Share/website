@@ -1,0 +1,65 @@
+<div class='row'>
+  <div class='col-md-4'>
+    <h2>{{m}} of {{n}} Multisig</h2>
+    <div class="input-group input-group-lg">
+      <span class="input-group-addon" id="sizing-addon1">Multisig Threshold</span>
+      {{input value=percentage class="form-control" placeholder="--"}}
+      <span class="input-group-addon" id="sizing-addon1">%</span>
+    </div>
+    <h2>P2SH Address</h2>
+    <div class="input-group input-group-sm">
+      <span class="input-group-addon" id="sizing-addon1">P2SH:</span>
+      {{input value=p2shAddressString readonly=true class="form-control" placeholder="--"}}
+    </div>
+    <h2>Redeem Script</h2>
+    <textarea readonly class='form-control' rows=35>{{scriptString}}</textarea>
+  </div><div class='col-md-4'>
+<pre># P2SH {{m}} of {{n}} Multisig
+
+{{p2shAddressString}}
+
+---
+
+{{model.title}}
+
+---
+
+## Redeem Script
+
+>{{scriptString}}
+
+---
+
+## Signatories
+
+{{#each comments}}
+/u/{{author}} *{{publicKeyString}}*
+
+{{/each}}</pre>
+  </div><div class='col-md-4'>
+    <h2>Enrollment</h2>
+    {{#unless isEnrolled}}
+      {{sign-comment  fixedMessage=true
+                      message=user.name
+                      thingId=model.name
+                      user=user
+                      comments=model.comments}}
+    {{/unless}}
+    <ul class='media-list'>
+      {{#each comments}}
+        <li class="media">
+          <div class="media-body">
+            <button {{action 'removeComment' this}} class='btn btn-danger btn-remove'>Remove</button>
+            <h4 class="media-heading">{{author}}</h4>
+            <span class="label label-default">{{ago created_utc 'X'}}</span>
+            {{#if author_flair_text}}
+              <span class="label label-default">{{author_flair_text}}</span>
+            {{/if}}
+            {{{body_html}}}
+            <hr>
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>

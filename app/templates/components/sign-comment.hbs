@@ -1,0 +1,19 @@
+{{#unless fixedMessage}}
+{{textarea value=message placeholder='message' class='form-control'}}
+{{/unless}}
+{{#unless isCommenting}}
+{{input type='password' value=passPhrase class="form-control" placeholder="passphrase"}}
+<div class="input-group input-group">
+  {{input type='password' value=passPhraseRepeat class="form-control" placeholder="repeat passphrase"}}
+
+  <span class="input-group-btn">
+    <button
+      {{bind-attr class=":btn matchingPassPhrase:btn-success:btn-danger"}}
+      {{action 'makeComment'}}
+    >Comment</button>
+  </span>
+</div>
+{{/unless}}
+{{#if markdown}}
+<pre>{{markdown}}</pre>
+{{/if}}

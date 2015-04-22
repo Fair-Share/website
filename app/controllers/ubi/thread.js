@@ -7,9 +7,7 @@ export default Ember.ObjectController.extend({
   escrows: Ember.computed.alias('controllers.ubi.model.escrows'),
   coins: function() {
     var data = this.get('escrows.content_html');
-    console.log('html data', data);
     var el = Ember.$(this.get('escrows.content_html'));
-    console.log('el', el);
     return el.find('blockquote h2').toArray().map(function(item) {
       item = Ember.$(item);
       return {

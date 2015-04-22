@@ -18,5 +18,6 @@ var app = new EmberApp();
 // along with the exports of each module as its value.
 
 app.import('bower_components/snoocore/dist/Snoocore-standalone.js');
-
+app.import('bower_components/bitcore/bitcore.js');
+app.import('bower_components/bitcore-message/bitcore-message.js');
 module.exports = app.toTree();
