@@ -10,10 +10,14 @@
     <button
       {{bind-attr class=":btn matchingPassPhrase:btn-success:btn-danger"}}
       {{action 'makeComment'}}
-    >Comment</button>
+    >{{buttonText}}</button>
   </span>
 </div>
+{{else}}
+  <h2 class='loading'>{{statusMessage}}</h2>
 {{/unless}}
+{{#unless hideMarkdown}}
 {{#if markdown}}
 <pre>{{markdown}}</pre>
 {{/if}}
+{{/unless}}

@@ -7,6 +7,8 @@ export default Ember.Component.extend ({
   message: '',
   passPhrase: '',
   passPhraseRepeat: '',
+  buttonText: 'comment',
+  statusMessage: 'Commenting...',
 
   matchingPassPhrase: function() {
     if (this.get('passPhrase') === this.get('passPhraseRepeat')) {
@@ -55,7 +57,6 @@ export default Ember.Component.extend ({
       var comments = this.get('comments') || [];
       if (!markdown) {return;}
       var thingId = this.get('thingId');
-      console.log('thingId', thingId);
       if (!thingId) {return;}
       if (!this.get('user.name')) {return;}
       this.set('isCommenting', true);
@@ -64,10 +65,8 @@ export default Ember.Component.extend ({
         thing_id: thingId,
         text: markdown
       }).then(function(data) {
-        console.log('data', data);
         var comment = data.json.data.things[0].data;
-        console.log('comment', comment);
-        comments.pushObject(comment);
+        comments.insertAt(0, comment);
       }, function(error) {
         console.error(error);
         alert('Error making comment', error);

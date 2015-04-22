@@ -3,10 +3,12 @@
 {{#if comment.author_flair_text}}
   <span class="label label-default">{{comment.author_flair_text}}</span>
 {{/if}}
-{{#if isSigned}}
-  <div class='md'>
-    {{message}}
-  </div>
-{{else}}
-{{{comment.body_html}}}
-{{/if}}
+{{#unless hideMessage}}
+  {{#if isSigned}}
+    <div class='md'>
+      {{message}}
+    </div>
+  {{else}}
+    {{{comment.body_html}}}
+  {{/if}}
+{{/unless}}

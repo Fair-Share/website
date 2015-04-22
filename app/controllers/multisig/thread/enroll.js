@@ -27,7 +27,7 @@ export default Ember.Controller.extend({
 
   enrolledComments: function() {
     return this.get('signedCommentItems').slice(0, this.get('maxEnrollment'));
-  }.property('signedCommentsItems.@each', 'maxEnrollment'),
+  }.property('signedCommentItems.@each', 'maxEnrollment'),
 
   comments: Ember.computed.mapBy('enrolledComments', 'comment'),
 
@@ -62,21 +62,13 @@ export default Ember.Controller.extend({
   markdown: function() {
     var address = this.get('p2shAddressString');
     if (!address) {return;}
-    return [
-      '*' + address + '*',
-      '# ' + this.get('model.title'),
-      '## Signatories',
-      this.get('enrolledComments').map(function(item) {
-        return [
-          ' * /u/' + Ember.get(item, 'comment.author'),
-          '*' + Ember.get(item, 'publicKeyString') + '*',
-          '**' + Ember.get(item, 'signatureString') + '**'
-        ].join(' ');
-      }).join('\n'),
-      '## Redeem Script',
-      '### P2SH ' + this.get('m') + ' of ' + this.get('n') + ' Multisig',
-      '>' + this.get('scriptString')
-    ].join('\n\n');
+    return this.get('signedCommentItems').map(function(item) {
+      return [
+        ' * /u/' + Ember.get(item, 'comment.author'),
+        '*' + Ember.get(item, 'publicKeyString') + '*',
+        '[' + Ember.get(item, 'signatureString') + '](/api/info?id=' + item.get('comment.name') + ')'
+      ].join(' ');
+    }).join('\n');
   }.property('p2shAddressString', 'model.title', 'enrolledComments.@each', 'scriptString'),
 
   actions: {
