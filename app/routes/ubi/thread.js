@@ -40,7 +40,8 @@ export default Ember.Route.extend({
       return client('/r/' + post.subreddit + '/comments/' + post.id + '.json').get({depth: 1}).then(function(result) {
         var moreItems = result[1].data.children.filterProperty('kind', 'more').getEach('data');
         var remainingIds = [];
-        post.comments = result[1].data.children.filterProperty('kind', 't1').getEach('data');
+        post.comments = result[1].data.children.filterProperty('kind', 't1').getEach('data').filter(function(data) {return !data.banned_by});
+
         moreItems.forEach(function(item) {
           remainingIds.addObjects(item.children || []);
         });
