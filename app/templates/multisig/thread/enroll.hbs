@@ -14,27 +14,7 @@
     <h2>Redeem Script</h2>
     <textarea readonly class='form-control' rows=35>{{scriptString}}</textarea>
   </div><div class='col-md-4'>
-<pre># P2SH {{m}} of {{n}} Multisig
-
-{{p2shAddressString}}
-
----
-
-{{model.title}}
-
----
-
-## Redeem Script
-
->{{scriptString}}
-
----
-
-## Signatories
-
-{{#each item in enrolledComments}}
- * /u/{{item.comment.author}} *{{item.publicKeyString}}*
-{{/each}}</pre>
+<pre>{{markdown}}</pre>
   </div><div class='col-md-4'>
     <h2>Enrollment</h2>
     {{#unless isEnrolled}}

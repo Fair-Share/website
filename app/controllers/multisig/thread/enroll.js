@@ -59,6 +59,26 @@ export default Ember.Controller.extend({
     return this.get('p2shAddress').toString();
   }.property('p2shAddress'),
 
+  markdown: function() {
+    var address = this.get('p2shAddressString');
+    if (!address) {return;}
+    return [
+      '*' + address + '*',
+      '# ' + this.get('model.title'),
+      '## Signatories',
+      this.get('enrolledComments').map(function(item) {
+        return [
+          ' * /u/' + Ember.get(item, 'comment.author'),
+          '*' + Ember.get(item, 'publicKeyString') + '*',
+          '**' + Ember.get(item, 'signatureString') + '**'
+        ].join(' ');
+      }).join('\n'),
+      '## Redeem Script',
+      '### P2SH ' + this.get('m') + ' of ' + this.get('n') + ' Multisig',
+      '>' + this.get('scriptString')
+    ].join('\n\n');
+  }.property('p2shAddressString', 'model.title', 'enrolledComments.@each', 'scriptString'),
+
   actions: {
     removeComment: function(comment) {
       this.get('model.comments').removeObject(comment);
