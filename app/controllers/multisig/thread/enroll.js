@@ -16,19 +16,20 @@ export default Ember.Controller.extend({
   }.property('user.name', 'comments.@each.author'),
 
   comments: function() {
-    return this.get('model.comments').slice(0, this.get('n')).map(function(comment) {
+    return this.get('model.comments').slice(0, 16).map(function(comment) {
       var pubKey = Ember.$(comment.body_html).find('strong:first').text();
+      if (!pubKey) {return;}
       Ember.set(comment, 'publicKey', bitcore.PublicKey(pubKey));
       Ember.set(comment, 'publicKeyString', Ember.get(comment, 'publicKey').toString('hex'));
       return comment;
-    });
-  }.property('model.comments.@each', 'n'),
+    }).without(undefined);
+  }.property('model.comments.@each'),
   n: function() {
-    if (this.get('model.comments.length') > 16) {
+    if (this.get('comments.length') > 16) {
       return 16;
     }
-    return this.get('model.comments.length');
-  }.property('model.comments.length'),
+    return this.get('comments.length');
+  }.property('comments.length'),
   m: function() {
     return Math.floor((parseInt(this.get('percentage'))/100.0) * this.get('n'));
   }.property('n', 'percentage'),
