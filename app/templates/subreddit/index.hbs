@@ -1,0 +1,19 @@
+<div class='row'>
+  <div class='col-md-9'>
+    <div class='panel panel-default'>
+    <ul class='nav nav-pills'>
+      {{#link-to 'subreddit.index' tagName='li'}}{{link-to 'hot' 'subreddit.index'}}{{/link-to}}
+      {{#link-to 'subreddit.new' tagName='li'}}{{link-to 'new' 'subreddit.new'}}{{/link-to}}
+      {{#link-to 'wiki.page' 'index' tagName='li'}}{{link-to 'wiki' 'wiki.page' 'index'}}{{/link-to}}
+    </ul>
+
+      <ol class='list-group'>
+      {{#each item in model}}
+        <li class='list-group-item'>{{link-entry item=item}}</li>
+      {{/each}}
+      </ol>
+    </div>
+  </div><div class='col-md-3'>
+    {{subreddit-sidebar subreddit=model.subreddit}}
+  </div>
+</div>

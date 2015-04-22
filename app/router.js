@@ -14,6 +14,17 @@ export default Router.map(function() {
       this.route('enroll');
     });
   });
+  this.resource('r', function() {
+    this.resource('subreddit', {path: '/:subreddit'}, function() {
+      this.route('new');
+      this.resource('wiki', function() {
+        this.route('page', {path: '/:page'});
+      });
+      this.resource('thread', {path: '/:thread_id'}, function() {
+        this.route('sign');
+      });
+    })
+  });
   this.route('privacy');
   this.route('about');
 });
