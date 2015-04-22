@@ -1,0 +1,12 @@
+<h4 class="media-heading">{{comment.author}}</h4>
+<span {{bind-attr class=":label isSigned:label-success:label-danger"}}>{{ago comment.created_utc 'X'}}</span>
+{{#if comment.author_flair_text}}
+  <span class="label label-default">{{comment.author_flair_text}}</span>
+{{/if}}
+{{#if isSigned}}
+  <div class='md'>
+    {{message}}
+  </div>
+{{else}}
+{{{comment.body_html}}}
+{{/if}}

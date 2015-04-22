@@ -32,9 +32,8 @@
 
 ## Signatories
 
-{{#each comments}}
-/u/{{author}} *{{publicKeyString}}*
-
+{{#each item in enrolledComments}}
+ * /u/{{item.comment.author}} *{{item.publicKeyString}}*
 {{/each}}</pre>
   </div><div class='col-md-4'>
     <h2>Enrollment</h2>
@@ -46,18 +45,10 @@
                       comments=model.comments}}
     {{/unless}}
     <ul class='media-list'>
-      {{#each comments}}
+      {{#each comment in comments}}
         <li class="media">
-          <div class="media-body">
-            <button {{action 'removeComment' this}} class='btn btn-danger btn-remove'>Remove</button>
-            <h4 class="media-heading">{{author}}</h4>
-            <span class="label label-default">{{ago created_utc 'X'}}</span>
-            {{#if author_flair_text}}
-              <span class="label label-default">{{author_flair_text}}</span>
-            {{/if}}
-            {{{body_html}}}
-            <hr>
-          </div>
+          {{display-comment comment=comment}}
+          <hr>
         </li>
       {{/each}}
     </ul>
