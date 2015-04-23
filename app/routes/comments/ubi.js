@@ -68,12 +68,14 @@ export default Ember.Route.extend({
         return post.comments.findProperty('author', author);
       }).without(undefined);
       var errors = [];
+      var quoteList = [];
       function makeNextComment() {
         var parent = comments.popObject();
         if (!parent) {return;}
         var commentLines = commentText.split('\n').map(function(j) {return j.trim();}).without('');
         var flair = parent.author_flair_css_class || '';
         var parts = flair.split('-').without('only').without('exclusion');
+        var quote = quoteList[Math.floor(Math.random() * quoteList.length)];
         commentLines = commentLines.filter(function(line) {
           if (!flair) {return true;}
           if (flair.match(/exclusion/)) {
@@ -97,13 +99,17 @@ export default Ember.Route.extend({
         if (flair) {
           flair = ' ' + parent.author_flair_text + ' (' + flair + ')';
         }
+        commentLines.insertAt(0, '---');
+        commentLines.pushObject('---');
         console.log('Distributing to', parent.author + ' - ' + flair, parent.name, flair, commentLines.length, commentLines);
         commentLines.insertAt(0, 'FairShare for [' + parent.author + flair + '](/api/info?id=' + parent.name + ')');
+        commentLines.pushObject('[' + quote.title + '](' + quote.permalink + ')');
         var commentBody = commentLines.join('\n\n');
         controller.get('distComments').insertAt(0, {
           request: parent,
           commentBody: commentBody
         });
+        //return Ember.RSVP.resolve(makeNextComment());
         return client('/api/comment').post({
           api_type: 'json',
           thing_id: parent.name,
@@ -114,7 +120,22 @@ export default Ember.Route.extend({
         }).then(makeNextComment);
       }
 
+      function fetchQuotes() {
+        return client('/r/quotes/top.json').get({
+          sort: 'top',
+          t: 'week',
+          limit: 100
+        }, {
+          bypassAuth: true
+        }).then(function(result) {
+          return (((result||{}).data||{}).children||[]).getEach('data');
+        }).then(function(quotes) {
+          quoteList = quotes;
+        });
+      }
+
       function closePost() {
+        //return Ember.RSVP.resolve(makeNextComment());
         return client('/api/comment').post({
           api_type: 'json',
           thing_id: post.name,
@@ -142,6 +163,7 @@ export default Ember.Route.extend({
       }
 
       function makeNextPost() {
+        //return Ember.RSVP.resolve();
         var parts = post.title.split(' - ');
         var num = parseInt(parts[0].slice(1)) + 1;
         var date = moment(parts[1]).add('days', 1).format('YYYY-MM-DD');
@@ -166,9 +188,9 @@ export default Ember.Route.extend({
         return;
       }
       if (confirm('Make new post?')) {
-        return makeNextPost().then(closePost);
+        return fetchQuotes().then(makeNextPost).then(closePost);
       } else {
-        return closePost();
+        return fetchQuotes().then(closePost);
       }
     }
   }
