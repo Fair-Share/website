@@ -49,7 +49,7 @@ export default Ember.Component.extend ({
   signature: function() {
     var privateKey = this.get('privateKey');
     if (!privateKey) {return;}
-    return Message(this.get('message') || '').sign(this.get('privateKey'));
+    return Message((this.get('message') || '').trim()).sign(this.get('privateKey'));
   }.property('privateKey', 'message'),
 
   actions: {
