@@ -13,12 +13,12 @@ export default window.reddit = new Snoocore({
     scope: [
       //'account',
       //'creddits',
-      'edit',
+      //'edit',
       //'history',
-      'modflair',
+      //'modflair',
       //'modlog',
       //'modothers',
-      'modposts',
+      //'modposts',
       //'modself',
       //'modwiki',
       //'mysubreddits',
@@ -27,9 +27,8 @@ export default window.reddit = new Snoocore({
       'submit',
       //'subscribe',
       //'vote',
-      'wikiedit',
-      'wikiread',
-      'read',
+      //'wikiedit',
+      //'read',
       'identity'
     ]
   }

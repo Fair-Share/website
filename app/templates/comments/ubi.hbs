@@ -33,50 +33,22 @@
     <hr>
     <form>
       {{#each total in totals}}
-      <div class="form-group">
-        <div class='row'>
-          <div class='col-md-4'>
-            <div class="form-group">
-              {{input value=total.coin.name class='form-control'}}
-            </div>
-          </div>
-          <div class='col-md-4'>
-            <div class="form-group">
-              {{input value=total.coin.unit class='form-control'}}
-            </div>
-          </div>
-          <div class='col-md-4'>
-            <div class="form-group">
-              {{total.value}} BTC<br>
-              ${{total.usdValue}}
-            </div>
-
+      <div class='row'>
+        <div class='col-md-6'>
+          {{total.coin.count}} {{total.coin.unit}}<br>
+          {{total.value}} BTC
+        </div><div class='col-md-6'>
+          <div class='input-group'>
+            {{input value=total.coin.percentage class='form-control'}}
+            <span class='input-group-addon'>%</span>
+            <span class="input-group-btn">
+              <button class='btn btn-danger' {{action 'removeCoin' total.coin}}>
+                X
+              </button>
+            </span>
           </div>
         </div>
-        <div class='row'>
-          <div class='col-md-3'>
-            <div class='form-group'>
-              {{input value=total.coin.percentage class='form-control'}}
-            </div>
-          </div>
-          <div class='col-md-1'>
-            <div class='form-group'>
-              <label>% of</label>
-            </div>
-          </div>
-          <div class='col-md-4'>
-            <div class="form-group">
-              {{input value=total.coin.count class='form-control'}}
-            </div>
-          </div><div class='col-md-4'>
-            <button class='btn btn-danger form-control' {{action 'removeCoin' total.coin}}>
-              Remove
-            </button>
-          </div>
-        </div>
-
       </div>
-      <hr>
       {{/each}}
     </form>
     {{!--{{#if user}}

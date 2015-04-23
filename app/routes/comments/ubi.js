@@ -41,5 +41,10 @@ export default Ember.Route.extend({
         Ember.set(post, 'beneficiaries', post.comments.getEach('author').uniq().without('PoliticBot').without('[deleted]').sort());
       });
     });
+  },
+  actions: {
+    removeCoin: function(coin) {
+      this.controllerFor('comments.ubi').get('coins').removeObject(coin);
+    }
   }
 });

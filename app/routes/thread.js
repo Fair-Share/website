@@ -5,7 +5,9 @@ export default Ember.Route.extend({
   model: function(args) {
     var subreddit = this.modelFor('subreddit');
     if (args.thread_id === 'sticky') {
-      return client('/r/GetFairShare/new').get().then(function(result) {
+      return client('/r/' + subreddit.display_name + '/hot').get({}, {
+        bypassAuth: true
+      }).then(function(result) {
         return (((result||{}).data||{}).children||[]).getEach('data').get('firstObject');
       });
     }

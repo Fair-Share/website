@@ -13,7 +13,9 @@ export default Ember.Route.extend({
   },
 
   afterModel: function(post) {
-    return client('/r/' + post.subreddit + '/comments/' + post.id + '.json').get({depth: 1}).then(function(result) {
+    return client('/r/' + post.subreddit + '/comments/' + post.id + '.json').get({depth: 1}, {
+      bypassAuth: true
+    }).then(function(result) {
       var moreItems = result[1].data.children.filterProperty('kind', 'more').getEach('data');
       var remainingIds = [];
       post.comments = result[1].data.children.filterProperty('kind', 't1').getEach('data');
@@ -36,7 +38,7 @@ export default Ember.Route.extend({
       post.persons = post.comments.getEach('author').uniq().without('PoliticBot').without('[deleted]');
       post.comments = post.persons.map(function(name) {
         return post.comments.findProperty('author', name);
-      });
+      })
       return post;
     });
   }
