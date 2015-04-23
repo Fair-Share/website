@@ -39,3 +39,7 @@ img.media-object {
   word-break: break-all;
   white-space: normal;
 }
+
+.panel-body > .md > h1 > a[href='https://fair-share.github.io/#/ubi'] {
+  display: none;
+}
