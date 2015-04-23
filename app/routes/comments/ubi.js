@@ -5,7 +5,9 @@ export default Ember.Route.extend({
   beforeModel: function(model) {
     var subreddit = this.modelFor('subreddit');
     var post = this.modelFor('thread');
-    return client('/r/' + subreddit.display_name + '/wiki/incomeescrows.json').get().then(function(result) {
+    return client('/r/' + subreddit.display_name + '/wiki/incomeescrows.json').get({}, {
+      bypassAuth: true
+    }).then(function(result) {
       var el = Ember.$(Ember.get(result, 'data.content_html') || '');
       Ember.set(subreddit, 'escrows', el.find('blockquote h2').toArray().map(function(item) {
         item = Ember.$(item);

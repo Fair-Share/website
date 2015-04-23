@@ -3,13 +3,17 @@ import client from 'fairshare-site/client';
 
 export default Ember.Route.extend({
   model: function(args) {
-    return client('/r/' + args.subreddit + '/about.json').get().then(function(result) {
+    return client('/r/' + args.subreddit + '/about.json').get({}, {
+      bypassAuth: true
+    }).then(function(result) {
       result.data.subreddit = result.data.display_name;
       return result.data;
     });
   },
   afterModel: function(model) {
-    return client('/r/' + model.subreddit + '/wiki/roll.json').get().then(function(result) {
+    return client('/r/' + model.subreddit + '/wiki/roll.json').get({}, {
+      bypassAuth: true
+    }).then(function(result) {
       if (!result.data) {return;}
       var parsed = Ember.$(result.data.content_html);
       Ember.set(model, 'roll', parsed.find('li').toArray().map(function(el) {

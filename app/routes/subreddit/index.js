@@ -6,7 +6,9 @@ export default Ember.Route.extend({
 
   model: function() {
     var sub = this.modelFor('subreddit');
-    return client('/r/' + sub.subreddit + '/' + this.get('listing')).get().then(function(result) {
+    return client('/r/' + sub.subreddit + '/' + this.get('listing')).get({}, {
+      bypassAuth: true
+    }).then(function(result) {
       return (((result||{}).data||{}).children||[]).getEach('data');
     });
   },
