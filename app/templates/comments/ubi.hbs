@@ -13,7 +13,18 @@
   class='form-control' id='distcomment' rows=3
 >{{#each share in shares}}+/u/{{share.coin.name}} {{share.amount}} {{share.coin.unit}}
 {{/each}}</textarea>
-        <button class='btn btn-default form-control' {{action 'doDistribution'}}>Do Distribution</button>
+      {{#if isMakingComments}}
+        <hr>
+        <h4>{{distComments.length}} Shares Sent</h4>
+        <hr>
+        {{#each item in distComments}}
+          <h5>{{item.request.author}}</h5>
+          <pre>{{item.commentBody}}</pre>
+          <hr>
+        {{/each}}
+      {{else}}
+        <button class='btn btn-danger form-control' {{action 'doDistribution'}}>Do Distribution</button>
+      {{/if}}
       {{else}}
         {{#if user.name}}
           <h3>Request FairShare</h3>
@@ -27,7 +38,7 @@
         {{/if}}
       {{/if}}
     {{/if}}
-    {{#unless isDistributing}}{{{subreddit.wiki.content_html}}}{{/unless}}
+    {{#unless isDistributing}}<hr>{{{subreddit.wiki.content_html}}}{{/unless}}
   </div><div class='col-md-6'>
     <h2>Income Escrow</h2>
     <h4>Estimated Total: {{collectiveTotal.btc}} BTC / ${{collectiveTotal.usd}}</h4>

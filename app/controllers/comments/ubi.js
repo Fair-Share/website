@@ -6,6 +6,11 @@ export default Ember.ObjectController.extend({
   auth: Ember.inject.service(),
   user : Ember.computed.alias('auth.user'),
   coins: Ember.computed.alias('controllers.subreddit.model.escrows'),
+
+  distComments: function() {
+    return [];
+  }.property('model'),
+
   _totals: function() {
     var post = this.get('model');
 

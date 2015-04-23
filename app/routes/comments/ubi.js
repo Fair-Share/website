@@ -58,6 +58,118 @@ export default Ember.Route.extend({
   actions: {
     removeCoin: function(coin) {
       this.controllerFor('comments.ubi').get('coins').removeObject(coin);
+    },
+    doDistribution: function() {
+      var post = this.modelFor('comments.ubi');
+      var controller = this.controllerFor('comments.ubi');
+      var commentText = Ember.$('#distcomment').val();
+      var bits = controller.get('shareTotal.bits');
+      var comments = post.beneficiaries.map(function(author) {
+        return post.comments.findProperty('author', author);
+      }).without(undefined);
+      var errors = [];
+      function makeNextComment() {
+        var parent = comments.popObject();
+        if (!parent) {return;}
+        var commentLines = commentText.split('\n').map(function(j) {return j.trim();}).without('');
+        var flair = parent.author_flair_css_class || '';
+        var parts = flair.split('-').without('only').without('exclusion');
+        commentLines = commentLines.filter(function(line) {
+          if (!flair) {return true;}
+          if (flair.match(/exclusion/)) {
+            if (parts.find(function(j) {
+              return line.toLowerCase().indexOf(j.toLowerCase()) !== -1;
+            })) {
+              return false;
+            }
+            return true;
+          }
+          if (flair.match(/only/)) {
+            if (parts.find(function(j) {
+              return line.toLowerCase().indexOf(j.toLowerCase()) !== -1;
+            })) {
+              return true;
+            }
+            return false;
+          }
+          return true;
+        });
+        if (flair) {
+          flair = ' ' + parent.author_flair_text + ' (' + flair + ')';
+        }
+        console.log('Distributing to', parent.author + ' - ' + flair, parent.name, flair, commentLines.length, commentLines);
+        commentLines.insertAt(0, 'FairShare for [' + parent.author + flair + '](/api/info?id=' + parent.name + ')');
+        var commentBody = commentLines.join('\n\n');
+        controller.get('distComments').insertAt(0, {
+          request: parent,
+          commentBody: commentBody
+        });
+        return client('/api/comment').post({
+          api_type: 'json',
+          thing_id: parent.name,
+          text: commentBody
+        }).catch(function(error) {
+          errors.pushObject(parent);
+          console.error('error', parent, error);
+        }).then(makeNextComment);
+      }
+
+      function closePost() {
+        return client('/api/comment').post({
+          api_type: 'json',
+          thing_id: post.name,
+          text: Ember.$('#distlog').text()
+        }).then(function() {
+          /*return client('/api/flair').post({
+            api_type: 'json',
+            css_class: 'closed',
+            link: post.name,
+            text: bits + ' * ' + comments.length
+          });*/
+        }).then(function() {
+          /*return client('/api/editusertext').post({
+            api_type: 'json',
+            thing_id: post.name,
+            text: '# [This distribution is CLOSED for requests](/r/' + post.subreddit + '/about/sticky)'
+          });*/
+        }).then(makeNextComment).catch(function(error) {
+          console.error('comment error', error);
+        }).finally(function() {
+          console.log(commentText);
+          if (!errors.length) {return;}
+          console.error('errors', errors);
+        });
+      }
+
+      function makeNextPost() {
+        var parts = post.title.split(' - ');
+        var num = parseInt(parts[0].slice(1)) + 1;
+        var date = moment(parts[1]).add('days', 1).format('YYYY-MM-DD');
+        var newTitle = '#' + num + ' - ' + date;
+        return client('/api/submit').post({
+          api_type: 'json',
+          sr: post.subreddit,
+          kind: 'self',
+          title: newTitle,
+          text: post.selftext,
+          sendreplies: false
+        }).then(function(result) {
+          /*return client('/api/set_subreddit_sticky').post({
+            api_type: 'json',
+            id: result.name,
+            state: true
+          });*/
+        });
+      }
+      controller.set('isMakingComments', true);
+      if (!confirm('Are you sure you want to distribute?')) {
+        return;
+      }
+      if (confirm('Make new post?')) {
+        return makeNextPost().then(closePost);
+      } else {
+        return closePost();
+      }
     }
   }
 });
