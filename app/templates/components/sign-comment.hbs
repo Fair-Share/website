@@ -1,10 +1,12 @@
+<span class='label label-danger'>Your passphrase should be extremely unique, random and long</span>
+<span class='label label-danger'>It CAN NOT be recovered if lost!</span>
 {{#unless fixedMessage}}
 {{textarea value=message placeholder='message' class='form-control'}}
 {{/unless}}
 {{#unless isCommenting}}
-{{input type='password' value=passPhrase class="form-control" placeholder="passphrase" action='makeComment'}}
+{{input type='password' value=passPhrase class="form-control" placeholder="FairShare passphrase" action='makeComment'}}
 <div class="input-group input-group">
-  {{input type='password' value=passPhraseRepeat class="form-control" placeholder="repeat passphrase" action='makeComment'}}
+  {{input type='password' value=passPhraseRepeat class="form-control" placeholder="repeat FairShare passphrase" action='makeComment'}}
 
   <span class="input-group-btn">
     <button

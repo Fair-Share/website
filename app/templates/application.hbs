@@ -15,7 +15,7 @@
         <li>{{#if user}}
           <a title='logout' {{action 'logout'}}>Logout: {{user.name}}</a>
         {{else}}
-          <a title='Login' {{bind-attr href=loginUrl}}>Login at reddit</a>
+          <a title='Login' class='dontintercept' {{bind-attr href=loginUrl}}>Login at reddit</a>
         {{/if}}</li>
       </ul>
     </div>

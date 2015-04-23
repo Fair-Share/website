@@ -2,7 +2,7 @@ import Ember from 'ember';
 import client from 'fairshare-site/client';
 
 export default Ember.Route.extend({
-  model: function() {
+  /*model: function() {
     return client('/r/GetFairShare/new').get({}, {
       bypassAuth: true
     }).then(function(result) {
@@ -16,6 +16,9 @@ export default Ember.Route.extend({
       console.log('result', result);
       model.escrows = result.data;
     });
+  },*/
+  redirect: function() {
+    this.transitionTo('/r/GetFairShare/sticky');
   },
   actions: {
     switchThread: function() {

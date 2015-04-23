@@ -1,9 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
-  needs: ['application', 'subreddit'],
-  loginUrl: Ember.computed.alias('controllers.application.loginUrl'),
-  user: Ember.computed.alias('controllers.application.user'),
+  needs: ['subreddit'],
+  auth: Ember.inject.service(),
+  user : Ember.computed.alias('auth.user'),
   coins: Ember.computed.alias('controllers.subreddit.model.escrows'),
   _totals: function() {
     var post = this.get('model');

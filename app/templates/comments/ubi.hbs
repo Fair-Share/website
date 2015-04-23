@@ -3,6 +3,22 @@
     <h2>{{beneficiaries.length}} Beneficiaries</h2>
     <h4>FairShare Estimate {{shareTotal.bits}} bits / ${{shareTotal.usd}}</h4>
     <hr>
+    {{#if requestComment}}
+      <h3>FairShare Requested</h3>
+      {{display-comment comment=requestComment}}
+    {{else}}
+      {{#if user.name}}
+        <h3>Request FairShare</h3>
+        {{sign-comment  thingId=model.name
+                        hideMarkdown=false
+                        statusMessage='Requesting FairShare...'
+                        buttonText='Request FairShare'
+                        comments=model.comments}}
+      {{else}}
+        <a {{bind-attr href=auth.loginUrl}} class='btn btn-success form-control dontintercept'>Login to request FairShare</a>
+      {{/if}}
+    {{/if}}
+    <hr>
 <pre id='distlog'># {{title}}
 
 ---
@@ -68,6 +84,7 @@
     {{else}}
       <a title='Login' {{bind-attr href=loginUrl}}><button class='btn btn-default form-control'>Login to Request Your FairShare</button></a>
     {{/if}}--}}
+<hr>
 <h3>Tip Commands (Limit of {{maxCoins}})</h3>
 <textarea
   class='form-control' id='distcomment' rows=3

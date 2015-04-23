@@ -4,6 +4,8 @@ var bitcore = require('bitcore');
 var Message = require('bitcore-message');
 
 export default Ember.Component.extend ({
+  auth: Ember.inject.service(),
+  user : Ember.computed.alias('auth.user'),
   message: '',
   passPhrase: '',
   passPhraseRepeat: '',

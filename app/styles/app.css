@@ -33,3 +33,9 @@ img.media-object {
 .md p {
   max-width: 42em;
 }
+
+.md p a {
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: normal;
+}

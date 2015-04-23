@@ -3,22 +3,10 @@ import client from 'fairshare-site/client';
 
 export default Ember.Controller.extend({
   queryParams: ['access_token'],
-  user: Ember.computed.alias('model'),
-  loginUrl: function() {
-    return client.getImplicitAuthUrl();
-  }.property('user'),
-  loginExpiry: function() {
-    return this.get('loginExpires');
-  }.property('loginExpires', 'timeupdater.currentMoment'),
-  updateUserData: function() {
-    if (!this.get('user')) {return;}
-    client('/api/v1/me').get().then(function(user) {
-      this.set('user', user);
-    }.bind(this)).catch(function() {
-      this.growl.alert([
-        '<div class="message">Logged out</div>'
-      ].join('\n'), {clickToDismiss: true});
-      this.set('user', null);
-    }.bind(this));
-  }.observes('timeupdater.currentMoment')
+  auth: Ember.inject.service(),
+  loginUrl: Ember.computed.alias('auth.loginUrl'),
+  user: Ember.computed.alias('auth.user'),
+  didChangeModel: function() {
+    this.set('auth.user', this.get('model'));
+  }.observes('model').on('init')
 });
