@@ -18,7 +18,6 @@ export default Ember.Route.extend({
         moment().add(parseInt(getParamByName('expires_in')), 'second')
       );
 
-      window.location.hash = '';
       return client.auth(code).then(function() {
         return client('/api/v1/me').get();
       }).then(function(res) {

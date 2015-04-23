@@ -7,18 +7,52 @@
       <h3>FairShare Requested</h3>
       {{display-comment comment=requestComment}}
     {{else}}
-      {{#if user.name}}
-        <h3>Request FairShare</h3>
-        {{sign-comment  thingId=model.name
-                        hideMarkdown=false
-                        statusMessage='Requesting FairShare...'
-                        buttonText='Request FairShare'
-                        comments=model.comments}}
+      {{#if isDistributing}}
+        <h3>Tip Commands (Limit of {{maxCoins}})</h3>
+<textarea
+  class='form-control' id='distcomment' rows=3
+>{{#each share in shares}}+/u/{{share.coin.name}} {{share.amount}} {{share.coin.unit}}
+{{/each}}</textarea>
+        <button class='btn btn-default form-control' {{action 'doDistribution'}}>Do Distribution</button>
       {{else}}
-        <a {{bind-attr href=auth.loginUrl}} class='btn btn-success form-control dontintercept'>Login to request FairShare</a>
+        {{#if user.name}}
+          <h3>Request FairShare</h3>
+          {{sign-comment  thingId=model.name
+                          hideMarkdown=false
+                          statusMessage='Requesting FairShare...'
+                          buttonText='Request FairShare'
+                          comments=model.comments}}
+        {{else}}
+          <a {{bind-attr href=auth.loginUrl}} class='btn btn-success form-control dontintercept'>Login to request FairShare</a>
+        {{/if}}
       {{/if}}
     {{/if}}
     <hr>
+  </div><div class='col-md-6'>
+    <h2>Income Escrow</h2>
+    <h4>Estimated Total: {{collectiveTotal.btc}} BTC / ${{collectiveTotal.usd}}</h4>
+    <hr>
+    {{#if isDistributing}}
+    <form>
+      {{#each total in totals}}
+      <div class='row'>
+        <div class='col-md-6'>
+          {{total.coin.count}} {{total.coin.unit}}<br>
+          {{total.value}} BTC
+        </div><div class='col-md-6'>
+          <div class='input-group'>
+            {{input value=total.coin.percentage class='form-control'}}
+            <span class='input-group-addon'>%</span>
+            <span class="input-group-btn">
+              <button class='btn btn-danger' {{action 'removeCoin' total.coin}}>
+                X
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+      </form>
 <pre id='distlog'># {{title}}
 
 ---
@@ -43,30 +77,25 @@
 
 {{/each}}
 </pre>
-  </div><div class='col-md-6'>
-    <h2>Income Escrow</h2>
-    <h4>Estimated Total: {{collectiveTotal.btc}} BTC / ${{collectiveTotal.usd}}</h4>
-    <hr>
-    <form>
-      {{#each total in totals}}
-      <div class='row'>
-        <div class='col-md-6'>
-          {{total.coin.count}} {{total.coin.unit}}<br>
-          {{total.value}} BTC
-        </div><div class='col-md-6'>
-          <div class='input-group'>
-            {{input value=total.coin.percentage class='form-control'}}
-            <span class='input-group-addon'>%</span>
-            <span class="input-group-btn">
-              <button class='btn btn-danger' {{action 'removeCoin' total.coin}}>
-                X
-              </button>
-            </span>
-          </div>
-        </div>
-      </div>
-      {{/each}}
-    </form>
+    {{else}}
+      <table class='table'>
+        <thead>
+          <tr>
+            <th>Currency</th>
+            <th>Amount</th>
+            <th>BTC Value</th>
+          </tr>
+        </thead><tbody>
+        {{#each total in totals}}
+          <tr>
+            <th>{{total.coin.unit}}</th>
+            <td>{{total.coin.count}}</td>
+            <td>{{total.value}} BTC</td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    {{/if}}
     {{!--{{#if user}}
       {{#if requestComment}}
         <span class='label label-success form-control'>You have already requested a FairShare</span>
@@ -84,14 +113,5 @@
     {{else}}
       <a title='Login' {{bind-attr href=loginUrl}}><button class='btn btn-default form-control'>Login to Request Your FairShare</button></a>
     {{/if}}--}}
-<hr>
-<h3>Tip Commands (Limit of {{maxCoins}})</h3>
-<textarea
-  class='form-control' id='distcomment' rows=3
->{{#each share in shares}}+/u/{{share.coin.name}} {{share.amount}} {{share.coin.unit}}
-{{/each}}</textarea>
-{{#if isDistributing}}
-  <button class='btn btn-default form-control' {{action 'doDistribution'}}>Do Distribution</button>
-{{/if}}
   </div>
 </div>
