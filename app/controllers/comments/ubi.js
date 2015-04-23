@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
   needs: ['subreddit'],
+  subreddit: Ember.computed.alias('controllers.subreddit.model'),
   auth: Ember.inject.service(),
   user : Ember.computed.alias('auth.user'),
   coins: Ember.computed.alias('controllers.subreddit.model.escrows'),

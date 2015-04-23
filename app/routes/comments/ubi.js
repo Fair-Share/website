@@ -44,6 +44,17 @@ export default Ember.Route.extend({
       });
     });
   },
+
+  afterModel: function() {
+    var post = this.modelFor('thread');
+    var sub = this.modelFor('subreddit');
+    return client('/r/' + sub.subreddit + '/wiki/index.json').get({}, {
+      bypassAuth: true
+    }).then(function(result) {
+      console.log('data', result.data);
+      Ember.set(sub, 'wiki', result.data);
+    });
+  },
   actions: {
     removeCoin: function(coin) {
       this.controllerFor('comments.ubi').get('coins').removeObject(coin);

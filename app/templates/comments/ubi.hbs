@@ -27,7 +27,7 @@
         {{/if}}
       {{/if}}
     {{/if}}
-    <hr>
+    {{#unless isDistributing}}{{{subreddit.wiki.content_html}}}{{/unless}}
   </div><div class='col-md-6'>
     <h2>Income Escrow</h2>
     <h4>Estimated Total: {{collectiveTotal.btc}} BTC / ${{collectiveTotal.usd}}</h4>
