@@ -1,0 +1,15 @@
+<div class='panel panel-default'><div class='panel-body'>
+  {{link-entry item=model}}
+  {{#if selftext}}
+    <hr>
+    {{{selftext_html}}}
+  {{/if}}
+</div></div>
+{{!--<ul class='nav nav-pills'>
+  {{#link-to 'comments' tagName='li'}}{{#link-to 'thread.index'}}
+    {{model.num_comments}} comments
+  {{/link-to}}{{/link-to}}
+</ul>--}}
+<div class='panel panel-default'>
+  <div class='panel-body'>{{outlet}}</div>
+</div>

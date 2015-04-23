@@ -10,6 +10,7 @@
   text-align: center;
 }
 
+.comments .media-body .media-heading,
 .ubi-comments .media-body .media-heading {
   float: left;
   margin-right: 0.5em;
@@ -28,3 +29,7 @@ img.media-object {
 }
 
 .wiki .toc {display: none;}
+
+.md p {
+  max-width: 42em;
+}

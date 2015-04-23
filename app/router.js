@@ -21,7 +21,10 @@ export default Router.map(function() {
         this.route('page', {path: '/:page'});
       });
       this.resource('thread', {path: '/:thread_id'}, function() {
-        this.route('sign');
+        this.resource('comments', function() {
+          this.route('sign');
+          this.route('ubi');
+        });
       });
     })
   });

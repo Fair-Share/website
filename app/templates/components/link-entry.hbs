@@ -4,7 +4,7 @@
 </div>
 {{/if}}{{/if}}
 <div class='media-body'>
-  <h4 class='media-heading'><a {{bind-attr href=item.url}} target='reddit'>{{item.title}}</a></h4>
+  <h4 class='media-heading'>{{link-to item.title 'thread' item}}</h4>
   <div class='meta'>
     {{item.num_comments}} comments
     posted {{ago item.created_utc 'X'}} by {{item.author}}

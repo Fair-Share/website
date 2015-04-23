@@ -1,0 +1,108 @@
+<div class='row'>
+  <div class='col-md-6'>
+    <h2>{{beneficiaries.length}} Beneficiaries</h2>
+    <h4>FairShare Estimate {{shareTotal.bits}} bits / ${{shareTotal.usd}}</h4>
+    <hr>
+<pre id='distlog'># {{title}}
+
+---
+
+# Income Escrow
+
+{{#each share in shares}}
+## {{share.coin.name}}: {{share.coin.count}} {{share.coin.unit}}
+### {{share.coin.percentage}}% Disbursement: {{share.total.amount}} {{share.coin.unit}}
+# FairShare: {{share.amount}} {{share.coin.unit}}
+{{/each}}
+
+# FairShare Value Estimate
+## {{shareTotal.bits}} bits (BTC)
+
+---
+
+# {{beneficiaryCount}} UBI Beneficiaries
+
+{{#each name in beneficiaries}}
+/u/{{name}}
+
+{{/each}}
+</pre>
+  </div><div class='col-md-6'>
+    <h2>Income Escrow</h2>
+    <h4>Estimated Total: {{collectiveTotal.btc}} BTC / ${{collectiveTotal.usd}}</h4>
+    <hr>
+    <form>
+      {{#each total in totals}}
+      <div class="form-group">
+        <div class='row'>
+          <div class='col-md-4'>
+            <div class="form-group">
+              {{input value=total.coin.name class='form-control'}}
+            </div>
+          </div>
+          <div class='col-md-4'>
+            <div class="form-group">
+              {{input value=total.coin.unit class='form-control'}}
+            </div>
+          </div>
+          <div class='col-md-4'>
+            <div class="form-group">
+              {{total.value}} BTC<br>
+              ${{total.usdValue}}
+            </div>
+
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-md-3'>
+            <div class='form-group'>
+              {{input value=total.coin.percentage class='form-control'}}
+            </div>
+          </div>
+          <div class='col-md-1'>
+            <div class='form-group'>
+              <label>% of</label>
+            </div>
+          </div>
+          <div class='col-md-4'>
+            <div class="form-group">
+              {{input value=total.coin.count class='form-control'}}
+            </div>
+          </div><div class='col-md-4'>
+            <button class='btn btn-danger form-control' {{action 'removeCoin' total.coin}}>
+              Remove
+            </button>
+          </div>
+        </div>
+
+      </div>
+      <hr>
+      {{/each}}
+    </form>
+    {{!--{{#if user}}
+      {{#if requestComment}}
+        <span class='label label-success form-control'>You have already requested a FairShare</span>
+      {{else}}
+        {{#if isRequesting}}
+          <span class='label label-warning form-control'>Requesting FairShare...</span>
+        {{else}}
+        {{textarea
+            value=newCommentText
+            placeholder="Free Bitcoin with a side of Speech."
+            class='form-control'}}
+        <button class='btn btn-default form-control' {{action 'makeRequest'}}>Request Your FairShare</button>
+        {{/if}}
+      {{/if}}
+    {{else}}
+      <a title='Login' {{bind-attr href=loginUrl}}><button class='btn btn-default form-control'>Login to Request Your FairShare</button></a>
+    {{/if}}--}}
+<h3>Tip Commands (Limit of {{maxCoins}})</h3>
+<textarea
+  class='form-control' id='distcomment' rows=3
+>{{#each share in shares}}+/u/{{share.coin.name}} {{share.amount}} {{share.coin.unit}}
+{{/each}}</textarea>
+{{#if isDistributing}}
+  <button class='btn btn-default form-control' {{action 'doDistribution'}}>Do Distribution</button>
+{{/if}}
+  </div>
+</div>

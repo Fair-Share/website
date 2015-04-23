@@ -1,0 +1,7 @@
+<ul class='nav nav-pills'>
+  {{#link-to 'subreddit' tagName='li'}}{{link-to model.display_name 'subreddit.index'}}{{/link-to}}
+  {{#link-to 'subreddit.index' tagName='li'}}{{link-to 'hot' 'subreddit.index'}}{{/link-to}}
+  {{#link-to 'subreddit.new' tagName='li'}}{{link-to 'new' 'subreddit.new'}}{{/link-to}}
+  {{#link-to 'wiki.page' 'index' tagName='li'}}{{link-to 'wiki' 'wiki.page' 'index'}}{{/link-to}}
+</ul>
+{{outlet}}

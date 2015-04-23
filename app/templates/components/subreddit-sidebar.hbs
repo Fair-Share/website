@@ -1,9 +1,10 @@
-<h3>{{subreddit.display_name}}</h3>
 {{{subreddit.description_html}}}
-<hr>
-<h4>Signature Roll</h4>
-<ul>
-{{#each item in subreddit.roll}}
-  <li {{bind-attr title=item.publicKey}}>{{item.user}}</li>
-{{/each}}
-</ul>
+{{#if subreddit.roll.length}}
+  <hr>
+  <h4>Signature Roll</h4>
+  <ul>
+  {{#each item in subreddit.roll}}
+    <li {{bind-attr title=item.publicKey}}>{{item.user}}</li>
+  {{/each}}
+  </ul>
+{{/if}}
