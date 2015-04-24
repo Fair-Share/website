@@ -1,10 +1,9 @@
 import Ember from 'ember';
 import client from 'fairshare-site/client';
-var bitcore = require('bitcore');
-var Message = require('bitcore-message');
 
 export default Ember.Component.extend ({
   auth: Ember.inject.service(),
+  bitcore: Ember.inject.service(),
   user : Ember.computed.alias('auth.user'),
   message: '',
   passPhrase: '',
@@ -21,13 +20,13 @@ export default Ember.Component.extend ({
   hashedPassPhrase: function() {
     var phrase = this.get('matchingPassPhrase');
     if (!phrase) {return;}
-    return bitcore.crypto.Hash.sha256(new bitcore.deps.Buffer(phrase)).toString('hex');
+    return this.get('bitcore').sha256(phrase);
   }.property('matchingPassPhrase'),
 
   privateKey: function() {
     var hashed = this.get('hashedPassPhrase');
     if (!hashed) {return;}
-    return new bitcore.PrivateKey(hashed);
+    return this.get('bitcore').privateKey(hashed);
   }.property('hashedPassPhrase'),
 
   markdown: function() {
@@ -43,7 +42,7 @@ export default Ember.Component.extend ({
   publicKey: function() {
     var privateKey = this.get('privateKey');
     if (!privateKey) {return;}
-    return new bitcore.PublicKey(privateKey);
+    return this.get('bitcore').publicKey(privateKey);
   }.property('privateKey'),
 
   address: function() {
@@ -53,13 +52,13 @@ export default Ember.Component.extend ({
   }.property('publicKey'),
 
   plaintext: function() {
-    return this.get('message').replace(/\W+/g, " ").trim();
+    return this.get('bitcore').normalizeMarkdown(this.get('message'));
   }.property('message'),
 
   signature: function() {
     var privateKey = this.get('privateKey');
     if (!privateKey) {return;}
-    return Message(this.get('plaintext')).sign(this.get('privateKey'));
+    return this.get('bitcore').signMessage(this.get('plaintext'), this.get('privateKey'));
   }.property('privateKey', 'plaintext'),
 
   actions: {

@@ -1,10 +1,10 @@
 import Ember from 'ember';
-var bitcore = require('bitcore');
-var Message = require('bitcore-message');
 
 export default Ember.Mixin.create({
+  bitcore: Ember.inject.service(),
   publicKeySelector: 'strong:first',
   signatureSelector: 'em:last',
+
   parsedBody: function() {
     return Ember.$(this.get('comment.body_html'));
   }.property('comment.body_html'),
@@ -25,24 +25,24 @@ export default Ember.Mixin.create({
   }.property('comment.body_html', 'isSigned'),
 
   plaintext: function() {
-    return this.get('message').replace(/\W+/g, " ").trim();
+    return this.get('bitcore').normalizeMarkdown(this.get('message'));
   }.property('message'),
 
   address: function() {
     var text = this.get('parsedBody').find(this.get('publicKeySelector')).text().trim();
-    if (bitcore.Address.isValid(text)) {
-      return new bitcore.Address(text);
+    if (this.get('bitcore').Address.isValid(text)) {
+      return this.get('bitcore').address(text);
     }
     if (!text) {return;}
-    return (new bitcore.PublicKey(text)).toAddress();
+    return this.get('bitcore').publicKey(text).toAddress();
   }.property('parsedBody'),
 
   isSigned: function() {
-    if (!this.get('address') || !this.get('signatureString')) {return;}
-    return Message(this.get('plaintext')).verify(this.get('address'), this.get('signatureString'));
-  }.property('plaintext', 'signatureString', 'address'),
+    if (!this.get('address') || !this.get('signature')) {return;}
+    return this.get('bitcore').verifySignature(this.get('plaintext'), this.get('address'), this.get('signature'));
+  }.property('plaintext', 'signature', 'address'),
 
-  signatureString: function() {
+  signature: function() {
     return this.get('parsedBody').find(this.get('signatureSelector')).text();
   }.property('parsedBody')
 })
