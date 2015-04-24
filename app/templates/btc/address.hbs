@@ -4,9 +4,9 @@
   </div>
   <div class='col-md-8'>
     <h2>{{model.address}}</h2>
-    <h4>Received Value: {{model.received_value}} {{model.network}}</h4>
-    <h4>Pending Value: {{model.pending_value}} {{model.network}}</h4>
-    <h4>Total Transactions: {{model.total_txs}}</h4>
+    <h3>Total Transactions: {{model.total_txs}}</h3>
+    <h3>Received: {{model.received_value}} {{model.network}}</h3>
+    <h3>Pending: {{model.pending_value}} {{model.network}}</h3>
     <h1>Balance: {{model.balance}} {{model.network}}</h1>
     {{#if model.txs.length}}
       <hr>
