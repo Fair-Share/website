@@ -20,4 +20,5 @@ var app = new EmberApp();
 app.import('bower_components/snoocore/dist/Snoocore-standalone.js');
 app.import('bower_components/bitcore/bitcore.js');
 app.import('bower_components/bitcore-message/bitcore-message.js');
+app.import('bower_components/qrcodejs/qrcode.js');
 module.exports = app.toTree();
