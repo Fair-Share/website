@@ -37,7 +37,7 @@ export default Ember.Component.extend ({
   username: function() {
     var username = this.get('user.name');
     if (!username) {return 'anonymous';}
-    return '/u/' + username;
+    return username;
   }.property('user.name'),
 
   datedMessage: function() {
