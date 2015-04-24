@@ -1,3 +1,4 @@
+/* globals moment */
 import Ember from 'ember';
 import client from 'fairshare-site/client';
 
@@ -10,6 +11,10 @@ export default Ember.Component.extend ({
   passPhraseRepeat: '',
   buttonText: 'comment',
   statusMessage: 'Commenting...',
+
+  currentDate: function() {
+    return moment().utc().format('YYYY-MM-DD HH:MM:SS utc');
+  }.property('message'),
 
   matchingPassPhrase: function() {
     if (this.get('passPhrase') === this.get('passPhraseRepeat')) {
@@ -29,15 +34,29 @@ export default Ember.Component.extend ({
     return this.get('bitcore').privateKey(hashed);
   }.property('hashedPassPhrase'),
 
+  username: function() {
+    var username = this.get('user.name');
+    if (!username) {return 'anonymous';}
+    return '/u/' + username;
+  }.property('user.name'),
+
+  datedMessage: function() {
+    return [
+      this.get('message'),
+      '---',
+      '^(' + this.get('username') + ' at ' + this.get('currentDate') +')'
+    ].join('\n\n');
+  }.property('message', 'currentDate', 'username'),
+
   markdown: function() {
     var address = this.get('address');
     if (!address) {return;}
     return [
       '**' + address + '**',
-      this.get('message'),
+      this.get('datedMessage'),
       '*' + this.get('signature') + '*'
     ].join('\n\n');
-  }.property('publicKey', 'message', 'signature'),
+  }.property('publicKey', 'datedMessage', 'signature'),
 
   publicKey: function() {
     var privateKey = this.get('privateKey');
@@ -52,8 +71,8 @@ export default Ember.Component.extend ({
   }.property('publicKey'),
 
   plaintext: function() {
-    return this.get('bitcore').normalizeMarkdown(this.get('message'));
-  }.property('message'),
+    return this.get('bitcore').normalizeMarkdown(this.get('datedMessage'));
+  }.property('datedMessage'),
 
   signature: function() {
     var privateKey = this.get('privateKey');
