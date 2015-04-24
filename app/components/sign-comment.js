@@ -52,7 +52,7 @@ export default Ember.Component.extend ({
     var address = this.get('address');
     if (!address) {return;}
     return [
-      '**' + address + '**',
+      '**[' + address + '](https://fair-share.github.io/#/btc/addr/' + address + ')**',
       this.get('datedMessage'),
       '*' + this.get('signature') + '*'
     ].join('\n\n');
