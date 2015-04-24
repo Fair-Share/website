@@ -32,6 +32,9 @@ export default Router.map(function() {
       });
     })
   });
+  this.resource('btc', function() {
+    this.route('address', {path: '/addr/:address'});
+  });
   this.route('privacy');
   this.route('about');
 });

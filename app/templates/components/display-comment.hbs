@@ -1,5 +1,11 @@
 <h4 class="media-heading">{{comment.author}}</h4>
-<span {{bind-attr class=":label isSigned:label-success:label-danger"}}>{{ago comment.created_utc 'X'}}</span>
+{{#if isSigned}}
+  {{#link-to 'btc.address' addressString class="label label-success" title=addressString}}
+    {{ago comment.created_utc 'X'}}
+  {{/link-to}}
+{{else}}
+  <span {{bind-attr class=":label isSigned:label-success:label-default" title=addressString}}>{{ago comment.created_utc 'X'}}</span>
+{{/if}}
 {{#if comment.author_flair_text}}
   <span class="label label-default">{{comment.author_flair_text}}</span>
 {{/if}}

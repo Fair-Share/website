@@ -37,6 +37,12 @@ export default Ember.Mixin.create({
     return this.get('bitcore').publicKey(text).toAddress();
   }.property('parsedBody'),
 
+  addressString: function() {
+    var address = this.get('address');
+    if (!address) {return;}
+    return address.toString();
+  }.property('address'),
+
   isSigned: function() {
     if (!this.get('address') || !this.get('signature')) {return;}
     return this.get('bitcore').verifySignature(this.get('plaintext'), this.get('address'), this.get('signature'));
