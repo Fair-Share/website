@@ -46,3 +46,7 @@ img.media-object {
 .panel-body > .md > h1 > a[href='https://www.reddit.com/api/v1/authorize?client_id=Eb_FuUtIEDgkFw&state=214&redirect_uri=http%3A%2F%2Ffair-share.github.io%2F%23%2F%3F&response_type=token&scope=submit%20identity'] {
   display: none;
 }
+
+.address-page .qr-code {
+  margin-top: 2em;
+}

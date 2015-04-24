@@ -1,28 +1,27 @@
-<div class='row'>
+<div class='row address-page'>
   <div class='col-md-4'>
     {{qr-code value=model.address}}
   </div>
   <div class='col-md-8'>
-    <h1>{{model.address}}</h1>
-    <h2>Balance: {{model.balance}} {{model.network}}</h2>
+    <h2>{{model.address}}</h2>
     <h4>Received Value: {{model.received_value}} {{model.network}}</h4>
     <h4>Pending Value: {{model.pending_value}} {{model.network}}</h4>
     <h4>Total Transactions: {{model.total_txs}}</h4>
+    <h1>Balance: {{model.balance}} {{model.network}}</h1>
+    {{#if model.txs.length}}
+      <hr>
+      {{#each tx in model.txs}}
+      <div class='well'>
+        <h5>{{tx.txid}}</h5>
+        <h3>Block #{{tx.block_no}} {{ago tx.time 'X'}} {{tx.confirmations}} Confirmations</h3>
+        {{#if tx.incoming.value}}
+          <h2>{{tx.incoming.inputs.length}} Inputs {{tx.incoming.value}} BTC</h2>
+        {{/if}}
+        {{#if tx.outgoing.value}}
+          <h2>{{tx.outgoing.outputs.length}} Outputs {{tx.outgoing.value}} BTC</h2>
+        {{/if}}
+      </div>
+      {{/each}}
+    {{/if}}
   </div>
 </div>
-{{#if model.txs.length}}
-  <hr>
-  <h2>{{model.txs.length}} Recent Transactions</h2>
-  {{#each tx in model.txs}}
-  <div class='well'>
-    <h5>{{tx.txid}}</h5>
-    <h3>Block #{{tx.block_no}} {{ago tx.time 'X'}} {{tx.confirmations}} Confirmations</h3>
-    {{#if tx.incoming.value}}
-      <h4>Incoming: {{tx.incoming.value}} BTC {{tx.incoming.inputs.length}} Inputs</h4>
-    {{/if}}
-    {{#if tx.outgoing.value}}
-      <h4>Outgoing: {{tx.outgoing.value}} BTC {{tx.outgoing.outputs.length}} Outputs</h4>
-    {{/if}}
-  </div>
-  {{/each}}
-{{/if}}
