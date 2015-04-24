@@ -60,16 +60,14 @@ export default Ember.Controller.extend({
   }.property('p2shAddress'),
 
   markdown: function() {
-    var address = this.get('p2shAddressString');
-    if (!address) {return;}
     return this.get('signedCommentItems').map(function(item) {
       return [
         ' * /u/' + Ember.get(item, 'comment.author'),
-        '*' + Ember.get(item, 'publicKeyString') + '*',
-        '[' + Ember.get(item, 'signatureString') + '](/api/info?id=' + item.get('comment.name') + ')'
+        '*' + Ember.get(item, 'address') + '*',
+        '[' + Ember.get(item, 'signature') + '](/api/info?id=' + item.get('comment.name') + ')'
       ].join(' ');
     }).join('\n');
-  }.property('p2shAddressString', 'model.title', 'enrolledComments.@each', 'scriptString'),
+  }.property('model.title', 'enrolledComments.@each'),
 
   actions: {
     removeComment: function(comment) {

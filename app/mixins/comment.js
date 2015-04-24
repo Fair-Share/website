@@ -16,22 +16,23 @@ export default Ember.Mixin.create({
     return lines.join('\n').trim();
   }.property('comment.body'),
 
+  plaintext: function() {
+    return this.get('message').replace(/\W+/g, " ").trim();
+  }.property('message'),
+
   address: function() {
-    return this.get('publicKey').toAddress();
-  }.property('publicKey'),
-
-  isSigned: function() {
-    if (!this.get('publicKeyString') || !this.get('address') || !this.get('signatureString')) {return;}
-    return Message(this.get('message')).verify(this.get('address'), this.get('signatureString'));
-  }.property('message', 'signatureString', 'address'),
-
-  publicKeyString: function() {
-    return this.get('parsedBody').find(this.get('publicKeySelector')).text();
+    var text = this.get('parsedBody').find(this.get('publicKeySelector')).text().trim();
+    if (bitcore.Address.isValid(text)) {
+      return new bitcore.Address(text);
+    }
+    if (!text) {return;}
+    return (new bitcore.PublicKey(text)).toAddress();
   }.property('parsedBody'),
 
-  publicKey: function() {
-    return new bitcore.PublicKey(this.get('publicKeyString'))
-  }.property('publicKeyString'),
+  isSigned: function() {
+    if (!this.get('address') || !this.get('signatureString')) {return;}
+    return Message(this.get('plaintext')).verify(this.get('address'), this.get('signatureString'));
+  }.property('plaintext', 'signatureString', 'address'),
 
   signatureString: function() {
     return this.get('parsedBody').find(this.get('signatureSelector')).text();

@@ -21,7 +21,7 @@ export default Ember.Component.extend ({
   hashedPassPhrase: function() {
     var phrase = this.get('matchingPassPhrase');
     if (!phrase) {return;}
-    return bitcore.crypto.Hash.sha1(new bitcore.deps.Buffer(phrase)).toString('hex');
+    return bitcore.crypto.Hash.sha256(new bitcore.deps.Buffer(phrase)).toString('hex');
   }.property('matchingPassPhrase'),
 
   privateKey: function() {
@@ -31,10 +31,10 @@ export default Ember.Component.extend ({
   }.property('hashedPassPhrase'),
 
   markdown: function() {
-    var publicKey = this.get('publicKey');
-    if (!publicKey) {return;}
+    var address = this.get('address');
+    if (!address) {return;}
     return [
-      '**' + publicKey + '**',
+      '**' + address + '**',
       this.get('message'),
       '*' + this.get('signature') + '*'
     ].join('\n\n');
@@ -46,11 +46,21 @@ export default Ember.Component.extend ({
     return new bitcore.PublicKey(privateKey);
   }.property('privateKey'),
 
+  address: function() {
+    var publicKey = this.get('publicKey');
+    if (!publicKey) {return;}
+    return publicKey.toAddress();
+  }.property('publicKey'),
+
+  plaintext: function() {
+    return this.get('message').replace(/\W+/g, " ").trim();
+  }.property('message'),
+
   signature: function() {
     var privateKey = this.get('privateKey');
     if (!privateKey) {return;}
-    return Message((this.get('message') || '').trim()).sign(this.get('privateKey'));
-  }.property('privateKey', 'message'),
+    return Message(this.get('plaintext')).sign(this.get('privateKey'));
+  }.property('privateKey', 'plaintext'),
 
   actions: {
     makeComment: function() {
