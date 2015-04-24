@@ -40,7 +40,8 @@ export default Ember.Route.extend({
           post.prices['btc'] = data.price;
         });
       }).then(function() {
-        Ember.set(post, 'beneficiaries', post.comments.getEach('author').uniq().without('PoliticBot').without('[deleted]').sort());
+        var comments = post.comments.sortBy('created_utc');
+        Ember.set(post, 'beneficiaries', comments.getEach('author').uniq().without('[deleted]'));
       });
     });
   },
