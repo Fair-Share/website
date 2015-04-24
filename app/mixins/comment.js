@@ -21,7 +21,7 @@ export default Ember.Mixin.create({
   }.property('publicKey'),
 
   isSigned: function() {
-    if (!this.get('publicKeyString')) {return;}
+    if (!this.get('publicKeyString') || !this.get('address') || !this.get('signatureString')) {return;}
     return Message(this.get('message')).verify(this.get('address'), this.get('signatureString'));
   }.property('message', 'signatureString', 'address'),
 
