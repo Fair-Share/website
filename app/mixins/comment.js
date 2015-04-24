@@ -16,6 +16,14 @@ export default Ember.Mixin.create({
     return lines.join('\n').trim();
   }.property('comment.body'),
 
+  messageHtml: function() {
+    if (!this.get('isSigned')) {return this.get('comment.body_html');}
+    var body = Ember.$(this.get('comment.body_html'));
+    Ember.$(body.find(this.get('publicKeySelector')).parent()).remove();
+    Ember.$(body.find(this.get('signatureSelector')).parent()).remove();
+    return '<div class="md">' + body.html() + '</div>';
+  }.property('comment.body_html', 'isSigned'),
+
   plaintext: function() {
     return this.get('message').replace(/\W+/g, " ").trim();
   }.property('message'),
