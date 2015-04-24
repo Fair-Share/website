@@ -32,12 +32,15 @@ img.media-object {
 
 .md p {
   max-width: 42em;
+  hyphens: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
-.md p a {
-  word-wrap: break-word;
+.md p a,
+.md p strong,
+.md p em {
   word-break: break-all;
-  white-space: normal;
 }
 
 .panel-body > .md > h1 > a[href='https://fair-share.github.io/#/ubi'] {
