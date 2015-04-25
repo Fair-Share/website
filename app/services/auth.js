@@ -77,7 +77,8 @@ export default Ember.Service.extend({
 
   balanceBtc: function() {
     var balance = this.get('balance') || 0;
-    return (balance/100000000).toFixed();
+    console.log('balance', balance);
+    return (balance/100000000).toFixed(8);
   }.property('balance'),
 
   unspent: [],
