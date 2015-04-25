@@ -1,7 +1,11 @@
 <div class='row address-page'>
   <div class='col-md-4'>
-    <h2>Send BTC</h2>
-    {{send-btc dest=model.address}}
+    {{#if isMine}}
+      <h2>My BrainWallet</h2>
+    {{else}}
+      <h2>Send BTC</h2>
+      {{send-btc dest=model.address}}
+    {{/if}}
     {{qr-code value=model.address}}
   </div>
   <div class='col-md-8'>
@@ -15,7 +19,7 @@
       {{#each tx in model.txs}}
       <div class='well'>
         <h5>{{tx.txid}}</h5>
-        <h3>Block #{{tx.block_no}} {{ago tx.time 'X'}} {{tx.confirmations}} Confirmations</h3>
+        <h3>{{#if tx.block_no}}Block #{{tx.block_no}} {{/if}}{{ago tx.time 'X'}} {{tx.confirmations}} Confirmations</h3>
         {{#if tx.incoming.value}}
           <h2>{{tx.incoming.inputs.length}} Inputs {{tx.incoming.value}} BTC</h2>
         {{/if}}
