@@ -3,6 +3,17 @@ import client from 'fairshare-site/client';
 
 export default Ember.Service.extend({
   bitcore: Ember.inject.service(),
+
+  /*
+    checkPassWait is how long in ms to wait for passPhrase to stop changing
+    after this interval it will built an address fron the passPhrase and check
+    for transaction history.  Valid transaction history means a good login
+    Checking too often may be a security risk as it can be a path to building
+    up the early parts of the phrase
+  */
+  checkPassWait: 3145,
+
+
   loginUrl: function() {
     return client.getImplicitAuthUrl();
   }.property('user'),
@@ -32,7 +43,7 @@ export default Ember.Service.extend({
   },
 
   checkPassPhrase: function() {
-    Ember.run.debounce(this, this._checkPassPhrase, 500);
+    Ember.run.debounce(this, this._checkPassPhrase, this.get('checkPassWait'));
   }.observes('passPhrase'),
 
   username: function() {
