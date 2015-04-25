@@ -167,6 +167,6 @@ export default Ember.Service.extend({
         alert(err.responseText);
         throw error;
       }).then(this.updateBalance.bind(this));
-    });
+    }.bind(this));
   }
 });

@@ -31,8 +31,10 @@ export default Ember.Component.extend({
       if (!dest || !amount) {return;}
       if (!confirm('Are you sure?')) {return;}
       this.get('auth').sendBtc(dest, amount).then(function() {
-        this.set('placeholder', 'Sent ' + amount + ' satoshi');
-        this.set('amount', '');
+        this.setProperties({
+          placeholder: 'Sent ' + amount + ' satoshi',
+          amount: ''
+        });
       }.bind(this));
     }
   }
