@@ -2,7 +2,9 @@
 {{textarea value=message placeholder='message' class='form-control'}}
 {{/unless}}
 {{#unless isCommenting}}
+{{#unless auth.addressData.total_txs}}
 {{input type='password' value=auth.passPhrase class="form-control" placeholder="FairShare passphrase" action='makeComment'}}
+{{/unless}}
 {{#if address}}
   <button
     {{bind-attr class=":btn :form-control auth.addressData.total_txs:btn-success:btn-default"}}
