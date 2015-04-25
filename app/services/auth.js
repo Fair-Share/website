@@ -16,6 +16,25 @@ export default Ember.Service.extend({
     return ''
   }.property('passPhrase'),
 
+  _checkPassPhrase: function() {
+    var phrase = this.get('passPhrase');
+    if (!phrase) {return;}
+    var hash = this.get('bitcore').sha256(phrase);
+    var privateKey = this.get('bitcore').privateKey(hash);
+    var publicKey = this.get('bitcore').publicKey(privateKey);
+    this.get('bitcore').getBalance(publicKey.toAddress()).then(function(data) {
+      if (data.total_txs) {
+        if (phrase === this.get('passPhrase')) {
+          this.set('passPhraseRepeat', phrase);
+        }
+      }
+    }.bind(this));
+  },
+
+  checkPassPhrase: function() {
+    Ember.run.debounce(this, this._checkPassPhrase, 500);
+  }.observes('passPhrase'),
+
   username: function() {
     var username = this.get('user.name');
     if (!username) {return 'anonymous';}

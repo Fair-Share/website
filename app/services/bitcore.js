@@ -79,5 +79,13 @@ export default Ember.Service.extend({
       console.error('getUnspentOutputs', address, err);
       return [];
     });
+  },
+
+  getBalance: function(address) {
+    return Ember.RSVP.resolve(Ember.$.ajax({
+      url: 'https://chain.so/api/v2/address/btc/' + address
+    })).then(function(data) {
+      return data.data;
+    });
   }
 });

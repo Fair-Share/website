@@ -26,19 +26,25 @@
 <footer class='footer'>
   <hr>
   <div class='container'>
-    <div class='row'>
-      <div class='col-sm-6'>
-        {{input type='password' value=auth.passPhrase class="form-control" placeholder="FairShare passphrase" action='makeComment'}}
-      </div><div class='col-sm-6'>
-        {{#if auth.address}}
-          {{#link-to 'btc.address' auth.addressString tagName='button' class='btn form-control' classNameBindings="auth.addressData.total_txs:btn-success:btn-default"}}
-            Balance: {{auth.balance}} satoshi
-          {{/link-to}}
-        {{else}}
-          {{input type='password' value=auth.passPhraseRepeat class="form-control" placeholder="Repeat FairShare passphrase" action='makeComment'}}
-        {{/if}}
+    {{#if auth.addressData.total_txs}}
+      {{#link-to 'btc.address' auth.addressString tagName='button' class='btn form-control' classNameBindings="auth.addressData.total_txs:btn-success:btn-default"}}
+        {{auth.address}} - Balance: {{auth.balance}} satoshi
+      {{/link-to}}
+    {{else}}
+      <div class='row'>
+        <div class='col-sm-6'>
+          {{input type='password' value=auth.passPhrase class="form-control" placeholder="FairShare passphrase"}}
+        </div><div class='col-sm-6'>
+          {{#if auth.address}}
+            {{#link-to 'btc.address' auth.addressString tagName='button' class='btn form-control' classNameBindings="auth.addressData.total_txs:btn-success:btn-default"}}
+              Balance: {{auth.balance}} satoshi
+            {{/link-to}}
+          {{else}}
+            {{input type='password' value=auth.passPhraseRepeat class="form-control" placeholder="Repeat FairShare passphrase"}}
+          {{/if}}
+        </div>
       </div>
-    </div>
+    {{/if}}
   </div>
   <hr>
 </footer>
