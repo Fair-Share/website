@@ -98,7 +98,7 @@ export default Ember.Service.extend({
     if (!address) {return;}
     var signature = this.get('bitcore').signMessage(message, privateKey);
     var markdown =  [
-      '**[' + address + '](https://fair-share.github.io/#/btc/addr/' + address + ')**',
+      '**[^^^^(' + address + ')](https://fair-share.github.io/#/btc/addr/' + address + ')**',
       datedMessage,
       '*^^^^(' + signature + ')*'
     ].join('\n\n');
