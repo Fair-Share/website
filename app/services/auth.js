@@ -72,12 +72,8 @@ export default Ember.Service.extend({
   }.property('publicKey'),
 
   balance: function() {
-    var balance = 0;
-    this.get('unspent').forEach(function(tx) {
-      balance += tx.satoshis;
-    });
-    return balance;
-  }.property('unspent.@each.satoshis'),
+    return parseInt((this.get('addressData.balance')||'').replace('.', ''));
+  }.property('addressData.balance'),
 
   unspent: [],
 
