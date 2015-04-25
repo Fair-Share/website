@@ -28,6 +28,7 @@ export default Router.map(function() {
         this.resource('comments', function() {
           this.route('sign');
           this.route('ubi');
+          this.route('chain');
         });
       });
     })
@@ -48,7 +49,6 @@ window.onclick = function(e) {
     if (parts.length <= 1) {
       var parts = t.href.split('reddit.com', 2);
     }
-    console.log('parts', parts);
     if (parts.length > 1) {
       e.preventDefault();
       try {

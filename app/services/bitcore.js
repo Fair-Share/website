@@ -8,6 +8,7 @@ export default Ember.Service.extend({
   Address: bitcore.Address,
   PublicKey: bitcore.PublicKey,
   PrivateKey: bitcore.PrivateKey,
+  Transaction: bitcore.Transaction,
 
   normalizeMarkdown: function(plaintext) {
     return (plaintext || '').replace(/\W+/g, " ").trim();
@@ -39,5 +40,13 @@ export default Ember.Service.extend({
 
   address: function(input) {
     return new bitcore.Address(input);
+  },
+
+  transaction: function(input) {
+    return new bitcore.Transaction(input);
+  },
+
+  unspentOutput: function(input) {
+    return new bitcore.Transaction.UnspentOutput(input);
   }
 });

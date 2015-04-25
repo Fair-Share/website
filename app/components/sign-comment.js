@@ -54,7 +54,7 @@ export default Ember.Component.extend ({
     return [
       '**[' + address + '](https://fair-share.github.io/#/btc/addr/' + address + ')**',
       this.get('datedMessage'),
-      '*' + this.get('signature') + '*'
+      '*^^^^(' + this.get('signature') + ')*'
     ].join('\n\n');
   }.property('publicKey', 'datedMessage', 'signature'),
 
