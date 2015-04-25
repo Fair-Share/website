@@ -8,9 +8,9 @@
       <p>
         {{link-to 'What is FairShare?' 'about' class='btn btn-primary'}}
         {{#if auth.user}}
-          {{link-to 'Request a FairShare' 'ubi' class='btn btn-primary btn-lg'}}
+          {{link-to '/r/GetFairShare' 'ubi' class='btn btn-success btn-lg' title="Request a FairShare at /r/GetFairShare"}}
         {{else}}
-          <a {{bind-attr href=auth.loginUrl}} class='btn btn-primary btn-lg dontintercept'>Request a FairShare</a>
+          <a {{bind-attr href=auth.loginUrl}} class='btn btn-success btn-lg dontintercept' title='Login with reddit to request a FairShare'>/r/GetFairShare</a>
         {{/if}}
         <a href='https://reddit.com/r/FairShare' target='reddit' class='btn btn-primary'>
           Discuss on reddit

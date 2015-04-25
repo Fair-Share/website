@@ -14,7 +14,7 @@
           <li>{{#link-to 'btc.address' auth.addressString}}<span class='glyphicon glyphicon-bitcoin'></span> {{auth.balanceBtc}}{{/link-to}}</li>
         {{/if}}
         <li>{{#if user}}
-          <a title='Logout of reddit' {{action 'logout'}}>L<span class='glyphicon glyphicon-user'></span> {{user.name}}</a>
+          <a title='Logout of reddit' {{action 'logout'}}><span class='glyphicon glyphicon-user'></span> {{user.name}}</a>
         {{else}}
           <a title='Login with reddit' class='dontintercept' {{bind-attr href=loginUrl}} title='with reddit'><span class='glyphicon glyphicon-user'></span></a>
         {{/if}}</li>
