@@ -1,0 +1,12 @@
+{{#unless auth.addressData.total_txs}}
+  {{input type='password'
+          value=auth.passPhrase
+          class="form-control"
+          placeholder="Your FairShare passphrase"}}
+  {{#if auth.address}}
+    {{input type='text'
+          value=auth.passPhraseRepeat
+          class="form-control"
+          placeholder="If this is a new passphrase, repeat here"}}
+  {{/if}}
+{{/unless}}

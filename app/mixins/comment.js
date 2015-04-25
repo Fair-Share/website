@@ -45,9 +45,7 @@ export default Ember.Mixin.create({
 
   isSigned: function() {
     if (!this.get('address') || !this.get('signature')) {return;}
-    var isSigned = this.get('bitcore').verifySignature(this.get('plaintext'), this.get('address'), this.get('signature'));
-    if (!isSigned) {console.log('err', this.get('address') + '', this.get('plaintext'));}
-    return isSigned;
+    return this.get('bitcore').verifySignature(this.get('plaintext'), this.get('address'), this.get('signature'));
   }.property('plaintext', 'signature', 'address'),
 
   signature: function() {

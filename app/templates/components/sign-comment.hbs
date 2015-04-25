@@ -1,9 +1,9 @@
 {{#unless fixedMessage}}
-{{textarea value=message placeholder='message' class='form-control'}}
+{{textarea value=message placeholder=placeholder class='form-control'}}
 {{/unless}}
 {{#unless isCommenting}}
 {{#unless auth.addressData.total_txs}}
-{{input type='password' value=auth.passPhrase class="form-control" placeholder="FairShare passphrase" action='makeComment'}}
+{{input type='password' value=auth.passPhrase class="form-control" placeholder="Your FairShare passphrase" action='makeComment'}}
 {{/unless}}
 {{#if address}}
   <button
@@ -11,7 +11,9 @@
     {{action 'makeComment'}}
   >{{buttonText}}</button>
 {{else}}
-  {{input type='password' value=auth.passPhraseRepeat class="form-control" placeholder="repeat FairShare passphrase" action='makeComment'}}
+  {{#unless auth.addressData.total_txs}}
+    {{input type='text' value=auth.passPhraseRepeat class="form-control" placeholder="If this is a new passphrase, repeat here" action='makeComment'}}
+  {{/unless}}
 {{/if}}
 <div class="input-group">
 

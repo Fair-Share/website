@@ -2,12 +2,13 @@
 import Ember from 'ember';
 import client from 'fairshare-site/client';
 
-export default Ember.Component.extend ({
+export default Ember.Component.extend({
   auth: Ember.inject.service(),
   bitcore: Ember.inject.service(),
   user : Ember.computed.alias('auth.user'),
   message: '',
-  buttonText: 'comment',
+  placeholder: 'message goes here (optional)',
+  buttonText: 'post comment',
   statusMessage: 'Commenting...',
   address: Ember.computed.alias('auth.publicKey'),
   username: Ember.computed.alias('auth.username'),
