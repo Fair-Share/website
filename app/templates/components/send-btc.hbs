@@ -1,7 +1,7 @@
 {{#if auth.address}}
   <div class='input-group'>
     <span class='input-group-addon'><span class='glyphicon glyphicon-bitcoin'></span></span>
-    {{input value=amount class='form-control' placeholder=placeholder}}
+    {{input value=amount class='form-control' placeholder=placeholder action='send'}}
     <span class="input-group-addon">satoshi</span>
     <span class="input-group-btn">
       <button {{bind-attr class=":btn isValid:btn-success:btn-danger"}} {{action 'send'}}><span class='glyphicon glyphicon-share'></span> Send</button>
