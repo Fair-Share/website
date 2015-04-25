@@ -36,7 +36,6 @@ export default Ember.Route.extend({
   },
 
   redirect: function(model) {
-    console.log('redirect');
     if (model) {
       this.transitionTo('ubi');
     }

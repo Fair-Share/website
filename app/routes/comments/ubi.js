@@ -2,6 +2,8 @@ import Ember from 'ember';
 import client from 'fairshare-site/client';
 
 export default Ember.Route.extend({
+  auth: Ember.inject.service(),
+
   beforeModel: function(model) {
     var subreddit = this.modelFor('subreddit');
     var post = this.modelFor('thread');
@@ -68,6 +70,7 @@ export default Ember.Route.extend({
       var comments = post.beneficiaries.map(function(author) {
         return post.comments.findProperty('author', author);
       }).without(undefined);
+      var auth = this.get('auth');
       var errors = [];
       var quoteList = [];
       function makeNextComment() {
@@ -106,6 +109,7 @@ export default Ember.Route.extend({
         commentLines.insertAt(0, 'FairShare for [' + parent.author + flair + '](/api/info?id=' + parent.name + ')');
         commentLines.pushObject('[' + quote.title + '](' + quote.permalink + ')');
         var commentBody = commentLines.join('\n\n');
+        commentBody = auth.signMessage(commentBody).markdown;
         controller.get('distComments').insertAt(0, {
           request: parent,
           commentBody: commentBody
@@ -140,7 +144,7 @@ export default Ember.Route.extend({
         return client('/api/comment').post({
           api_type: 'json',
           thing_id: post.name,
-          text: Ember.$('#distlog').text()
+          text: auth.signMessage(Ember.$('#distlog').text()).markdown
         }).then(function() {
           /*return client('/api/flair').post({
             api_type: 'json',

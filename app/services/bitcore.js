@@ -48,5 +48,17 @@ export default Ember.Service.extend({
 
   unspentOutput: function(input) {
     return new bitcore.Transaction.UnspentOutput(input);
+  },
+
+  postTransaction: function(transaction) {
+    return Ember.RSVP.resolve(Ember.$.ajax({
+      method: 'post',
+      url: 'https://blockchain.info/pushtx?cors=true',
+      data: {
+        tx: transaction + ''
+      }
+    }).then(function(response) {
+      console.log('blockchain response', response);
+    }));
   }
 });

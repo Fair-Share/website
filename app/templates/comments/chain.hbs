@@ -55,6 +55,12 @@
       </tbody>
     </table>
     <hr>
+    {{#if isDistributing}}
+      <button {{action 'postTransaction'}} class='btn btn-danger form-control'>
+        Post to Blockchain
+      </button>
+      <hr>
+    {{/if}}
     <h1>JSON</h1>
     <pre>{{transactionJsonString}}</pre>
 

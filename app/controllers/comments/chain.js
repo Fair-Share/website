@@ -8,6 +8,10 @@ export default Ember.Controller.extend({
 
   percentage: 10,
 
+  isDistributing: function() {
+    return this.get('escrow.address') === this.get('auth.addressString');
+  }.property('escrow.address', 'auth.addressString'),
+
   totalDistribution: function() {
     return Math.floor((parseInt(this.get('percentage')) / 100) * this.get('balance'));
   }.property('percentage', 'balance'),
@@ -91,7 +95,7 @@ export default Ember.Controller.extend({
     });
     transaction.change(this.get('escrow.address'));
     return transaction;
-  }.property('uniqueSignatures.@each', 'toSpend.@each', 'fairShare'),
+  }.property('uniqueSignatures.@each', 'toSpend.@each', 'fairShare', 'auth.privateKey', 'isAuthorized'),
 
   minerFee: function() {
     return this.get('transaction').getFee();
@@ -105,7 +109,6 @@ export default Ember.Controller.extend({
     var transaction = this.get('transaction');
     if (!transaction) {return;}
     var obj = transaction.toObject();
-    console.log('transaction', obj);
     return obj;
   }.property('transaction'),
 

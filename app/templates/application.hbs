@@ -22,7 +22,23 @@
   </div>
 </div>
 <div id='maincontainer' class='container'>{{outlet}}</div>
-<hr>
+<footer class='footer'>
+  <hr>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-sm-6'>
+        {{input type='password' value=auth.passPhrase class="form-control" placeholder="FairShare passphrase" action='makeComment'}}
+      </div><div class='col-sm-6'>
+        {{#if auth.address}}
+          {{link-to auth.address 'btc.address' auth.addressString tagName='button' class='btn form-control' classNameBindings="auth.addressData.total_txs:btn-success:btn-default"}}
+        {{else}}
+          {{input type='password' value=auth.passPhraseRepeat class="form-control" placeholder="Repeat FairShare passphrase" action='makeComment'}}
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  <hr>
+</footer>
 <footer id='footer'>
 All code and concepts are licensed under <a href='http://www.wtfpl.net' target='license'>WTFPLv2</a>.  Build something!
 </footer>

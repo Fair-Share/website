@@ -51,3 +51,12 @@ img.media-object {
 .address-page .qr-code {
   margin-top: 2em;
 }
+
+
+/*footer.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  background-color: #f5f5f5;
+}*/

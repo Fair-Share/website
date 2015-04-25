@@ -1,18 +1,19 @@
-<span class='label label-danger'>Passphrases should be very unique, random and long</span>
-<span class='label label-danger'>They CAN NOT be recovered if lost!</span>
 {{#unless fixedMessage}}
 {{textarea value=message placeholder='message' class='form-control'}}
 {{/unless}}
 {{#unless isCommenting}}
-{{input type='password' value=passPhrase class="form-control" placeholder="FairShare passphrase" action='makeComment'}}
-<div class="input-group input-group">
-  {{input type='password' value=passPhraseRepeat class="form-control" placeholder="repeat FairShare passphrase" action='makeComment'}}
+{{input type='password' value=auth.passPhrase class="form-control" placeholder="FairShare passphrase" action='makeComment'}}
+{{#if address}}
+  <button
+    {{bind-attr class=":btn :form-control auth.addressData.total_txs:btn-success:btn-default"}}
+    {{action 'makeComment'}}
+  >{{buttonText}}</button>
+{{else}}
+  {{input type='password' value=auth.passPhraseRepeat class="form-control" placeholder="repeat FairShare passphrase" action='makeComment'}}
+{{/if}}
+<div class="input-group">
 
   <span class="input-group-btn">
-    <button
-      {{bind-attr class=":btn matchingPassPhrase:btn-success:btn-danger"}}
-      {{action 'makeComment'}}
-    >{{buttonText}}</button>
   </span>
 </div>
 {{else}}
@@ -21,5 +22,12 @@
 {{#unless hideMarkdown}}
 {{#if markdown}}
 <pre>{{markdown}}</pre>
+{{else}}
+<div class='well'>
+  <h3>Your passphrase powers a <a href='https://en.bitcoin.it/wiki/Brainwallet' target='_new'>brainwallet</a></h3>
+  <p>It is <strong>very important</strong> when creating a brainwallet to use a passphrase that has a very high level of entropy. If this is not done, theft of the brainwallet is an eventual certainty.</p>
+  <p>This is not a simple suggestion. This is a requirement. Most people when asked to create a secure password, with everything they've heard about creating a password, will still create a password that if used for a brainwallet, will result in the eventual theft of their funds. <strong>The simple fact of the matter is that hacking a brainwallet password is a mathematical exercise that requires no internet access, no communication, and leaves no trace</strong>, so hackers can collectively try multiple trillions of passwords every second in the privacy of their own homes with the very same equipment they use for mining bitcoins (in the usual sense). Your bank might tell you that a 10 character password with uppercase, lowercase, numbers and symbols is a strong password, but it is not strong enough to secure a brainwallet. A password that might be strong enough for traditional banking or a social website is typically unacceptable for a brainwallet.</p>
+  <p>A brainwallet passphrase, at a minimum, <strong>needs to be an entirely original sentence that does not appear in any song or literature.</strong> Security is enhanced simply by including some sort of memorable personal information, which doesn't necessarily even have to be secret (e.g. an e-mail address, or phone number). A good brainwallet passphrase will have dozens of characters.</p>
+</div>
 {{/if}}
 {{/unless}}
