@@ -75,6 +75,11 @@ export default Ember.Service.extend({
     return parseInt((this.get('addressData.balance')||'').replace('.', ''));
   }.property('addressData.balance'),
 
+  balanceBtc: function() {
+    var balance = this.get('balance') || 0;
+    return (balance/100000000).toFixed(8);
+  }.property('balance'),
+
   unspent: [],
 
   updateBalance: function() {

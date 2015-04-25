@@ -5,18 +5,18 @@
     </div>
     <div id='navbar' class='navbar-collapse collapse'>
       <ul class='nav navbar-nav'>
-        <li>{{link-to 'ubi' 'ubi'}}</li>
-        <li>{{link-to 'about' 'about'}}</li>
-        <li><a target='reddit' href='https://reddit.com/r/FairShare'>reddit</a></li>
-        <li><a target='changetip' href='https://PoliticBot.tip.me'>changetip</a></li>
-        <li><a target='github' href='https://github.com/Fair-Share'>github</a></li>
+        <li>{{#link-to 'about' title='About FairShare'}}<span class='glyphicon glyphicon-info-sign'></span>{{/link-to}}</li>
+        <li><a target='reddit' href='https://reddit.com/r/FairShare' title='@reddit'><span class='glyphicon glyphicon-comment'></span></a></li>
+        <li>{{#link-to 'ubi' title='Universal Basic Income'}}<span class='glyphicon glyphicon-transfer'></span>{{/link-to}}</li>
       </ul>
       <ul class='nav navbar-nav navbar-right'>
-        <li>{{link-to 'Privacy Policy' 'privacy'}}</li>
+        {{#if auth.address}}
+          <li>{{#link-to 'btc.address' auth.addressString}}<span class='glyphicon glyphicon-bitcoin'></span> {{auth.balanceBtc}}{{/link-to}}</li>
+        {{/if}}
         <li>{{#if user}}
-          <a title='logout' {{action 'logout'}}>Logout: {{user.name}}</a>
+          <a title='Logout of reddit' {{action 'logout'}}>L<span class='glyphicon glyphicon-user'></span> {{user.name}}</a>
         {{else}}
-          <a title='Login' class='dontintercept' {{bind-attr href=loginUrl}}>Login at reddit</a>
+          <a title='Login with reddit' class='dontintercept' {{bind-attr href=loginUrl}} title='with reddit'><span class='glyphicon glyphicon-user'></span></a>
         {{/if}}</li>
       </ul>
     </div>
@@ -28,7 +28,7 @@
   <div class='container'>
     {{#if auth.addressData.total_txs}}
       {{#link-to 'btc.address' auth.addressString tagName='button' class='btn form-control' classNameBindings="auth.addressData.total_txs:btn-success:btn-default"}}
-        {{auth.address}} - Balance: {{auth.balance}} satoshi
+        Balance {{auth.address}}
       {{/link-to}}
     {{else}}
       <div class='row'>
@@ -49,5 +49,6 @@
   <hr>
 </footer>
 <footer id='footer'>
-All code and concepts are licensed under <a href='http://www.wtfpl.net' target='license'>WTFPLv2</a>.  Build something!
+  <h4>{{#link-to 'privacy'}}<span class='glyphicon glyphicon-eye-close'></span> FairShare Privacy Policy <span class='glyphicon glyphicon-eye-close'></span>{{/link-to}}</h4>
+  <h5>All <a target='github' href='https://github.com/Fair-Share'>code and concepts</a> are licensed under <a href='http://www.wtfpl.net' target='license'>WTFPLv2</a>.  Build something!</h5>
 </footer>

@@ -11,7 +11,7 @@ export default Ember.Component.extend({
     if (arguments.length > 1) {return value;}
     var balance = this.get('auth.balance');
     if (!balance) {return 'No balance available!';}
-    return balance + ' satoshi available';
+    return balance + ' available';
   }.property('auth.balance'),
 
   isValid: function() {

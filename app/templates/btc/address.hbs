@@ -1,15 +1,20 @@
 <div class='row address-page'>
   <div class='col-md-4'>
     {{#if isMine}}
-      <h2>My BrainWallet</h2>
+      <h2><span class='glyphicon glyphicon-piggy-bank'></span> My Brain Wallet</h2>
+      <hr>
+      {{qr-code value=model.address}}
     {{else}}
-      <h2>Send BTC</h2>
+      <h2>Send Bitcoin</h2>
+      <hr>
+      {{qr-code value=model.address}}
+      <hr>
       {{send-btc dest=model.address}}
     {{/if}}
-    {{qr-code value=model.address}}
   </div>
   <div class='col-md-8'>
-    <h2>{{model.address}}</h2>
+    <h2><span class='glyphicon glyphicon-bitcoin'></span> {{model.address}}</h2>
+    <hr>
     <h3>Total Transactions: {{model.total_txs}}</h3>
     <h3>Received: {{model.received_value}} {{model.network}}</h3>
     <h3>Pending: {{model.pending_value}} {{model.network}}</h3>
