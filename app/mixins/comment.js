@@ -10,7 +10,7 @@ export default Ember.Mixin.create({
   }.property('comment.body_html'),
 
   message: function() {
-    var lines = (this.get('comment.body') || '').split('\n');
+    var lines = (this.get('comment.body') || '').trim().split('\n');
     lines = lines.splice(1);
     lines.pop();
     return lines.join('\n').trim();
@@ -45,10 +45,13 @@ export default Ember.Mixin.create({
 
   isSigned: function() {
     if (!this.get('address') || !this.get('signature')) {return;}
-    return this.get('bitcore').verifySignature(this.get('plaintext'), this.get('address'), this.get('signature'));
+    var isSigned = this.get('bitcore').verifySignature(this.get('plaintext'), this.get('address'), this.get('signature'));
+    if (!isSigned) {console.log('err', this.get('address') + '', this.get('plaintext'));}
+    return isSigned;
   }.property('plaintext', 'signature', 'address'),
 
   signature: function() {
-    return this.get('parsedBody').find(this.get('signatureSelector')).text();
+    var sig = this.get('parsedBody').find(this.get('signatureSelector')).text().trim();
+    return sig;
   }.property('parsedBody')
 })

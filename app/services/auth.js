@@ -77,7 +77,7 @@ export default Ember.Service.extend({
 
   balanceBtc: function() {
     var balance = this.get('balance') || 0;
-    return (balance/100000000).toFixed(8);
+    return (balance/100000000).toFixed();
   }.property('balance'),
 
   unspent: [],
@@ -116,13 +116,13 @@ export default Ember.Service.extend({
     var privateKey = this.get('privateKey');
     var address = this.get('address');
     if (!address) {return;}
+    message = this.get('bitcore').normalizeMarkdown(datedMessage);
     var signature = this.get('bitcore').signMessage(message, privateKey);
     var markdown =  [
       '**[^^^^(' + address + ')](https://fair-share.github.io/#/btc/addr/' + address + ')**',
       datedMessage,
       '*^^^^(' + signature + ')*'
     ].join('\n\n');
-    message = this.get('bitcore').normalizeMarkdown(datedMessage);
     return {
       dated: datedMessage,
       signature: signature,
