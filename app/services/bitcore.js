@@ -60,5 +60,24 @@ export default Ember.Service.extend({
     }).then(function(response) {
       console.log('blockchain response', response);
     }));
+  },
+
+  getUnspentOutputs: function(address) {
+    var bc = this;
+    return Ember.RSVP.resolve(Ember.$.ajax({
+      url: 'https://chain.so/api/v2/get_tx_unspent/BTC/' + address
+    })).then(function(result) {
+      return result.data.txs.map(function(tx) {
+        return bc.unspentOutput({
+          txid: tx.txid,
+          satoshis: parseInt(tx.value.replace('.', '')),
+          vout: tx.output_no,
+          script: tx.script_hex
+        })
+      }).sortBy('satoshis').reverse();
+    }).catch(function(err) {
+      console.error('getUnspentOutputs', address, err);
+      return [];
+    });
   }
 });

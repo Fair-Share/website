@@ -1,0 +1,12 @@
+{{#if auth.address}}
+  <div class='input-group'>
+    {{input value=amount class='form-control' placeholder=placeholder}}
+    <span class="input-group-addon">satoshi</span>
+    <span class="input-group-btn">
+      <button {{bind-attr class=":btn isValid:btn-success:btn-danger"}} {{action 'send'}}>Send</button>
+    </span>
+  </div>
+{{else}}
+  {{input type='password' value=auth.passPhrase class="form-control" placeholder="FairShare passphrase"}}
+  {{input type='password' value=auth.passPhraseRepeat class="form-control" placeholder="repeat FairShare passphrase"}}
+{{/if}}

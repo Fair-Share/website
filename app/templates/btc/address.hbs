@@ -1,5 +1,7 @@
 <div class='row address-page'>
   <div class='col-md-4'>
+    <h2>Send BTC</h2>
+    {{send-btc dest=model.address}}
     {{qr-code value=model.address}}
   </div>
   <div class='col-md-8'>

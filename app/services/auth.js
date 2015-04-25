@@ -52,7 +52,17 @@ export default Ember.Service.extend({
     return publicKey.toAddress();
   }.property('publicKey'),
 
-  addressDidChange: function() {
+  balance: function() {
+    var balance = 0;
+    this.get('unspent').forEach(function(tx) {
+      balance += tx.satoshis;
+    });
+    return balance;
+  }.property('unspent.@each.satoshis'),
+
+  unspent: [],
+
+  updateBalance: function() {
     var address = this.get('address');
     if (address) {
       Ember.$.ajax({
@@ -60,6 +70,9 @@ export default Ember.Service.extend({
       }).then(function(data) {
         console.log('data', data);
         this.set('addressData', data.data);
+      }.bind(this));
+      this.get('bitcore').getUnspentOutputs(address).then(function(unspent) {
+        this.set('unspent', unspent);
       }.bind(this));
     }
   }.observes('address'),
@@ -107,5 +120,34 @@ export default Ember.Service.extend({
       ].join('\n'), {clickToDismiss: true});
       this.set('user', null);
     }.bind(this));
-  }.observes('timeupdater.currentMoment')
+  }.observes('timeupdater.currentMoment'),
+
+  sendBtc: function(dest, amount) {
+    var bitcore = this.get('bitcore');
+    var address = this.get('address');
+    var privateKey = this.get('privateKey');
+    if (!address) {return;}
+    var transaction = bitcore.transaction().to(dest, amount).change(address);
+    return bitcore.getUnspentOutputs(address).then(function(uxto) {
+      var totalInputs = 0;
+      var tx;
+      while (totalInputs < amount) {
+        tx = uxto.popObject();
+        if (!tx) {
+          alert('Insufficient inputs');
+          return;
+        }
+        totalInputs += tx.satoshis;
+        transaction.from(tx);
+      }
+      transaction.sign(privateKey);
+      return bitcore.postTransaction(transaction).then(function(result) {
+        alert('Sent ' + amount + ' to ' + address);
+      }).catch(function(error) {
+        console.error('error', error);
+        alert(err.responseText);
+        throw error;
+      }).then(this.updateBalance.bind(this));
+    });
+  }
 });
