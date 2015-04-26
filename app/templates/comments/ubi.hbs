@@ -1,15 +1,11 @@
 <div class='row'>
-  <div class='col-md-6'>
+  <div class='col-md-4'>
     <h2>{{beneficiaries.length}} Beneficiaries</h2>
     <h4>FairShare Estimate {{shareTotal.bits}} bits / ${{shareTotal.usd}}</h4>
     <hr>
     {{#if requestComment}}
-      <h3>FairShare Requested</h3>
-      {{display-comment comment=requestComment}}
-      <hr>
-      <h4>Comment Again Anyway</h4>
-      <p>Primarily for testing purposes</p>
-      <p>Still Just 1 FairShare per person</p>
+      <h3>FairShare Already Requested</h3>
+      <p>You may comment again, but you will only receive 1 FairShare</p>
       {{sign-comment  thingId=model.name
                       hideMarkdown=false
                       statusMessage='Requesting FairShare...'
@@ -35,20 +31,15 @@
         <button class='btn btn-danger form-control' {{action 'doDistribution'}}>Do Distribution</button>
       {{/if}}
       {{else}}
-        {{#if user.name}}
-          <h3>Request FairShare</h3>
-          {{sign-comment  thingId=model.name
-                          hideMarkdown=false
-                          statusMessage='Requesting FairShare...'
-                          buttonText='Request FairShare'
-                          comments=model.comments}}
-        {{else}}
-          <a {{bind-attr href=auth.loginUrl}} class='btn btn-success form-control dontintercept'>Login at reddit to request FairShare</a>
-        {{/if}}
+        {{sign-comment  thingId=model.name
+                        hideMarkdown=false
+                        statusMessage='Requesting FairShare...'
+                        buttonText='Request FairShare'
+                        comments=model.comments}}
       {{/if}}
     {{/if}}
     {{#unless isDistributing}}<hr>{{{subreddit.wiki.content_html}}}{{/unless}}
-  </div><div class='col-md-6'>
+  </div><div class='col-md-4'>
     <h2>Income Escrow</h2>
     <h4>Estimated Total: {{collectiveTotal.btc}} BTC / ${{collectiveTotal.usd}}</h4>
     <hr>
@@ -115,6 +106,28 @@
         {{/each}}
         </tbody>
       </table>
+      {{#if myCommentItems.length}}
+        <h3>My Comments</h3>
+        <ul class='media-list comments'>
+        {{#each item in myCommentItems}}
+          <li class="media">
+            {{display-comment comment=item.comment}}
+          </li>
+        {{/each}}
+        </ul>
+      {{/if}}
     {{/if}}
+  </div>
+  <div class='col-md-4'>
+    <h2>{{model.num_comments}} Comments</h2>
+    <h4>{{model.comments.length}} Top-Level</h4>
+    <hr>
+    <ul class='media-list comments'>
+      {{#each comment in model.comments}}
+        <li class="media">
+          {{display-comment comment=comment}}
+        </li>
+      {{/each}}
+    </ul>
   </div>
 </div>

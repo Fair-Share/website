@@ -29,9 +29,6 @@ export default Ember.Route.extend({
       return getMoreComments().then(function() {return post;});
     }).then(function(post) {
       post.persons = post.comments.getEach('author').uniq().without('PoliticBot').without('[deleted]');
-      post.comments = post.persons.map(function(name) {
-        return post.comments.findProperty('author', name);
-      });
       return post;
     });
   }

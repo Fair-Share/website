@@ -9,7 +9,7 @@ export default Ember.Route.extend({
       result.data.subreddit = result.data.display_name;
       return result.data;
     });
-  },
+  }/*,
   afterModel: function(model) {
     return client('/r/' + model.subreddit + '/wiki/roll.json').get({}, {
       bypassAuth: true
@@ -29,5 +29,5 @@ export default Ember.Route.extend({
         };
       }));
     });
-  }
+  }**/
 });

@@ -1,7 +1,7 @@
 import Ember from 'ember';
-import CommentMixin from 'fairshare-site/mixins/comment';
+import CommentsMixin from 'fairshare-site/mixins/comments';
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(CommentsMixin, {
   auth: Ember.inject.service(),
   bitcore: Ember.inject.service(),
   user : Ember.computed.alias('auth.user'),
@@ -70,21 +70,6 @@ export default Ember.Controller.extend({
   fairShare: function() {
     return Math.floor(this.get('totalDistribution') / this.get('uniqueSignatures.length'));
   }.property('totalDistribution', 'uniqueSignatures.length'),
-
-  commentItems: Ember.computed.map('model.comments', function(comment) {
-    return Ember.Object.createWithMixins(CommentMixin, {
-      comment: comment,
-      container: this.get('container')
-    });
-  }),
-
-  signedItems: Ember.computed.filterProperty('commentItems', 'isSigned', true),
-
-  rawSignatories: Ember.computed.mapBy('signedItems', 'comment.author'),
-  signatories: Ember.computed.uniq('rawSignatories'),
-  uniqueSignatures: Ember.computed.map('signatories', function(username) {
-    return this.get('signedItems').findProperty('comment.author', username);
-  }),
 
   transaction: function() {
     var transaction = this.get('bitcore').transaction();

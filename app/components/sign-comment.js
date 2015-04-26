@@ -40,6 +40,7 @@ export default Ember.Component.extend({
         console.error(error);
         alert('Error making comment', error);
       }).finally(function() {
+        this.set('message', '');
         this.set('isCommenting', false)
       }.bind(this));
     }

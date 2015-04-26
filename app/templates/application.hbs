@@ -32,24 +32,21 @@
         Balance {{auth.address}}
       {{/link-to}}
     {{else}}
-      <div class='row'>
-        <div class='col-sm-6'>
-          {{input type='password' value=auth.passPhrase class="form-control" placeholder="FairShare passphrase"}}
-        </div><div class='col-sm-6'>
-          {{#if auth.address}}
-            {{#link-to 'btc.address' auth.addressString tagName='button' class='btn form-control' classNameBindings="auth.addressData.total_txs:btn-success:btn-default"}}
-              Balance: {{auth.balance}} satoshi
-            {{/link-to}}
-          {{else}}
-            {{input type='password' value=auth.passPhraseRepeat class="form-control" placeholder="Repeat FairShare passphrase"}}
-          {{/if}}
-        </div>
+      <div class="input-group">
+        <span class="input-group-addon">
+          {{input type='checkbox' checked=showPassPhrase title='Toggle Passphrase Visibility'}}
+        </span>
+        {{#if showPassPhrase}}
+          {{input value=auth.passPhrase class="form-control" placeholder="Your FairShare passphrase (will show)"}}
+        {{else}}
+          {{input type='password' value=auth.passPhrase class="form-control" placeholder="Your FairShare passphrase (hidden)"}}
+        {{/if}}
       </div>
     {{/if}}
   </div>
   <hr>
 </footer>
 <footer id='footer'>
-  <h4>{{#link-to 'privacy'}}<span class='glyphicon glyphicon-eye-close'></span> FairShare Privacy Policy <span class='glyphicon glyphicon-eye-close'></span>{{/link-to}}</h4>
   <h5>All <a target='github' href='https://github.com/Fair-Share'>code and concepts</a> are licensed under <a href='http://www.wtfpl.net' target='license'>WTFPLv2</a>.  Build something!</h5>
+  <h4>{{#link-to 'privacy'}}<span class='glyphicon glyphicon-eye-close'></span> FairShare Privacy Policy <span class='glyphicon glyphicon-eye-close'></span>{{/link-to}}</h4>
 </footer>

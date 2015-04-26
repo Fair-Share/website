@@ -1,3 +1,6 @@
+{{#unless auth.user.name}}
+  <a {{bind-attr href=auth.loginUrl}} class='btn btn-danger form-control dontintercept'>Login at reddit to {{buttonText}}</a>
+{{/unless}}
 {{#unless fixedMessage}}
 {{textarea value=message placeholder=placeholder class='form-control'}}
 {{/unless}}

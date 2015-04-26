@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import CommentsMixin from 'fairshare-site/mixins/comments';
 
-export default Ember.ObjectController.extend({
+export default Ember.ObjectController.extend(CommentsMixin, {
   needs: ['subreddit'],
   subreddit: Ember.computed.alias('controllers.subreddit.model'),
   auth: Ember.inject.service(),

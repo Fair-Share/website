@@ -1,45 +1,38 @@
 <div class='row'>
   <div class='col-md-4'>
+    <h2>Blockchain UBI</h2>
+    <hr>
+    {{sign-comment  thingId=model.name
+                    hideMarkdown=false
+                    statusMessage='Requesting FairShare...'
+                    buttonText='Request FairShare'
+                    comments=model.comments}}
+    <hr>
+    {{#if myCommentItems.length}}
+      <h3>My Comments</h3>
+      <ul class='media-list comments'>
+      {{#each item in myCommentItems}}
+        <li class="media">
+          {{display-comment comment=item.comment}}
+        </li>
+      {{/each}}
+      </ul>
+    {{/if}}
+  </div>
+  <div class='col-md-4'>
     <h2>Income Escrow</h2>
     <hr>
     {{#link-to 'btc.address' escrow.address}}{{qr-code value=escrow.address}}{{/link-to}}
     <hr>
     <h5>{{link-to escrow.address 'btc.address' escrow.address}}</h5>
-    {{send-btc dest=escrow.address}}
-
-    <h3>{{transactionObj.inputs.length}} Inputs</h3>
-    {{#each input in transactionObj.inputs}}
+    {{#if isDistributing}}
       <hr>
-      <h4>{{input.output.satoshis}} satoshi</h4>
-      <pre>{{input.output.script}}</pre>
-    {{/each}}
-    <h3>{{transactionObj.outputs.length}} Outputs</h3>
-    {{#each output in transactionObj.outputs}}
-      <hr>
-      <h4>{{output.satoshis}} satoshi</h4>
-      <pre>{{output.script}}</pre>
-    {{/each}}
-  </div>
-  <div class='col-md-4'>
-    <h2>{{uniqueSignatures.length}} Addresses</h2>
-    <hr>
-    <ul class='media-list comments'>
-    {{#each item in uniqueSignatures}}
-      <li class="media">
-        {{display-comment comment=item.comment hideMessage=true}}
-        {{item.address}}
-      </li>
-    {{/each}}
-    </ul>
-  </div>
-  <div class='col-md-4'>
-    <h2>Blockchain UBI</h2>
-    <hr>
-    <div class='input-group'>
-      <span class="input-group-addon">Balance: {{balance}} satoshi</span>
-      {{input value=percentage class='form-control'}}
-      <span class="input-group-addon">Percent</span>
-    </div>
+      <button {{action 'postTransaction'}} class='btn btn-danger form-control'>
+        Post to Blockchain
+      </button>
+    {{else}}
+      {{send-btc dest=escrow.address}}
+    {{/if}}
     <h3>FairShare: {{fairShare}} satoshi</h3>
     <table class='table'>
       <tbody>
@@ -58,18 +51,22 @@
         </tr>
       </tbody>
     </table>
+    <div class='input-group'>
+      <span class="input-group-addon">Balance: {{balance}} satoshi</span>
+      {{input value=percentage class='form-control'}}
+      <span class="input-group-addon">Percent</span>
+    </div>
+  </div>
+  <div class='col-md-4'>
+    <h2>{{uniqueSignatures.length}} Addresses</h2>
     <hr>
-    {{#if isDistributing}}
-      <button {{action 'postTransaction'}} class='btn btn-danger form-control'>
-        Post to Blockchain
-      </button>
-      <hr>
-    {{/if}}
-    <h1>JSON</h1>
-    <pre>{{transactionJsonString}}</pre>
-
-    <h1>Hexadecimal</h1>
-    <pre>{{transactionString}}</pre>
-
+    <ul class='media-list comments'>
+    {{#each item in uniqueSignatures}}
+      <li class="media">
+        {{display-comment comment=item.comment hideMessage=true}}
+        {{item.address}}
+      </li>
+    {{/each}}
+    </ul>
   </div>
 </div>

@@ -4,6 +4,12 @@ import client from 'fairshare-site/client';
 export default Ember.Route.extend({
   auth: Ember.inject.service(),
 
+  renderTemplate: function() {
+    this.render({
+      into: 'thread'
+    });
+  },
+
   beforeModel: function(model) {
     var subreddit = this.modelFor('subreddit');
     var post = this.modelFor('thread');
