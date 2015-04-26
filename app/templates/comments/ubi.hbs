@@ -6,6 +6,15 @@
     {{#if requestComment}}
       <h3>FairShare Requested</h3>
       {{display-comment comment=requestComment}}
+      <hr>
+      <h4>Comment Again Anyway</h4>
+      <p>Primarily for testing purposes</p>
+      <p>Still Just 1 FairShare per person</p>
+      {{sign-comment  thingId=model.name
+                      hideMarkdown=false
+                      statusMessage='Requesting FairShare...'
+                      buttonText='Request FairShare'
+                      comments=model.comments}}
     {{else}}
       {{#if isDistributing}}
         <h3>Tip Commands (Limit of {{maxCoins}})</h3>
@@ -107,22 +116,5 @@
         </tbody>
       </table>
     {{/if}}
-    {{!--{{#if user}}
-      {{#if requestComment}}
-        <span class='label label-success form-control'>You have already requested a FairShare</span>
-      {{else}}
-        {{#if isRequesting}}
-          <span class='label label-warning form-control'>Requesting FairShare...</span>
-        {{else}}
-        {{textarea
-            value=newCommentText
-            placeholder="Free Bitcoin with a side of Speech."
-            class='form-control'}}
-        <button class='btn btn-default form-control' {{action 'makeRequest'}}>Request Your FairShare</button>
-        {{/if}}
-      {{/if}}
-    {{else}}
-      <a title='Login' {{bind-attr href=loginUrl}}><button class='btn btn-default form-control'>Login to Request Your FairShare</button></a>
-    {{/if}}--}}
   </div>
 </div>
