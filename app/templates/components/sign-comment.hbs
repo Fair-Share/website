@@ -6,7 +6,16 @@
 {{/unless}}
 {{#unless isCommenting}}
 {{#unless auth.addressData.total_txs}}
-{{input type='password' value=auth.passPhrase class="form-control" placeholder="Your FairShare passphrase" action='makeComment'}}
+  <div class="input-group">
+    {{#if auth.showPassPhrase}}
+      {{input value=auth.passPhrase class="form-control" placeholder="FairShare passphrase"}}
+    {{else}}
+      {{input type='password' value=auth.passPhrase class="form-control" placeholder="FairShare passphrase"}}
+    {{/if}}
+    <span class="input-group-addon" title='Toggle Passphrase Visibility'>
+      {{input type='checkbox' checked=auth.showPassPhrase}}
+    </span>
+  </div>
 {{/unless}}
 {{#if address}}
   <button
@@ -15,7 +24,7 @@
   >{{buttonText}}</button>
 {{else}}
   {{#unless auth.addressData.total_txs}}
-    {{input type='text' value=auth.passPhraseRepeat class="form-control" placeholder="If this is a new passphrase, repeat here" action='makeComment'}}
+    {{input type='text' value=auth.passPhraseRepeat class="form-control" placeholder="Repeat new passphrase here" action='makeComment'}}
   {{/unless}}
 {{/if}}
 <div class="input-group">

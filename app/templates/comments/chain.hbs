@@ -23,15 +23,11 @@
     <h2>Income Escrow</h2>
     <hr>
     <h5>{{link-to escrow.address 'btc.address' escrow.address}}</h5>
-    {{#if isDistributing}}
-      <hr>
-      <button {{action 'postTransaction'}} class='btn btn-danger form-control'>
-        Post to Blockchain
-      </button>
-    {{else}}
-      {{send-btc dest=escrow.address}}
-    {{/if}}
-    <h3>FairShare: {{fairShare}} satoshi</h3>
+    <div class='input-group'>
+      <span class="input-group-addon">Balance: {{balance}} satoshi</span>
+      {{input value=percentage class='form-control'}}
+      <span class="input-group-addon">Percent</span>
+    </div>
     <table class='table'>
       <tbody>
         <tr>
@@ -46,14 +42,19 @@
         </tr><tr>
           <th>Total</th>
           <th>{{totalInputs}}</th>
+        </tr><tr>
+          <th><h3>FairShare</h3></th>
+          <th><h3>{{fairShare}}</h3></th>
         </tr>
       </tbody>
     </table>
-    <div class='input-group'>
-      <span class="input-group-addon">Balance: {{balance}} satoshi</span>
-      {{input value=percentage class='form-control'}}
-      <span class="input-group-addon">Percent</span>
-    </div>
+    {{#if isDistributing}}
+      <button {{action 'postTransaction'}} class='btn btn-danger form-control'>
+        Post to Blockchain
+      </button>
+    {{else}}
+      {{send-btc dest=escrow.address}}
+    {{/if}}
     <hr>
     {{#link-to 'btc.address' escrow.address}}{{qr-code value=escrow.address}}{{/link-to}}
   </div>

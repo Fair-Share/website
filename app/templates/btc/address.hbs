@@ -15,10 +15,11 @@
   <div class='col-md-8'>
     <h2><span class='glyphicon glyphicon-bitcoin'></span> {{model.address}}</h2>
     <hr>
+    <h1>Balance: {{model.balance}} {{model.network}}</h1>
+    <hr>
     <h3>Total Transactions: {{model.total_txs}}</h3>
     <h3>Received: {{model.received_value}} {{model.network}}</h3>
     <h3>Pending: {{model.pending_value}} {{model.network}}</h3>
-    <h1>Balance: {{model.balance}} {{model.network}}</h1>
     {{#if model.txs.length}}
       <hr>
       {{#each tx in model.txs}}

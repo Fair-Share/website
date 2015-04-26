@@ -38,7 +38,6 @@
                         comments=model.comments}}
       {{/if}}
     {{/if}}
-    {{#unless isDistributing}}<hr>{{{subreddit.wiki.content_html}}}{{/unless}}
   </div><div class='col-md-4'>
     <h2>Income Escrow</h2>
     <h4>Estimated Total: {{collectiveTotal.btc}} BTC / ${{collectiveTotal.usd}}</h4>
@@ -89,6 +88,7 @@
 {{/each}}
 </pre>
     {{else}}
+      {{#unless isDistributing}}{{{subreddit.wiki.content_html}}}{{/unless}}
       <table class='table'>
         <thead>
           <tr>
