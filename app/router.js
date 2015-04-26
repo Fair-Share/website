@@ -28,7 +28,8 @@ export default Router.map(function() {
         this.resource('comments', function() {
           this.route('sign');
           this.route('ubi');
-          this.route('chain');
+          this.route('chainRedirect', {path: '/chain'});
+          this.route('chain', {path: '/chain/:address'});
         });
       });
     })

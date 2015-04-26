@@ -7,7 +7,7 @@ export default Ember.Route.extend({
   user : Ember.computed.alias('auth.user'),
 
   model: function(args) {
-    var address = this.get('auth.address') || '1JBbuhbsnou187vsQX8M9xHX64HWCAEpJi';
+    var address = args.address || '1JBbuhbsnou187vsQX8M9xHX64HWCAEpJi';
     return Ember.$.ajax({
       url: 'https://chain.so/api/v2/address/btc/' + address
     }).then(function(data) {
