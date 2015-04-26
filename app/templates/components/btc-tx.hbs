@@ -1,0 +1,57 @@
+<h5>{{tx.txid}}</h5>
+<h3>{{#if tx.block_no}}Block #{{tx.block_no}} {{/if}}{{ago tx.time 'X'}} {{tx.confirmations}} Confirmations</h3>
+<table class='table'>
+{{#if tx.outgoing.value}}
+  <thead>
+    <tr>
+      <th colspan='2'>
+        <h4>{{tx.outgoing.outputs.length}} Outputs {{tx.outgoing.value}} BTC</h4>
+      </th>
+    </tr>
+  </thead>
+  <thead>
+    <tr>
+      <th>Amount (BTC)</th>
+      <th>Address</th>
+    </tr>
+  </thead><tbody>
+  {{#each output in outputs}}
+    <tr>
+      <td>{{output.value}}</td>
+      <td>{{link-to output.address 'btc.address' output.address}}</td>
+    </tr>
+  {{/each}}
+  </tbody>
+  {{#if changeOutputs.length}}
+    <thead>
+      <tr>
+        <th>Change Amount (BTC)</th>
+        <th>Address</th>
+      </tr>
+    </thead><tbody>
+    {{#each output in changeOutputs}}
+      <tr>
+        <td>{{output.value}}</td>
+        <td>{{link-to output.address 'btc.address' output.address}}</td>
+      </tr>
+    {{/each}}
+    </tbody>
+  {{/if}}
+{{/if}}
+{{#if tx.incoming.value}}
+  <thead>
+    <tr>
+      <th colspan='2'>
+        <h4>{{tx.incoming.inputs.length}} Inputs {{tx.incoming.value}} BTC</h4>
+      </th>
+    </tr>
+    <tr><th colspan='2'>Received From transaction</th></tr>
+  </thead><tbody>
+  {{#each input in tx.incoming.inputs}}
+    <tr>
+      <td colspan='2'>{{input.received_from.txid}}</td>
+    </tr>
+  {{/each}}
+  </tbody>
+{{/if}}
+</table>
