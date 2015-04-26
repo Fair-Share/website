@@ -3,6 +3,17 @@
     {{#if isMine}}
       <h2><span class='glyphicon glyphicon-piggy-bank'></span> My Brain Wallet</h2>
       <hr>
+      {{#link-to 'comments.chain' 'GetFairShare' 'sticky' model.address
+              class='btn btn-success btn-lg btn-block'}}
+          FairShare this
+
+          <span class='glyphicon glyphicon-user'></span>
+          <span class='glyphicon glyphicon-piggy-bank'></span>
+          <span class='glyphicon glyphicon-bitcoin'></span>
+          <span class='glyphicon glyphicon-transfer'></span>
+          <span class='glyphicon glyphicon-globe'></span>
+      {{/link-to}}
+      <hr>
       {{qr-code value=model.address}}
     {{else}}
       <h2>Send Bitcoin</h2>
