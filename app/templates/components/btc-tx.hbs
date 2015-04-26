@@ -1,11 +1,11 @@
-<h5>{{tx.txid}}</h5>
+<h5>{{link-to tx.txid 'btc.tx' tx.txid}}</h5>
 <h3>{{#if tx.block_no}}Block #{{tx.block_no}} {{/if}}{{ago tx.time 'X'}} {{tx.confirmations}} Confirmations</h3>
 <table class='table'>
-{{#if tx.outgoing.value}}
+{{#if txOutputs.length}}
   <thead>
     <tr>
       <th colspan='2'>
-        <h4>{{tx.outgoing.outputs.length}} Outputs {{tx.outgoing.value}} BTC</h4>
+        <h4>{{txOutputs.length}} Outputs {{tx.outgoing.value}} BTC</h4>
       </th>
     </tr>
   </thead>
@@ -38,18 +38,22 @@
     </tbody>
   {{/if}}
 {{/if}}
-{{#if tx.incoming.value}}
+{{#if txInputs.length}}
   <thead>
     <tr>
       <th colspan='2'>
-        <h4>{{tx.incoming.inputs.length}} Inputs {{tx.incoming.value}} BTC</h4>
+        <h4>{{txInputs.length}} Inputs {{tx.incoming.value}} BTC</h4>
       </th>
     </tr>
-    <tr><th colspan='2'>Received From transaction</th></tr>
-  </thead><tbody>
-  {{#each input in tx.incoming.inputs}}
     <tr>
-      <td colspan='2'>{{input.received_from.txid}}</td>
+      <th>Address</th>
+      <th>Transaction</th>
+    </tr>
+  </thead><tbody>
+  {{#each input in txInputs}}
+    <tr>
+      <td>{{link-to input.address 'btc.address' input.address}}</td>
+      <td>{{link-to input.from_output.txid 'btc.tx' input.from_output.txid}}</td>
     </tr>
   {{/each}}
   </tbody>

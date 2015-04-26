@@ -3,24 +3,11 @@
     {{#if isMine}}
       <h2><span class='glyphicon glyphicon-piggy-bank'></span> My Brain Wallet</h2>
       <hr>
-      {{#link-to 'comments.chain' 'GetFairShare' 'sticky' model.address
-              class='btn btn-success btn-lg btn-block'}}
-          FairShare this
-
-          <span class='glyphicon glyphicon-user'></span>
-          <span class='glyphicon glyphicon-piggy-bank'></span>
-          <span class='glyphicon glyphicon-bitcoin'></span>
-          <span class='glyphicon glyphicon-transfer'></span>
-          <span class='glyphicon glyphicon-globe'></span>
-      {{/link-to}}
-      <hr>
       {{qr-code value=model.address}}
     {{else}}
       <h2>Send Bitcoin</h2>
       <hr>
       {{qr-code value=model.address}}
-      <hr>
-      {{send-btc dest=model.address}}
     {{/if}}
   </div>
   <div class='col-md-8'>
@@ -31,11 +18,23 @@
     <h3>Total Transactions: {{model.total_txs}}</h3>
     <h3>Received: {{model.received_value}} {{model.network}}</h3>
     <h3>Pending: {{model.pending_value}} {{model.network}}</h3>
-    {{#if model.txs.length}}
-      <hr>
-      {{#each tx in model.txs}}
-        {{btc-tx tx=tx class='well'}}
-      {{/each}}
-    {{/if}}
+    {{#if isMine}}
+      {{#link-to 'comments.chain' 'GetFairShare' 'sticky' model.address
+              class='btn btn-success btn-lg btn-block'}}
+          FairShare from My Brain Wallet
+
+          <span class='glyphicon glyphicon-user'></span>
+          <span class='glyphicon glyphicon-piggy-bank'></span>
+          <span class='glyphicon glyphicon-bitcoin'></span>
+          <span class='glyphicon glyphicon-transfer'></span>
+          <span class='glyphicon glyphicon-globe'></span>
+      {{/link-to}}
+    {{else}}{{send-btc dest=model.address}}{{/if}}
   </div>
 </div>
+{{#if model.txs.length}}
+  <hr>
+  {{#each tx in model.txs}}
+    {{btc-tx tx=tx class='well'}}
+  {{/each}}
+{{/if}}
