@@ -20,32 +20,27 @@
           <a title='Login with reddit' class='dontintercept' {{bind-attr href=loginUrl}} title='with reddit'><span class='glyphicon glyphicon-user'></span></a>
         {{/if}}</li>
       </ul>
+      {{#unless auth.address}}
+        <form class="navbar-form navbar-right">
+          <div class="form-group">
+            <div class="input-group">
+              {{#if showPassPhrase}}
+                {{input value=auth.passPhrase class="form-control" placeholder="FairShare passphrase"}}
+              {{else}}
+                {{input type='password' value=auth.passPhrase class="form-control" placeholder="FairShare passphrase"}}
+              {{/if}}
+              <span class="input-group-addon" title='Toggle Passphrase Visibility'>
+                {{input type='checkbox' checked=showPassPhrase}}
+              </span>
+            </div>
+          </div>
+        </form>
+      {{/unless}}
     </div>
   </div>
 </div>
 <div id='maincontainer' class='container'>{{outlet}}</div>
-<footer class='footer'>
-  <hr>
-  <div class='container'>
-    {{#if auth.addressData.total_txs}}
-      {{#link-to 'btc.address' auth.addressString tagName='button' class='btn form-control' classNameBindings="auth.addressData.total_txs:btn-success:btn-default"}}
-        Balance {{auth.address}}
-      {{/link-to}}
-    {{else}}
-      <div class="input-group">
-        <span class="input-group-addon">
-          {{input type='checkbox' checked=showPassPhrase title='Toggle Passphrase Visibility'}}
-        </span>
-        {{#if showPassPhrase}}
-          {{input value=auth.passPhrase class="form-control" placeholder="Your FairShare passphrase (will show)"}}
-        {{else}}
-          {{input type='password' value=auth.passPhrase class="form-control" placeholder="Your FairShare passphrase (hidden)"}}
-        {{/if}}
-      </div>
-    {{/if}}
-  </div>
-  <hr>
-</footer>
+<hr>
 <footer id='footer'>
   <h5>All <a target='github' href='https://github.com/Fair-Share'>code and concepts</a> are licensed under <a href='http://www.wtfpl.net' target='license'>WTFPLv2</a>.  Build something!</h5>
   <h4>{{#link-to 'privacy'}}<span class='glyphicon glyphicon-eye-close'></span> FairShare Privacy Policy <span class='glyphicon glyphicon-eye-close'></span>{{/link-to}}</h4>
