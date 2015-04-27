@@ -18,7 +18,7 @@ export default Ember.Component.extend({
   txInputs: Ember.computed.map('_txInputs', function(input) {
     console.log('input', input);
     var recvFrom = Ember.get(input, 'received_from');
-    if (recvFrom) {Ember.set(input, 'from_output', recvFrom)};
+    if (recvFrom) {Ember.set(input, 'from_output', recvFrom);}
     return input;
   }),
   outputs: Ember.computed.setDiff('txOutputs', 'changeOutputs')

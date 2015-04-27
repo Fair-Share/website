@@ -6,17 +6,10 @@ var Router = Ember.Router.extend({
 });
 
 export default Router.map(function() {
-  this.resource('ubi', function() {
-    this.route('thread', {path: '/:thread_id'});
-  });
-  this.resource('multisig', function() {
-    this.route('thread', {path: '/:thread_id'}, function() {
-      this.route('enroll');
-    });
-  });
+  this.resource('ubi');
   this.resource('r', function() {
     this.resource('subreddit', {path: '/:subreddit'}, function() {
-      this.resource('aboutStickyRedirect', {path: '/about/sticky'}),
+      this.resource('aboutStickyRedirect', {path: '/about/sticky'});
       this.resource('commentsThreadRedirect', {path: '/comments/:thread_id'}, function() {
         this.route('slug', {path: '/:slug'});
       });
@@ -32,7 +25,7 @@ export default Router.map(function() {
           this.route('chain', {path: '/chain/:address'});
         });
       });
-    })
+    });
   });
   this.resource('btc', function() {
     this.route('address', {path: '/addr/:address'});
@@ -49,7 +42,7 @@ window.onclick = function(e) {
   if (t && t.href && !Ember.$(t).hasClass('dontintercept') && !Ember.$(t).hasClass('ember-view')){
     var parts = t.href.split(window.location.origin, 2);
     if (parts.length <= 1) {
-      var parts = t.href.split('reddit.com', 2);
+      parts = t.href.split('reddit.com', 2);
     }
     if (parts.length > 1) {
       e.preventDefault();

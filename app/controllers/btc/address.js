@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import CommentMixin from 'fairshare-site/mixins/comment';
 
 export default Ember.Controller.extend({
   auth: Ember.inject.service(),

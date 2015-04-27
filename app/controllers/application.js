@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import client from 'fairshare-site/client';
 
 export default Ember.Controller.extend({
   queryParams: ['access_token'],

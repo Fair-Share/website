@@ -23,4 +23,4 @@ export default Ember.Mixin.create({
   uniqueSignatures: Ember.computed.map('signatories', function(username) {
     return this.get('signedItems').findProperty('comment.author', username);
   })
-})
+});

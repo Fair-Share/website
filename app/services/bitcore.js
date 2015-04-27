@@ -1,3 +1,4 @@
+/* globals require */
 import Ember from 'ember';
 
 var bitcore = require('bitcore');
@@ -73,7 +74,7 @@ export default Ember.Service.extend({
           satoshis: parseInt(tx.value.replace('.', '')),
           vout: tx.output_no,
           script: tx.script_hex
-        })
+        });
       }).sortBy('satoshis').reverse();
     }).catch(function(err) {
       console.error('getUnspentOutputs', address, err);

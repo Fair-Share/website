@@ -52,4 +52,4 @@ export default Ember.Mixin.create({
     var sig = this.get('parsedBody').find(this.get('signatureSelector')).text().trim();
     return sig;
   }.property('parsedBody')
-})
+});

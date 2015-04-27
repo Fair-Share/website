@@ -1,4 +1,3 @@
-/* globals moment */
 import Ember from 'ember';
 import client from 'fairshare-site/client';
 
@@ -41,7 +40,7 @@ export default Ember.Component.extend({
         alert('Error making comment', error);
       }).finally(function() {
         this.set('message', '');
-        this.set('isCommenting', false)
+        this.set('isCommenting', false);
       }.bind(this));
     }
   }

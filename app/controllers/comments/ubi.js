@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import CommentsMixin from 'fairshare-site/mixins/comments';
 
-export default Ember.ObjectController.extend(CommentsMixin, {
+export default Ember.Controller.extend(CommentsMixin, {
   needs: ['subreddit'],
   subreddit: Ember.computed.alias('controllers.subreddit.model'),
   auth: Ember.inject.service(),
@@ -81,18 +81,18 @@ export default Ember.ObjectController.extend(CommentsMixin, {
     if (value) {
       return parseInt(value);
     }
-    return this.get('beneficiaries.length');
-  }.property('beneficiaries.length'),
+    return this.get('model.beneficiaries.length');
+  }.property('model.beneficiaries.length'),
 
   fairShare: function() {
     var count = this.get('beneficiaryCount');
-    if (!count) {return this.get('total')};
+    if (!count) {return this.get('total');}
     return Math.floor(this.get('total') / count);
   }.property('beneficiaryCount', 'total'),
 
   requestComment: function() {
-    return this.get('comments').findProperty('author', this.get('user.name'));
-  }.property('user', 'comments.@each.author'),
+    return this.get('model.comments').findProperty('author', this.get('user.name'));
+  }.property('user', 'model.comments.@each.author'),
 
   isDistributing: function(key, value) {
     if (arguments.length > 1) {return value;}

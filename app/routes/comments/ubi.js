@@ -1,3 +1,4 @@
+/* globals moment */
 import Ember from 'ember';
 import client from 'fairshare-site/client';
 
@@ -10,7 +11,7 @@ export default Ember.Route.extend({
     });
   },
 
-  beforeModel: function(model) {
+  beforeModel: function() {
     var subreddit = this.modelFor('subreddit');
     var post = this.modelFor('thread');
     return client('/r/' + subreddit.display_name + '/wiki/incomeescrows.json').get({}, {
@@ -24,7 +25,7 @@ export default Ember.Route.extend({
           unit: item.find('em').text(),
           count: parseFloat(item.find('strong').text()),
           percentage: 10
-        }
+        };
       }));
     }).then(function() {
       var coins = ['doge', 'nyan', 'rdd', 'ltc', 'pot'];
@@ -55,12 +56,10 @@ export default Ember.Route.extend({
   },
 
   afterModel: function() {
-    var post = this.modelFor('thread');
     var sub = this.modelFor('subreddit');
     return client('/r/' + sub.subreddit + '/wiki/index.json').get({}, {
       bypassAuth: true
     }).then(function(result) {
-      console.log('data', result.data);
       Ember.set(sub, 'wiki', result.data);
     });
   },
@@ -72,7 +71,6 @@ export default Ember.Route.extend({
       var post = this.modelFor('comments.ubi');
       var controller = this.controllerFor('comments.ubi');
       var commentText = Ember.$('#distcomment').val();
-      var bits = controller.get('shareTotal.bits');
       var comments = post.beneficiaries.map(function(author) {
         return post.comments.findProperty('author', author);
       }).without(undefined);
@@ -186,13 +184,13 @@ export default Ember.Route.extend({
           title: newTitle,
           text: post.selftext,
           sendreplies: false
-        }).then(function(result) {
-          /*return client('/api/set_subreddit_sticky').post({
+        });/*.then(function(result) {
+          return client('/api/set_subreddit_sticky').post({
             api_type: 'json',
             id: result.name,
             state: true
-          });*/
-        });
+          });
+        });*/
       }
       controller.set('isMakingComments', true);
       if (!confirm('Are you sure you want to distribute?')) {

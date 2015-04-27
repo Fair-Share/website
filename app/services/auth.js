@@ -1,3 +1,4 @@
+/* globals moment */
 import Ember from 'ember';
 import client from 'fairshare-site/client';
 
@@ -24,7 +25,7 @@ export default Ember.Service.extend({
   passPhrase: '',
   passPhraseRepeat: function(key, value) {
     if (arguments.length > 1) {return value;}
-    return ''
+    return '';
   }.property('passPhrase'),
 
   _checkPassPhrase: function() {
@@ -174,11 +175,12 @@ export default Ember.Service.extend({
       }
       transaction.sign(privateKey);
       return bitcore.postTransaction(transaction).then(function(result) {
+        console.log('postTransaction result', result);
         alert('Sent ' + amount + ' to ' + address);
-      }).catch(function(error) {
-        console.error('error', error);
+      }).catch(function(err) {
+        console.error('error', err);
         alert(err.responseText);
-        throw error;
+        throw err;
       }).then(this.updateBalance.bind(this));
     }.bind(this));
   }

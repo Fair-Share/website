@@ -24,7 +24,7 @@ module.exports = function(environment) {
       'script-src': "'self'",
       'font-src': "'self' http://maxcdn.bootstrapcdn.com https://maxcdn.bootstrapcdn.com http://fonts.gstatic.com https://fonts.gstatic.com",
       'connect-src': "'self' https://*.reddit.com http://*.reddit.com https://chain.so",
-      'img-src': "'self' http://maxcdn.bootstrapcdn.com https://maxcdn.bootstrapcdn.com http://*.redditmedia.com",
+      'img-src': "'self' http://maxcdn.bootstrapcdn.com https://maxcdn.bootstrapcdn.com http://*.redditmedia.com data",
       'style-src': "'self' 'unsafe-inline' http://maxcdn.bootstrapcdn.com https://maxcdn.bootstrapcdn.com http://fonts.googleapis.com https://fonts.googleapis.com",
       'media-src': "'self'"
     }

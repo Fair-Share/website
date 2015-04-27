@@ -9,4 +9,4 @@ export default Ember.Route.extend({
     var subreddit = this.modelFor('subreddit');
     this.transitionTo('/r/' + subreddit.display_name + '/' + model);
   }
-})
+});

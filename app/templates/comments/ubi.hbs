@@ -1,6 +1,6 @@
 <div class='row'>
   <div class='col-md-4'>
-    <h2>{{beneficiaries.length}} Beneficiaries</h2>
+    <h2>{{model.beneficiaries.length}} Beneficiaries</h2>
     <h4>FairShare Estimate {{shareTotal.bits}} bits / ${{shareTotal.usd}}</h4>
     <hr>
     {{#if requestComment}}
@@ -37,6 +37,16 @@
                         buttonText='Request FairShare'
                         comments=model.comments}}
       {{/if}}
+    {{/if}}
+    {{#if myCommentItems.length}}
+      <h3>My Comments</h3>
+      <ul class='media-list comments'>
+      {{#each item in myCommentItems}}
+        <li class="media">
+          {{display-comment comment=item.comment}}
+        </li>
+      {{/each}}
+      </ul>
     {{/if}}
   </div><div class='col-md-4'>
     <h2>Income Escrow</h2>
@@ -82,7 +92,7 @@
 
 # {{beneficiaryCount}} UBI Beneficiaries
 
-{{#each name in beneficiaries}}
+{{#each name in model.beneficiaries}}
 /u/{{name}}
 
 {{/each}}
@@ -106,16 +116,6 @@
         {{/each}}
         </tbody>
       </table>
-      {{#if myCommentItems.length}}
-        <h3>My Comments</h3>
-        <ul class='media-list comments'>
-        {{#each item in myCommentItems}}
-          <li class="media">
-            {{display-comment comment=item.comment}}
-          </li>
-        {{/each}}
-        </ul>
-      {{/if}}
     {{/if}}
   </div>
   <div class='col-md-4'>
