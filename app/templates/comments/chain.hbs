@@ -59,15 +59,21 @@
     {{#link-to 'btc.address' escrow.address}}{{qr-code value=escrow.address}}{{/link-to}}
   </div>
   <div class='col-md-4'>
+    {{#if hideComments}}
+      <button class='btn btn-default form-control' {{action 'toggleComments'}}>
+        Show Addresses
+      </button>
+    {{else}}
     <h2>{{uniqueSignatures.length}} Addresses</h2>
     <hr>
-    <ul class='media-list comments'>
-    {{#each item in uniqueSignatures}}
-      <li class="media">
-        {{display-comment comment=item.comment hideMessage=true}}
-        {{item.address}}
-      </li>
-    {{/each}}
-    </ul>
+      <ul class='media-list comments'>
+      {{#each item in uniqueSignatures}}
+        <li class="media">
+          {{display-comment comment=item.comment hideMessage=true}}
+          {{item.address}}
+        </li>
+      {{/each}}
+      </ul>
+    {{/if}}
   </div>
 </div>

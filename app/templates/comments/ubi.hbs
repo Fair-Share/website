@@ -122,12 +122,16 @@
     <h2>{{model.num_comments}} Comments</h2>
     <h4>{{model.comments.length}} Top-Level</h4>
     <hr>
-    <ul class='media-list comments'>
+    {{#if hideComments}}
+      <button class='btn btn-default form-control' {{action 'toggleComments'}}>
+        Show Comments
+      </button>
+    {{else}}<ul class='media-list comments'>
       {{#each comment in model.comments}}
         <li class="media">
           {{display-comment comment=comment}}
         </li>
       {{/each}}
-    </ul>
+    </ul>{{/if}}
   </div>
 </div>
