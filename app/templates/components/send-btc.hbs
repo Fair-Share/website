@@ -7,6 +7,11 @@
       <button {{bind-attr class=":btn isValid:btn-success:btn-danger"}} {{action 'send'}}><span class='glyphicon glyphicon-share'></span> Send</button>
     </span>
   </div>
+  <div class="alert alert-info" role="alert">
+    <span class='glyphicon glyphicon-exclamation-sign'></span>
+    A 10000 satoshi miner fee will be included
+    <span class='glyphicon glyphicon-exclamation-sign'></span>
+  </div>
 {{else}}
   <div class="input-group">
     {{#if auth.showPassPhrase}}

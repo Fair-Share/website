@@ -5,23 +5,25 @@ export default Ember.Component.extend({
   bitcore: Ember.inject.service(),
   amount: '',
   dest: '',
+  fees: 10000,
 
   placeholder: function(key, value) {
     if (arguments.length > 1) {return value;}
     var balance = this.get('auth.balance');
     if (!balance) {return 'No balance available!';}
-    return balance + ' available';
-  }.property('auth.balance'),
+    return (balance - this.get('fees')) + ' available';
+  }.property('auth.balance', 'fees'),
 
   isValid: function() {
     var amount = parseInt(this.get('amount'));
+    var fees = this.get('fees')
     var dest = this.get('dest') || '';
     if (!amount) {return false;}
-    if (amount > this.get('auth.balance')) {
+    if ((amount + fees) > this.get('auth.balance')) {
       return false;
     }
     return this.get('bitcore').Address.isValid(dest);
-  }.property('amount', 'dest'),
+  }.property('amount', 'dest', 'fees'),
 
   actions: {
     send: function() {

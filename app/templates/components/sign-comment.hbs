@@ -17,12 +17,12 @@
     </span>
   </div>
 {{/unless}}
-{{#if address}}
+{{#if address}}{{#if auth.user.name}}
   <button
     {{bind-attr class=":btn :form-control auth.addressData.total_txs:btn-success:btn-default"}}
     {{action 'makeComment'}}
   >{{buttonText}}</button>
-{{else}}
+{{/if}}{{else}}
   {{#unless auth.addressData.total_txs}}
     {{input type='text' value=auth.passPhraseRepeat class="form-control" placeholder="Repeat passphrase here (if new)" action='makeComment'}}
   {{/unless}}
