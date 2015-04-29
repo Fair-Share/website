@@ -12,7 +12,7 @@ export default Ember.Mixin.create({
   toAddresses: [],
 
   transaction: function() {
-    this.transactionForShareAmount(this.get('fairShare'));
+    return this.transactionForShareAmount(this.get('fairShare'));
   }.property('toAddresses.@each', 'fromAddress', 'fairShare'),
 
   fairShare: function() {

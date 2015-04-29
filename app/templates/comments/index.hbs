@@ -1,4 +1,9 @@
-
+{{#if voteChoices}}
+  {{view "select" content=voteChoices
+                  optionLabelPath="content.label"
+                  optionValuePath="content.value"
+                  value=selectedVote}}
+{{/if}}
 <div class='row'>
   <div class='col-md-4'>
     <h2>{{model.num_comments}} Comments</h2>
