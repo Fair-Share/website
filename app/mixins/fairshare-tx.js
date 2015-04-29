@@ -6,14 +6,14 @@ export default Ember.Mixin.create({
 
   unspent: [],
   totalDistribution: 0,
-  minimumFairShare: 1,
+  minimumFairShare: 5430, // https://github.com/bitcoin/bitcoin/pull/2577
 
   fromAddress: null,
   toAddresses: [],
 
   transaction: function() {
-    return this.transactionForShareAmount(this.get('fairShare'));
-  }.property('toAddresses.@each', 'fromAddress', 'fairShare'),
+    return this.transactionForShareAmount(this.get('fairShare'), this.get('minerFee'));
+  }.property('toAddresses.@each', 'fromAddress', 'fairShare', 'toSpend'),
 
   fairShare: function() {
     var addresses = this.get('toAddresses');
@@ -25,7 +25,8 @@ export default Ember.Mixin.create({
     return this.get('totalDistribution') - this.get('minerFee');
   }.property('totalDistribution', 'minerFee'),
 
-  minerFee: function() {
+  minerFee: function(key, value) {
+    if (arguments.length > 1) {return parseInt(value);}
     return this.transactionForShareAmount(1).getFee();
   }.property('toAddresses.@each', 'toSpend.@each'),
 
@@ -45,7 +46,7 @@ export default Ember.Mixin.create({
       toSpend.pushObject(tx);
     }
     return toSpend;
-  }.property('unspent.@each.satoshis'),
+  }.property('unspent.@each', 'totalDistribution'),
 
   totalInputs: function() {
     var inputs = 0;
@@ -53,7 +54,7 @@ export default Ember.Mixin.create({
       inputs += input.output.satoshis;
     });
     return inputs;
-  }.property('transactionObj.inputs.@each.output.satoshis'),
+  }.property('transactionObj.inputs.@each'),
 
   totalOutputs: function() {
     var outputs = 0;
@@ -63,7 +64,7 @@ export default Ember.Mixin.create({
     return outputs;
   }.property('transactionObj.outputs.@each.satoshis'),
 
-  transactionForShareAmount: function(amount) {
+  transactionForShareAmount: function(amount, fee) {
     var transaction = this.get('bitcore').transaction();
     var fromAddress = this.get('fromAddress');
     transaction.from(this.get('toSpend'));
@@ -71,6 +72,7 @@ export default Ember.Mixin.create({
       transaction.to(address, amount);
     });
     transaction.change(fromAddress);
+    if (fee) {transaction.fee(fee);}
     return transaction;
   },
 
@@ -92,6 +94,6 @@ export default Ember.Mixin.create({
   }.property('transactionObj'),
 
   isValid: function() {
-    return this.get('fairShare') > (this.get('toAddresses').length * this.get('minimumFairShare'));
+    return this.get('fairShare') > this.get('minimumFairShare');
   }.property('fairShare', 'minimumFairShare')
 });

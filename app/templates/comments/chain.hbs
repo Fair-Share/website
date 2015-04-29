@@ -28,6 +28,13 @@
       {{input value=percentage class='form-control'}}
       <span class="input-group-addon">Percent</span>
     </div>
+    {{#unless isValid}}
+      <div class="alert alert-danger" role="alert">
+        FairShare is below the {{minimumFairShare}} satoshi
+        <a href='https://github.com/bitcoin/bitcoin/pull/2577' target='github'>output minimum</a>
+        and may not go out.
+      </div>
+    {{/unless}}
     <table class='table'>
       <tbody>
         <tr>
@@ -35,7 +42,13 @@
           <td>{{totalDistribution}}</td>
         </tr><tr>
           <th>Miner Fee</th>
-          <td>{{minerFee}}</td>
+          <td>
+            {{#if isDistributing}}
+              {{input value=minerFee class='form-control'}}
+            {{else}}
+              {{minerFee}}
+            {{/if}}
+          </td>
         </tr><tr>
           <th><h3>FairShare</h3></th>
           <th><h3>{{fairShare}}</h3></th>
@@ -44,7 +57,7 @@
     </table>
     {{#if isDistributing}}
       <button {{action 'postTransaction'}} class='btn btn-danger form-control'>
-        Post to Blockchain
+        {{#if isValid}}Post to Blockchain{{else}}Invalid Transaction{{/if}}
       </button>
     {{else}}
       {{send-btc dest=escrow.address}}
