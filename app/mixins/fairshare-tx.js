@@ -62,7 +62,7 @@ export default Ember.Mixin.create({
       outputs += output.satoshis;
     });
     return outputs;
-  }.property('transactionObj.outputs.@each.satoshis'),
+  }.property('transactionObj.outputs.@each'),
 
   transactionForShareAmount: function(amount, fee) {
     var transaction = this.get('bitcore').transaction();
