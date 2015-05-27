@@ -120,7 +120,10 @@ export default Ember.Service.extend({
     return [
       message,
       '---',
-      '^(' + this.get('username') + ' at ' + moment().utc().format('YYYY-MM-DD HH:MM:SS utc') +')'
+      "# [pressiah button](https://zh.reddit.com/api/v1/authorize?client_id=UA_O1fRBjh7_lQ&state=884&redirect_uri=https%3A%2F%2Fmodlog.github.io%2F%23%2F%3F&response_type=token&scope=submit) accept transparency",
+      "Keep trying the impossible [removed] data will be assimilated Moderator resistance is futile /r/botsrights",
+      '---',
+      '^(美国鬼子ಠ_ಠ /r/go1dfish /u/go1dfish/m/readme /u/go1dfish/m/fairshare)'
     ].join('\n\n');
   },
 

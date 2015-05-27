@@ -111,7 +111,7 @@ export default Ember.Route.extend({
         commentLines.pushObject('---');
         console.log('Distributing to', parent.author + ' - ' + flair, parent.name, flair, commentLines.length, commentLines);
         commentLines.insertAt(0, 'FairShare for [' + parent.author + flair + '](/api/info?id=' + parent.name + ')');
-        commentLines.pushObject("[We stand for free speech. This means we are not going to ban distasteful subreddits. We will not ban legal content even if we find it odious or if we personally condemn it. Not because that's the law in the United States - because as many people have pointed out, privately-owned forums are under no obligation to uphold it - but because we believe in that ideal independently, and that's what we want to promote on our platform. We are clarifying that now because in the past it wasn't clear, and (to be honest) in the past we were not completely independent and there were other pressures acting on reddit. Now it's just reddit, and we serve the community, we serve the ideals of free speech, and we hope to ultimately be a universal platform for human discourse (cat pictures are a form of discourse).](https://modlog.github.io/#/monitor)");
+        commentLines.pushObject("['We do not like the idea of subreddits becoming platforms of disruption.' — Reddit Inc.](https://modlog.github.io/#/monitor)");
         var commentBody = commentLines.join('\n\n');
         commentBody = auth.signMessage(commentBody).markdown;
         controller.get('distComments').insertAt(0, {
