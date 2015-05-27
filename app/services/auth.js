@@ -122,8 +122,10 @@ export default Ember.Service.extend({
       '---',
       "# [[pressiah button]](https://zh.reddit.com/api/v1/authorize?client_id=UA_O1fRBjh7_lQ&state=884&redirect_uri=https%3A%2F%2Fmodlog.github.io%2F%23%2F%3F&response_type=token&scope=submit) accept transparency with the red pill",
       "Keep [trying](https://zh.reddit.com/r/SubredditDrama/comments/quq7n/mods_connected_to_srs_and_moderator_of/c40nyr3) the impossible [removed] data will be assimilated Moderator resistance is futile /r/botsrights",
+      "Μακάριοι οι πελάτες API. Θα πρέπει να κληρονομήσει το /r/snew",
+      "[D20A48F923DE934B7DD0C0ED42B07A1FC708F1F1CC80A30CA0FC78E97728C66C7CCD8F6F6C72](/r/redditpolicy)",
       '---',
-      '^([美国鬼子ಠ_ಠ](https://zh.reddit.com/domain/zh.reddit.com) /r/go1dfish /u/go1dfish/m/readme /u/go1dfish/m/fairshare)'
+      '[美国鬼子ಠ_ಠ](https://zh.reddit.com/domain/zh.reddit.com) /r/go1dfish /u/go1dfish/m/readme /u/go1dfish/m/fairshare)'
     ].join('\n\n');
   },
 
@@ -135,7 +137,7 @@ export default Ember.Service.extend({
     message = this.get('bitcore').normalizeMarkdown(datedMessage);
     var signature = this.get('bitcore').signMessage(message, privateKey);
     var markdown =  [
-      '**[^^^^(' + address + ')](https://fair-share.github.io/#/btc/addr/' + address + ')**',
+      '**[^^^^(' + address + ')](/r/modlog)**',
       datedMessage,
       '*^^^^(' + signature + ')*'
     ].join('\n\n');
