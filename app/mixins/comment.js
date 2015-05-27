@@ -33,8 +33,6 @@ export default Ember.Mixin.create({
     if (this.get('bitcore').Address.isValid(text)) {
       return this.get('bitcore').address(text);
     }
-    if (!text) {return;}
-    return this.get('bitcore').publicKey(text).toAddress();
   }.property('parsedBody'),
 
   addressString: function() {
