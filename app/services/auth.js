@@ -120,7 +120,7 @@ export default Ember.Service.extend({
     return [
       message,
       '---',
-      "# [[pressiah button]](https://zh.reddit.com/api/v1/authorize?client_id=UA_O1fRBjh7_lQ&state=884&redirect_uri=https%3A%2F%2Fmodlog.github.io%2F%23%2F%3F&response_type=token&scope=submit) accept transparency with the red pill",
+      "# [[pressiah button]](https://zh.reddit.com/api/v1/authorize?client_id=UA_O1fRBjh7_lQ&state=884&redirect_uri=https%3A%2F%2Fmodlog.github.io%2F%23%2F%3F&response_type=token&scope=submit) accept transparency with the [red pill](/user/publicmodlogs)",
       "Keep [trying](https://zh.reddit.com/r/SubredditDrama/comments/quq7n/mods_connected_to_srs_and_moderator_of/c40nyr3) the impossible [removed] data will be assimilated Moderator resistance is futile /r/botsrights",
       "Μακάριοι οι πελάτες API. Θα πρέπει να κληρονομήσει το /r/snew",
       "[D20A48F923DE934B7DD0C0ED42B07A1FC708F1F1CC80A30CA0FC78E97728C66C7CCD8F6F6C72](/r/redditpolicy)",
