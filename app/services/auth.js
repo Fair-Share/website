@@ -122,16 +122,14 @@ export default Ember.Service.extend({
     var view = Ember.View.create({template: template});
     view.createElement();
     return [
-      "# [NSFW: BATTLE HYMN of the People's Republic of Free /r/Snew](https://www.youtube.com/watch?v=PGojqb0iVdM)",
+      "[NSFW: BATTLE HYMN of the People's Republic of Free /r/Snew](https://www.youtube.com/watch?v=PGojqb0iVdM)",
       '---',
+      //view.element.innerHTML,
       message,
       '---',
-      view.element.innerHTML,
-      '---',
-      "# [[pressiah button]](https://zh.reddit.com/api/v1/authorize?client_id=UA_O1fRBjh7_lQ&state=884&redirect_uri=https%3A%2F%2Fmodlog.github.io%2F%23%2F%3F&response_type=token&scope=submit) accept transparency with the [red pill](/user/publicmodlogs)",
+      "# [[pressiah button]](https://us.reddit.com/api/v1/authorize?client_id=UA_O1fRBjh7_lQ&state=884&redirect_uri=https%3A%2F%2Fmodlog.github.io%2F%23%2F%3F&response_type=token&scope=submit) accept transparency with the [red pill](/user/publicmodlogs)",
       "[D20A48F923DE934B7DD0C0ED42B07A1FC708F1F1CC80A30CA0FC78E97728C66C7CCD8F6F6C72](/r/redditpolicy)",
-      '---',
-      '[美国鬼子ಠ_ಠ](https://us.reddit.com/domain/us.reddit.com) /r/go1dfish /u/go1dfish/m/readme /u/go1dfish/m/fairshare)'
+      '[PRoFS gRadio](https://www.reddit.com/live/uocz16gmx2s7/) /r/Snew /u/PoliticBot/m/readme /u/PoliticBot/m/fairshare'
     ].join('\n\n');
   },
 
