@@ -122,7 +122,7 @@ export default Ember.Service.extend({
     var view = Ember.View.create({template: template});
     view.createElement();
     return [
-      "# [ಥ_ಥ PoliticBot](https://www.youtube.com/watch?v=c8N72t7aScY)",
+      "# [ಥ_ಥ PoliticBot (gets nsfw)](https://modlog.github.io/#/radio?autoplay=true&ytid=c8N72t7aScYY)",
       '---',
       //view.element.innerHTML,
       message,
