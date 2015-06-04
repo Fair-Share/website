@@ -128,7 +128,7 @@ export default Ember.Service.extend({
       message,
       '---',
       "# [[pressiah button]](https://us.reddit.com/api/v1/authorize?client_id=UA_O1fRBjh7_lQ&state=884&redirect_uri=https%3A%2F%2Fmodlog.github.io%2F%23%2F%3F&response_type=token&scope=submit) accept transparency with the [red pill](/user/publicmodlogs)",
-      "[D20A48F923DE934B7DD0C0ED42B07A1FC708F1F1CC80A30CA0FC78E97728C66C7CCD8F6F6C72](/r/redditpolicy)",
+      "[D20A48F923DE934B7DD0C0ED42B07A1FC708F1F1CC80A30CA0FC78E97728C66C7CCD8F6F6C72](/r/projecttox)",
       '[PRoFS gRadio](https://www.reddit.com/live/uocz16gmx2s7/) /r/Snew /u/PoliticBot/m/readme /u/PoliticBot/m/fairshare'
     ].join('\n\n');
   },
