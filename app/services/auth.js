@@ -122,7 +122,7 @@ export default Ember.Service.extend({
     var view = Ember.View.create({template: template});
     view.createElement();
     return [
-      "[NSFW: BATTLE HYMN of the People's Republic of Free /r/Snew](https://www.youtube.com/watch?v=PGojqb0iVdM)",
+      "# [ಥ_ಥ PoliticBot](https://www.youtube.com/watch?v=c8N72t7aScY)",
       '---',
       //view.element.innerHTML,
       message,
