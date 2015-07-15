@@ -38,7 +38,8 @@ export default Ember.Route.extend({
         })).then(function (result) {
           return result.data.prices.findProperty('price_base', 'BTC');
         }).then(function(data) {
-          post.prices[name] = data.price;
+          data = data || {};
+          post.prices[name] = data.price || 0;
         });
       })).then(function() {
         return Ember.RSVP.resolve(Ember.$.ajax({
